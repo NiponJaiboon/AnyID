@@ -1,0 +1,732 @@
+﻿@using AnyIDAdmin.Models
+@{
+    string languageCode = ViewData["LanguageCode"] == null ? "th-TH" : ViewData["LanguageCode"].ToString();
+    ViewBag.Title = "Amend Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    AnyIDModel.Customer cust_data = (ViewData["Cust_Data"] == null ? null : (AnyIDModel.Customer)ViewData["Cust_Data"]);
+    AnyIDModel.AccountProxy anyID_Data = (ViewData["AnyID_Data"] == null ? null : (AnyIDModel.AccountProxy)ViewData["AnyID_Data"]);
+    IList<iSabaya.BankAccount> account_data = (ViewData["AccFunding_Data"] == null ? null : (IList<iSabaya.BankAccount>)ViewData["AccFunding_Data"]);
+    IList<AnyIDModel.TransactionDocument> document_data = (ViewData["Document_Data"] == null ? new List<AnyIDModel.TransactionDocument>() : (IList<AnyIDModel.TransactionDocument>)ViewData["Document_Data"]);
+
+    bool isPerson = true;
+    AnyIDModel.Person person_Data = null;
+    AnyIDModel.Organization org_Data = null;
+    if (cust_data == null)
+    {
+        cust_data = new AnyIDModel.Person() { IDType = AnyIDModel.IDType.I, BirthDate = new DateTime(1, 1, 1) };
+        person_Data = (AnyIDModel.Person)cust_data;
+    }
+    else
+    {
+        isPerson = (cust_data is AnyIDModel.Person);
+        person_Data = (cust_data is AnyIDModel.Person ? (AnyIDModel.Person)cust_data : null);
+        org_Data = (cust_data is AnyIDModel.Person ? null : (AnyIDModel.Organization)cust_data);
+    }
+
+    int i = 0;
+    string dataRow = "";
+    foreach (var item in document_data)
+    {
+        dataRow = dataRow + "<tr><td class=\"text-center\">" + (++i) + "</td>";
+        dataRow = dataRow + "<td>" + item.DocumentFileName + "</td>";
+        dataRow = dataRow + "<td>" + item.DocumentType + "</td>";
+        dataRow = dataRow + "<td>" + CommonUtilities.GetUserActionNameText(item.UploadAction) + "</td>";
+        dataRow = dataRow + "<td class=\"text-center\">" + CommonUtilities.GetUserActionTimestampText(item.UploadAction) + "</td>";
+        dataRow = dataRow + "<td class=\"text-center\">";
+        dataRow = dataRow + "<img class=\"point\" style=\"width:20px;\" alt=\"\" src=\"" + Url.Content("~/Images/icon/search.png") + "\" onclick=\"downloadAttached('" + item.Tag.ToString() + "');\" />";
+        dataRow = dataRow + "&nbsp;&nbsp;";
+        dataRow = dataRow + "<img class=\"point\" style=\"width:20px;\" alt=\"\" src=\"" + Url.Content("~/Images/icon/trash.png") + "\" onclick=\"confirmDelAttachFile('" + item.Tag.ToString() + "', '" + item.DocumentFileName + "');\" />";
+        dataRow = dataRow + "</td></tr>";
+    }
+}
+
+@if (ViewData["ExceptionOnLoad"] != null){<span style="font-family:ClanOT_Narrow;font-size:14px;color:red;">@Html.Raw(ViewData["ExceptionOnLoad"].ToString())</span>}
+else if (ViewData["InsufficientPrivilege"] != null)
+{
+    @section PageHead{
+        <script type="text/javascript">
+            $(document).ready(function () {
+                window.location.replace('@Url.Content("~/Login")');
+            });
+        </script>
+    }
+}
+else
+{
+    @section PageHead{
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/datatables.min.css")">
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/isabayaDataTable.css")">
+        <script type="text/javascript" src="@Url.Content("~/Scripts/datatables.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/isabayaDataTable.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.form.js")"></script>
+        <style type="text/css">
+            .page-SelFontEN {
+                font-family: ClanOT_Narrow;
+                font-size: 14px;
+            }
+
+                .page-SelFontEN option {
+                    font-family: ClanOT_Narrow;
+                    font-size: 14px;
+                }
+
+            .page-borderGray {
+                border-style: inset;
+                border-color: gray;
+            }
+
+            .page-row td {
+                padding: 5px;
+            }
+
+            .page-table {
+                width: 100%;
+            }
+
+                .page-table td {
+                    padding: 5px;
+                }
+
+            .page-validate {
+                height: 30px;
+                position: absolute;
+                border: 1px ridge gray;
+                background-color: #D9534F;
+                float: right;
+                margin-left: 215px;
+            }
+        </style>
+        <script type="text/javascript">
+            var LoG = { EmptyTableText: "ไม่มีข้อมูล", InfoText: "จำนวนรายการที่พบ _TOTAL_ รายการ แสดงผลหน้าที่ _PAGE_ จาก _PAGES_", InfoEmptyText: "จำนวนรายการที่พบ 0 รายการ แสดงผลหน้าที่ 1 จาก 1" };
+            var imgUrl = "@Url.Content("~/Images/iconcontrol/")";
+            $(document).ready(function () {
+                AttachmentGrid.Initial(LoG);
+                AttachmentGrid.ChangePageLength(15);
+            });
+
+            function Expire() { window.location.replace('@Url.Content("~/Login")'); }
+
+            function ChangeProxyType(sender) {
+                var anyIDValue = document.getElementById("anyIDValue");
+                if (sender.value == "@AnyIDModel.AnyIDType.MSISDN.ToString()") {
+                    anyIDValue.disabled = false;
+                    anyIDValue.value = "@Html.Raw(isPerson ? person_Data.MobilePhoneNo : "N/A")";
+                }
+                else if (sender.value == "@AnyIDModel.AnyIDType.NATID.ToString()") {
+                    anyIDValue.disabled = true;
+                    anyIDValue.value = "@cust_data.IDNo";
+                }
+            }
+
+            function EditAction(v) {
+                var initAccV = "@Html.Raw(anyID_Data.BankAccount.AccountNo + ":" + anyID_Data.BankAccount.Name)";
+                var initAidT = "@anyID_Data.AnyID.IDType.ToString()";
+                var initAidV = "@anyID_Data.AnyID.DisplayIDNo";
+                var accNo = document.getElementById('accNo');
+                var accName = document.getElementById('accName');
+                var anyIDType = document.getElementById('anyIDType');
+                var anyIDValue = document.getElementById('anyIDValue');
+
+                clearAllValidate(["accNo", "anyIDValue"]);
+                document.getElementById('editAction').value = v;
+                if (v == "1") {
+                    accNo.disabled = true;
+                    accName.disabled = true;
+                    //anyIDType.disabled = false;
+                    anyIDValue.disabled = (initAidT == "@AnyIDModel.AnyIDType.NATID.ToString()");
+                    for (var i = 0; i < accNo.children.length; i++) {
+                        if (accNo.children[i].value == initAccV) {
+                            accNo.selectedIndex = i;
+                            accName.value = $("#accNo").val().split(':')[1];
+                            break;
+                        }
+                    }
+                }
+                else {
+                    accNo.disabled = false;
+                    accName.disabled = true;
+                    //anyIDType.disabled = true;
+                    anyIDValue.disabled = true;
+                    for (var i = 0; i < anyIDType.children.length; i++) {
+                        if (anyIDType.children[i].value == initAidT) {
+                            anyIDType.selectedIndex = i;
+                            anyIDValue.value = initAidV;
+                        }
+                    }
+                }
+            }
+
+            function GetConfirm() {
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    dataType: "json",
+                    data: {},
+                    url: '@Url.Content("~/AmendRegistration/Comfirm")',
+                    success: function (data) {
+                        if (data.responseCode == "000") {
+                            ChangeViewPoint(data.html);
+                        }
+                        else { ErrorException999(data.responseCode + ", " + data.responseText + "; " + data.html); }
+                        loading.Hide();
+                    },
+                    error: function (e) {
+                        alert("Error Exception");
+                        console.log(e);
+                    }
+                });
+            }
+
+
+            var ConfirmAttachmentGrid;
+            function SendAmend(sender, urlAction) {
+                sender.disabled = true;
+                clearAllValidate(["accNo", "anyIDValue"]);
+                var isPass = true;
+                if ($("#accNo").val() == null || $("#accNo").val() == "") { isPass = false; displayValidate("accNo", true); document.getElementById("accNo").focus(); }
+                if ($("#anyIDValue").val() == null || $("#anyIDValue").val() == "") { isPass = false; displayValidate("anyIDValue", true); document.getElementById("anyIDValue").focus(); }
+
+                if (isPass) {
+                    loading.Show();
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        dataType: "json",
+                        url: urlAction,
+                        data: { editAction: $("#editAction").val(), regID: $("#regID").text(), anyIDType: $("#anyIDType").val(), anyIDValue: $("#anyIDValue").val(), accountNo: $("#accNo").val().split(':')[0], accountName: $("#accName").val() },
+                        success: function (data) {
+                            if (data.responseCode == "000") { GetConfirm(); sender.disabled = false; }
+                            else if (data.responseCode == "500") { Expire(); }
+                            else {
+                                if (data.responseCode == "") { alert(data.responseText); }
+                                else if (data.responseCode == "101") {
+                                    displayValidate("anyIDValue", true);
+                                    document.getElementById("anyIDValue").focus();
+                                }
+                                else if (data.responseCode == "102") {
+                                    displayValidate("accNo", true);
+                                    document.getElementById("accNo").focus();
+                                }
+                                else { ErrorException999(data.responseCode + ", " + data.responseText + "; " + data.html); }
+                                loading.Hide();
+                                sender.disabled = false;
+                            }
+                        },
+                        error: function (e) {
+                            alert("Error Exception");
+                            console.log(e);
+                        }
+                    });
+                }
+                else { sender.disabled = false; }
+            }
+            function SendConfirm(urlAction) {
+                loading.Show();
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    dataType: "json",
+                    data: { editAction: $("#editAction").val(), otp: ($("#otpConfirm") ? $("#otpConfirm").val() : "") },
+                    url: urlAction,
+                    success: function (data) {
+                        if (data.responseCode == "000") { window.location.replace('@ViewData["ReturnScreen"].ToString()'); }
+                        else if (data.responseCode == "500") { Expire(); }
+                        else if (data.responseCode == "999") { ErrorException999(data.responseCode + ", " + data.responseText + "; " + data.html); loading.Hide(); }
+                        else { alert(data.html); loading.Hide(); }
+                    },
+                    error: function (e) {
+                        alert("Error Exception");
+                        console.log(e);
+                    }
+                });
+            }
+            function Re_OTP(urlAction) {
+                loading.Show();
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    dataType: "json",
+                    data: {},
+                    url: urlAction,
+                    success: function (data) {
+                        if (data.responseCode == "000") {
+                            document.getElementById("otpRef").innerHTML = data.html;
+                            $("#otpConfirm").val("");
+                            loading.Hide();
+                        }
+                        else if (data.responseCode == "500") { Expire(); }
+                        else {
+                            ErrorException999(data.responseCode + ", " + data.responseText + "; " + data.html);
+                            $("#otpConfirm").val("");
+                            loading.Hide();
+                        }
+                    },
+                    error: function (e) {
+                        alert("Error Exception");
+                        console.log(e);
+                    }
+                });
+            }
+            function ChangeAccount(sender) { var accD = $(sender).val().split(":"); $("#accName").val(accD[1]); }
+            function ChangeViewPoint(d) {
+                if (document.getElementById("displayUserInfo").alt != "expand") {
+                    document.getElementById("displayUserInfo").click();
+                }
+
+                var createPoint = document.getElementById("createPoint");
+                var confirmPoint = document.getElementById("confirmPoint");
+                createPoint.style.display = (createPoint.style.display == "block" ? "none" : "block");
+                confirmPoint.style.display = (confirmPoint.style.display == "block" ? "none" : "block");
+
+                if (d == null || d == "") {
+                    if (ConfirmAttachmentGrid) { ConfirmAttachmentGrid = null; }
+                    document.getElementById("confirmPoint").innerHTML = "";
+                }
+                else {
+                    document.getElementById("confirmPoint").innerHTML = d;
+                    ConfirmAttachmentGrid = new isabayaDataTable("ConfirmAttachmentGrid", imgUrl);
+                    ConfirmAttachmentGrid.Initial(LoG);
+                    ConfirmAttachmentGrid.ChangePageLength(15);
+                }
+            }
+            function downloadAttached(id) { window.open('@Url.Content("~/AmendRegistration/DownloadTempAttachedDoc")?tag=' + id.toString()); }
+        </script>
+    }
+    <table style="font-family:ClanOT_Narrow;width:100%;font-size:14px;">
+        <tr>
+            <td class="BGKKGray" style="border-style:solid; border-color:white; border-width: 0px 0px 2px 0px; height:30px; padding:0 5px;">
+                <span style="font-weight:bold;color:black;">ข้อมูลการลงทะเบียน AnyID</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="BGKKBlue" style="border-style:solid; border-color:white; border-width: 2px 2px 0px 2px; height:30px; padding:0 5px;">
+                <span style="font-weight:bold; color:white;">ข้อมูลลูกค้า</span>&nbsp;&nbsp;<img id="displayUserInfo" alt="expand" src="@Url.Content("~/Images/expand.png")" style="cursor:pointer;width:18px;" onclick="if (this.alt == 'collapse') { this.alt = 'expand'; this.src = '@Url.Content("~/Images/expand.png")';document.getElementById('userinfo').style.display='none'; }else{this.alt = 'collapse'; this.src = '@Url.Content("~/Images/collapse.png")';document.getElementById('userinfo').style.display='table'; }" />
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:3px 0px;">
+                <table id="userinfo" class="page-table" style="color:black;display:none;">
+                    <tr class="page-borderGray" style="border-width:2px">
+                        <td>
+                            <span style="font-weight:bold;">Segment:</span>
+                        </td>
+                        <td>
+                            @cust_data.CustomerSegment
+                        </td>
+                        <td colspan="2">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <span style="font-weight:bold;">RM:</span>
+                                    </td>
+                                    <td>
+                                        @cust_data.CustomerRM
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td colspan="2">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="text-align:right;">
+                                        <span style="font-weight:bold;">Main Branch:</span>
+                                    </td>
+                                    <td>
+                                        @CommonUtilities.CustomerInfo.GetBranchFromCIS(cust_data.HomeBranchCode)
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">ชื่อ-นามสกุล:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(cust_data.FullNameThai)
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">Name-Surname:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(cust_data.FullNameEnglish)
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">CIS ID:</span>
+                        </td>
+                        <td>
+                            @cust_data.CISID
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">ประเภทบัตร:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(CommonUtilities.CardType(new Dictionary<string, string>())[cust_data.IDType.ToString()])
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">เลขที่บัตร:</span>
+                        </td>
+                        <td>
+                            @cust_data.IDNo
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">วันเดือนปีเกิด:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(isPerson ? CommonUtilities.CustomerInfo.GetBtirthDate(person_Data.BirthDate) : "N/A")
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">สถานะสมรส:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(isPerson ? person_Data.MaritalStatus : "N/A")
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">เพศ:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(isPerson ? (person_Data.Gender == "F" ? "หญิง" : (person_Data.Gender == "M" ? "ชาย" : "")) : "N/A")
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">ที่อยู่ตามทะเบียนบ้าน:</span>
+                        </td>
+                        <td colspan="5">
+                            @cust_data.RegisteredAddress
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">ที่อยู่ปัจจุบัน:</span>
+                        </td>
+                        <td colspan="5">
+                            @cust_data.CurrentAddress
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">ที่อยู่จัดส่งเอกสาร:</span>
+                        </td>
+                        <td colspan="5">
+                            @cust_data.MailingAddress
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">โทรศัพท์บ้าน:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(isPerson ? person_Data.HomePhoneNo : "N/A")
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">โทรศัพท์มือถือ:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(isPerson ? person_Data.MobilePhoneNo : "N/A")
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">โทรศัพท์ที่ทำงาน:</span>
+                        </td>
+                        <td>
+                            @cust_data.OfficePhoneNo
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">email:</span>
+                        </td>
+                        <td colspan="5">
+                            @cust_data.EmailAddress
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">สถานที่ทำงาน:</span>
+                        </td>
+                        <td colspan="5">
+                            @cust_data.OfficeAddress
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:2px">
+                        <td>
+                            <span style="font-weight:bold;">FATCA:</span>
+                        </td>
+                        <td>
+                            @CommonUtilities.CustomerInfo.GetFATCA(cust_data.FATCA)
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">Sanction List:</span>
+                        </td>
+                        <td>
+                            @CommonUtilities.CustomerInfo.GetSanctionListFromCIS(cust_data.Sanction)
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">ระดับความเสี่ยงฟอกเงิน:</span>
+                        </td>
+                        <td>
+                            @CommonUtilities.CustomerInfo.GetNomineeLevel(cust_data.KYCLevel)
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <div id="createPoint" style="display:block;">
+        <table class="page-borderGray" style="font-family:ClanOT_Narrow;width:100%;font-size:14px;margin-top:30px;border-width:2px;">
+            <tr>
+                <td style="padding:0px 3px 0px 0px !important;"></td>
+                <td colspan="4" style="padding:0px 0px 4px 0px !important;"></td>
+                <td style="padding:0px 3px 0px 0px !important;"></td>
+            </tr>
+            <tr>
+                <td style="padding:0px 3px 0px 0px !important;"></td>
+                <td colspan="4" class="BGKKBlue" style="height:30px;padding:0px 5px;">
+                    <span style="font-weight:bold;color:white;">แก้ไขการลงทะเบียน AnyID</span>
+                </td>
+                <td style="padding:0px 3px 0px 0px !important;"></td>
+            </tr>
+            <tr class="page-row">
+                <td style="padding:0px 3px 0px 0px !important;"></td>
+                <td>
+                    <span style="font-weight:bold;color:black;">Registration ID:</span>
+                </td>
+                <td colspan="3">
+                    <span id="regID">@anyID_Data.RegistrationID</span>
+                </td>
+                <td style="padding:0px 3px 0px 0px !important;"></td>
+            </tr>
+            <tr class="page-row">
+                <td style="padding:0px 3px 0px 0px !important;"></td>
+                <td>
+                    <span style="font-weight:bold;color:black;">เลือกการแก้ไข</span>
+                    <span style="font-weight:bold;color:red;">*</span>
+                    <span style="font-weight:bold;color:black;">:</span>
+                </td>
+                <td colspan="3">
+                    <input type="radio" name="editAction" checked="checked" onclick="EditAction('1');" /> <span>แก้ไข AnyID</span>
+                    &nbsp;&nbsp;
+                    <input type="radio" name="editAction" onclick="EditAction('2');" /> <span>แก้ไขบัญชี</span>
+                    <input type="hidden" id="editAction" value="1" />
+                </td>
+                <td style="padding:0px 3px 0px 0px !important;"></td>
+            </tr>
+            <tr>
+                <td style="padding:0px 3px 0px 0px !important;"></td>
+                <td style="padding:5px;">
+                    <span style="font-weight:bold;color:black;">ประเภท AnyID</span>
+                    <span style="font-weight:bold;color:red;">*</span>
+                    <span style="font-weight:bold;color:black;">:</span>
+                </td>
+                <td style="padding:5px;">
+                    <select id="anyIDType" class="page-SelFontEN" style="width:210px;" disabled>
+                        @foreach (string item in CommonUtilities.AnyIDType(new string[1]))
+                        {
+                            string[] keyValue = item.Split(':');
+                            if (keyValue[0] == anyID_Data.AnyID.IDType.ToString())
+                            {
+                                @Html.Raw("<option value=\"" + keyValue[0] + "\" selected>" + keyValue[1] + "</option>");
+                            }
+                            else
+                            {
+                                @Html.Raw("<option value=\"" + keyValue[0] + "\">" + keyValue[1] + "</option>");
+                            }
+                        }
+                    </select>
+                </td>
+                <td style="padding:5px;">
+                    <span style="font-weight:bold;color:black;">AnyID</span>
+                    <span style="font-weight:bold;color:red;">*</span>
+                    <span style="font-weight:bold;color:black;">:</span>
+                </td>
+                <td style="padding:5px;">
+                    <input id="anyIDValue" type="text" style="height:30px;width:210px;font-family:ClanOT_Narrow;font-size:14px;float:left;" @Html.Raw(anyID_Data.AnyID.IDType == AnyIDModel.AnyIDType.NATID? " disabled " : "") value="@anyID_Data.AnyID.DisplayIDNo" />
+                    <table id="vanyIDValue" class="page-validate" style="display:none;">
+                        <tr>
+                            <td style="padding:0 5px;">
+                                <span style="font-family:ClanOT_Narrow;font-size:14px;white-space:nowrap;color:white;">กรุณาระบุ : AnyID</span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="padding:0px 3px 0px 0px !important;"></td>
+            </tr>
+            <tr>
+                <td style="padding:0px 3px 0px 0px !important;"></td>
+                <td style="padding:5px;">
+                    <span style="font-weight:bold;color:black;">เลขที่บัญชี</span>
+                    <span style="font-weight:bold;color:red;">*</span>
+                    <span style="font-weight:bold;color:black;">:</span>
+                </td>
+                <td style="padding:5px;">
+                    <select id="accNo" class="page-SelFontEN" style="width:210px;float:left;" disabled onchange="ChangeAccount(this);">
+                        <option value="">-- please select --</option>
+                        @foreach (iSabaya.BankAccount item in account_data)
+                        {
+                            if (item.AccountNo == anyID_Data.BankAccount.AccountNo)
+                            {
+                                @Html.Raw("<option value=\"" + item.AccountNo + ":" + item.Name + "\" selected>" + item.AccountNo + "</option>");
+                            }
+                            else
+                            {
+                                @Html.Raw("<option value=\"" + item.AccountNo + ":" + item.Name + "\">" + item.AccountNo + "</option>");
+                            }
+                        }
+                    </select>
+                    <table id="vaccNo" class="page-validate" style="display:none;">
+                        <tr>
+                            <td style="padding:0 5px;">
+                                <span style="font-family:ClanOT_Narrow;font-size:14px;white-space:nowrap;color:white;">กรุณาระบุ : เลขที่บัญชี</span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="padding:5px;">
+                    <span style="font-weight:bold;color:black;">ชื่อบัญชี:</span>
+                </td>
+                <td style="padding:5px;">
+                    <input id="accName" type="text" style="height:30px;width:210px;font-family:ClanOT_Narrow;font-size:14px;" disabled value="@anyID_Data.BankAccount.Name" />
+                </td>
+                <td style="padding:0px 3px 0px 0px !important;"></td>
+            </tr>
+            <tr>
+                <td style="padding:0px 3px 0px 0px !important;"></td>
+                <td colspan="4">
+                    <table style="width:100%;">
+                        <tr>
+                            <td class="BGKKBlue" style="padding:5px;">
+                                <span style="font-weight:bold;color:white;">เอกสารแนบ</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="padding:5px;">
+                                            <span style=" font-weight:bold;color:black;">ประเภทเอกสาร:</span>
+                                        </td>
+                                        <td style="padding:5px;">
+                                            <select id="docType" class="page-SelFontEN">
+                                                @foreach (string item in CommonUtilities.DocumentType())
+                                                {
+                                                    @Html.Raw("<option value=\"" + item + "\">" + item + "</option>");
+                                                }
+                                            </select>
+                                        </td>
+                                        <td style="padding:5px;">
+                                            <input id="fileUploadButton" type="button" class="ibtn ibtn-primary" value="Browse" style="width:80px;" onclick="var iframe = $('#iUpload').contents(); iframe.find('#fileUpload').click();" />
+                                            <script type="text/javascript">
+                                                function uploadfile() {
+                                                    loading.Show();
+                                                    var iframe = $('#iUpload').contents();
+                                                    iframe.find('#fileDocType').val($("#docType").val());
+                                                    iframe.find('#formUploadFile').submit();
+                                                }
+                                                function uploadComplete(urlAction) {
+                                                    $.ajax({
+                                                        cache: false,
+                                                        type: 'POST',
+                                                        dataType: "json",
+                                                        data: {},
+                                                        url: urlAction,
+                                                        success: function (data) {
+                                                            if (data.responseCode == "000") {
+                                                                var iframe = document.getElementById('iUpload'); iframe.src = iframe.src;
+                                                                AttachmentGrid.UpdateDataGrid(data.html);
+                                                            }
+                                                            else if (data.responseCode == "500") { uploadExpire(); }
+                                                            else {
+                                                                var iframe = document.getElementById('iUpload'); iframe.src = iframe.src;
+                                                                ErrorException999(data.responseCode + ", " + data.responseText + "; " + data.html);
+                                                            }
+                                                        },
+                                                        error: function (e) {
+                                                            alert("Error Exception");
+                                                            console.log(e);
+                                                        }
+                                                    });
+                                                }
+
+                                                function uploadExpire() { window.location.replace('@Url.Content("~/Login")'); }
+                                                function uploadError(s) { var iframe = document.getElementById('iUpload'); iframe.src = iframe.src; alert(s); }
+
+                                                function confirmDelAttachFile(s, filename) {
+                                                    $("#attachFilename").text(filename);
+                                                    $("#attachFileKey").val(s);
+                                                    ConfirmDelAttachFile.Show();
+                                                }
+                                                function deleteAttach(s) {
+                                                    ConfirmDelAttachFile.Hide();
+                                                    loading.Show();
+                                                    $.ajax({
+                                                        cache: false,
+                                                        type: 'POST',
+                                                        dataType: "json",
+                                                        data: { actionRef: s },
+                                                        url: '@Url.Content("~/AmendRegistration/DeleteAttachFile")',
+                                                        success: function (data) {
+                                                            if (data.responseCode == "000") { AttachmentGrid.UpdateDataGrid(data.html); }
+                                                            else if (data.responseCode == "500") { uploadExpire(); }
+                                                            else {
+                                                                ErrorException999(data.responseCode + ", " + data.responseText + "; " + data.html);
+                                                            }
+                                                            loading.Hide();
+                                                        },
+                                                        error: function (e) {
+                                                            alert("Error Exception");
+                                                            console.log(e);
+                                                        }
+                                                    });
+                                                }
+                                            </script>
+                                            <iframe id="iUpload" src="@Url.Content("~/AmendRegistration/_Form")" style="display:none;"></iframe>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.iSabayaDataTable(new iSabayaDataTableSettings()
+                                {
+                                    Name = "AttachmentGrid",
+                                    Url = Url,
+                                    Columns = new List<string>() { "No.", "ชื่อไฟล์", "ประเภทเอกสาร", "ดำเนินการโดย", "วันที่ดำเนินการ", "Action" },
+                                    ColumnDatas = dataRow,
+                                    PageLengthShowingText = "แสดง",
+                                    PageLength = new List<string>() { "15", "25", "50", "100" },
+                                    PageLengthEntriesText = "รายการ",
+                                })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;padding:30px 0;">
+                                <input type="button" class="ibtn ibtn-primary" value="Submit" style="width:80px;" onclick="SendAmend(this, '@Url.Content("~/AmendRegistration/AmendAnyID")');" />
+                                &nbsp;&nbsp;
+                                <input type="button" class="ibtn ibtn-primary" value="Reset" style="width:80px;" onclick="window.location.replace('@Url.Content("~/AmendRegistration?k=" + ViewData["RefSession"])')" />
+                                &nbsp;&nbsp;
+                                <input type="button" id="btnBack" class="ibtn ibtn-primary" value="Back" style="width:80px;" onclick="window.location.replace('@Url.Content("~/ViewRegistration?k=" + ViewData["PrevScreen_Session"])')" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="padding:0px 3px 0px 0px !important;"></td>
+            </tr>
+        </table>
+    </div>
+    <div id="confirmPoint" style="display:none;"></div>
+    @Html.iSabayaPopup(new iSabayaPopupSettings()
+    {
+        Name = "ConfirmDelAttachFile",
+        CloseOnClickOutside = false,
+        Width = "370",
+        TemplateContent = "<table style=\"font-family:ClanOT_Narrow !important;font-size:14px;width:350px;margin:0 auto;\"><tr><td style=\"width:40px;\"><img alt=\"\" style=\"width:40px;\" src=\"" + Url.Content("~/Images/help.png") + "\" /></td><td style=\"padding-left:20px;\"><span style=\"color:black;\">ต้องการลบเอกสารแนบ '<span id=\"attachFilename\"></span>' ใช่หรือไม่?</span><input type=\"hidden\" id=\"attachFileKey\" /></td></tr><tr><td colspan=\"2\" style=\"height:20px;\"></td></tr><tr><td colspan=\"2\" style=\"text-align:center;\"><input type=\"button\" class=\"ibtn ibtn-primary\" style=\"width:80px;\" value=\"OK\" onclick=\"deleteAttach($('#attachFileKey').val());\" />&nbsp;&nbsp;<input type=\"button\" class=\"ibtn ibtn-primary\" style=\"width:80px;\" value=\"Cancel\" onclick=\"ConfirmDelAttachFile.Hide();\" /></td></tr></table>",
+    })
+}

@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 style="text-align:center; margin-top:200px; color:silver; font-size:65px;">Welcome 
+    @(ViewData["User"] == null ? "" : (string)ViewData["User"])
+</h1>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.EmployeeWorkSchedule,iSabaya" table="EmployeeWorkSchedule">
+    <id name="ID" type="Int64" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+
+    <property name="Code" />
+
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+
+    <many-to-one name="Employee" column="EmployeeID" />
+    <property name="Reference" />
+    <property name="Remark" />
+    <many-to-one name="WorkSchedule" column="WorkScheduleID" />
+  </class>
+</hibernate-mapping>
+
+

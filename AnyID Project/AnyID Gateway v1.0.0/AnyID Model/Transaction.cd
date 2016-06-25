@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AnyIDModel.AnyID" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAEAAEAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AnyID.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AnyIDModel.ProxyTransactionState" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AACAEAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProxyTransactionState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AnyIDModel.ProxyTransaction" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QARAAAAMgAIAAhSAAAg0ACIAQAsAAAACCAAABEAAAAA=</HashCode>
+      <FileName>ProxyTransaction.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AccountProxy" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="States" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="AnyIDModel.AmendTransaction" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAACAAAgQAAIAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AmendTransaction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AnyIDModel.DeactivateTransaction" Collapsed="true">
+    <Position X="2.75" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAACAAAgQAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DeactivateTransaction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AnyIDModel.RegisterTransaction" Collapsed="true">
+    <Position X="5" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AACAAAQAAAIAAACAAAgQAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RegisterTransaction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AnyIDModel.AccountProxy" Collapsed="true">
+    <Position X="7.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAUAAFAAAAAgAAAAAIACIAQgAASCAACAAAJAAEgAE=</HashCode>
+      <FileName>AccountProxy.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AnyID" />
+      <Property Name="BankAccount" />
+      <Property Name="Customer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="iSabaya.BankAccount" Collapsed="true">
+    <Position X="10.5" Y="2" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AnyIDModel.Customer" Collapsed="true">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAoAAAAAQEAAwAAACAAAAAAAAoADACAAQAACgAAAAA=</HashCode>
+      <FileName>Customer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

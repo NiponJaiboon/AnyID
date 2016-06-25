@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  <class name="iSabaya.BracketedMoneyRate,iSabaya" table="BracketedMoneyRate" >
+    <!-- Primary key-->
+    <id name="ID" type="Int32" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+
+    <component name="Rate" class="iSabaya.SingleMoneyRate,iSabaya">
+
+      <component name="FixedAmount" class="iSabaya.Money,iSabaya">
+        <property name="Amount" column="FixedRateAmount"/>
+        <property name="CurrencyCode" column="FixedRateCurrencyID" />
+      </component>
+
+      <component name="MaxFixedAmount" class="iSabaya.Money,iSabaya">
+        <property name="Amount" column="MaxFixedRateAmount"/>
+        <property name="CurrencyCode" column="MaxFixedRateCurrencyID" />
+      </component>
+
+      <component name="MinFixedAmount" class="iSabaya.Money,iSabaya">
+        <property name="Amount" column="MinFixedRateAmount"/>
+        <property name="CurrencyCode" column="MinFixedRateCurrencyID" />
+      </component>
+
+      <property name="MaxPercentageRate" />
+      <property name="MinPercentageRate" />
+      <property name="PercentageRate" />
+
+    </component>
+
+    <many-to-one name="Schedule" column="MoneyRateScheduleID" class="iSabaya.MoneyRateSchedule,iSabaya" />
+    <property name="SeqNo" />
+    <component name="LowerBound" class="iSabaya.Money,iSabaya">
+      <property name="Amount" column="LowerBoundAmount"/>
+      <property name="CurrencyCode" column="LowerBoundCurrencyID" />
+    </component>
+    <component name="UpperBound" class="iSabaya.Money,iSabaya">
+      <property name="Amount" column="UpperBoundAmount"/>
+      <property name="CurrencyCode" column="UpperBoundCurrencyID" />
+    </component>
+  </class>
+
+</hibernate-mapping>

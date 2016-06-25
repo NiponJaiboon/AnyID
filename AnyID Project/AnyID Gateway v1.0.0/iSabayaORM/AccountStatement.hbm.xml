@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.AccountStatement,iSabaya" table="AccountStatement">
+
+    <!-- Primary key-->
+    <id name="ID" type="Int64" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+
+    <many-to-one name="Account" class="iSabaya.BankAccount,iSabaya" column="BankAccountID" />
+    <property name="AccountNo" />
+    <property name="Amount" />
+    <property name="BranchCode" />
+    <property name="ChequeNo" />
+    <property name="CreditDebitCode" />
+    <property name="Description" />
+    <property name="LedgerBalance" />
+    <property name="PostedTS" />
+    <property name="ReferenceNo" />
+    <property name="SequenceNo" />
+    <property name="TransactionCode" />
+    <property name="TransactionDate" />
+    <property name="TransactionNo" />
+
+  </class>
+</hibernate-mapping>

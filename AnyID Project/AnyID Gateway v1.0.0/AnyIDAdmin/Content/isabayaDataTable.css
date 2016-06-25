@@ -1,0 +1,27 @@
+﻿.dataTables_wrapper select {
+    width: auto;
+}
+
+.cus_paginate {
+    font-family: ClanOT_Narrow;
+    font-size: 12px;
+    height: 25px;
+    color: black;
+}
+
+    .cus_paginate option {
+        font-family: ClanOT_Narrow;
+        font-size: 12px;
+    }
+
+.cus_paginatelength {
+    font-family: ClanOT_Narrow;
+    font-size: 12px;
+    height: 25px;
+    color: black;
+}
+
+    .cus_paginatelength option {
+        font-family: ClanOT_Narrow;
+        font-size: 12px;
+    }

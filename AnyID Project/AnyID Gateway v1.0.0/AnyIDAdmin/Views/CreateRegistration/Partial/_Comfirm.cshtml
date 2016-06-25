@@ -1,0 +1,166 @@
+﻿@using AnyIDAdmin.Models
+@{
+    string languageCode = ViewData["LanguageCode"] == null ? "th-TH" : ViewData["LanguageCode"].ToString();
+
+    AnyIDModel.AccountProxy data = (ViewData["CreateAnyID"] == null ? null : (AnyIDModel.AccountProxy)ViewData["CreateAnyID"]);
+    List<AnyIDModel.TransactionDocument> dataFile = (ViewData["FileData"] == null ? null : (List<AnyIDModel.TransactionDocument>)ViewData["FileData"]);
+    string OTPRef = (ViewData["OTPRef"] == null ? "" : ViewData["OTPRef"].ToString());
+}
+<table class="page-borderGray" style="font-family:ClanOT_Narrow !important;width:100%;font-size:14px;margin-top:30px;border-width:2px;">
+    <tr>
+        <td style="padding:0px 3px 0px 0px !important;"></td>
+        <td colspan="4" style="padding:0px 0px 4px 0px !important;"></td>
+        <td style="padding:0px 3px 0px 0px !important;"></td>
+    </tr>
+    <tr>
+        <td style="padding:0px 3px 0px 0px !important;"></td>
+        <td colspan="4" class="BGKKBlue" style="height:30px;padding:0px 5px;"><span style="font-weight:bold;color:white;">ลงทะเบียน AnyID</span></td>
+        <td style="padding:0px 3px 0px 0px !important;"></td>
+    </tr>
+    <tr class="page-cell">
+        <td style="padding:0px 3px 0px 0px !important;"></td>
+        <td><span style="font-weight:bold;color:black;">Registration ID:</span></td>
+        <td><span style="color:black;">@data.RegistrationID</span></td>
+        <td><span style="font-weight:bold;color:black;">วันที่ดำเนินการ:</span></td>
+        <td><span style="color:black;">@CommonUtilities.GetUserActionTimestampText(data.CreateAction)</span></td>
+        <td style="padding:0px 3px 0px 0px !important;"></td>
+    </tr>
+    <tr class="page-cell">
+        <td style="padding:0px 3px 0px 0px !important;"></td>
+        <td><span style="font-weight:bold;color:black;">ดำเนินการโดย:</span></td>
+        <td><span style="color:black;">@CommonUtilities.GetUserActionNameText(data.CreateAction)</span></td>
+        <td><span style="font-weight:bold;color:black;">สาขา:</span></td>
+        <td><span style="color:black;">@CommonUtilities.Branch(new Dictionary<string, string>())[data.RegisteringBranch]</span></td>
+        <td style="padding:0px 3px 0px 0px !important;"></td>
+    </tr>
+    <tr class="page-cell">
+        <td style="padding:0px 3px 0px 0px !important;"></td>
+        <td><span style="font-weight:bold;color:black;">ประเภท AnyID:</span></td>
+        <td><span style="color:black;">@CommonUtilities.AnyIDType(new Dictionary<string, string>())[data.AnyID.IDType.ToString()]</span></td>
+        <td><span style="font-weight:bold;color:black;">AnyID:</span></td>
+        <td><span style="color:black;">@data.AnyID.DisplayIDNo</span></td>
+        <td style="padding:0px 3px 0px 0px !important;"></td>
+    </tr>
+    <tr class="page-cell">
+        <td style="padding:0px 3px 0px 0px !important;"></td>
+        <td><span style="font-weight:bold;color:black;">เลขที่บัญชี:</span></td>
+        <td><span style="color:black;">@data.BankAccount.AccountNo</span></td>
+        <td><span style="font-weight:bold;color:black;">ชื่อบัญชี:</span></td>
+        <td><span style="color:black;">@data.BankAccount.Name</span></td>
+        <td style="padding:0px 3px 0px 0px !important;"></td>
+    </tr>
+    <tr>
+        <td style="padding:0px 3px 0px 0px !important;"></td>
+        <td colspan="4">
+            <table style="width:100%;">
+                <tr class="page-cell">
+                    <td class="BGKKBlue">
+                        <span style="font-weight:bold;color:white;">เอกสารแนบ</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="ConfirmAttachmentGrid_data">
+                            <table id="ConfirmAttachmentGrid" class="display fontClanOT_Narrow" style="font-size:14px;width:99%;margin:1px auto 0px auto;">
+                                <thead class="BGKKBlue" style="color:white;">
+                                    <tr>
+                                        <th class="tableHeaderLabel">No.</th>
+                                        <th class="tableHeaderLabel">ชื่อไฟล์</th>
+                                        <th class="tableHeaderLabel">ประเภทเอกสาร</th>
+                                        <th class="tableHeaderLabel">ดำเนินการโดย</th>
+                                        <th class="tableHeaderLabel">วันที่ดำเนินการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (dataFile != null)
+                                    {
+                                        int i = 0;
+                                        foreach (AnyIDModel.TransactionDocument item in dataFile)
+                                        {
+                                            if (item != null)
+                                            {
+                                                <tr>
+                                                    <td class="text-center">@Html.Raw(++i)</td>
+                                                    <td>@item.DocumentFileName</td>
+                                                    <td>@item.DocumentType</td>
+                                                    <td>@CommonUtilities.GetUserActionNameText(item.UploadAction)</td>
+                                                    <td class="text-center">@CommonUtilities.GetUserActionTimestampText(item.UploadAction)</td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="ConfirmAttachmentGrid_footerT">
+                            <table id="ConfirmAttachmentGrid_footer" class="BGKKBlue fontclanot_narrow" style="width:99%;font-size:14px;color:white;margin:0px auto 10px auto;">
+                                <tr>
+                                    <td id="ConfirmAttachmentGrid_footer_col1" style="width:50%; padding:5px;"></td>
+                                    <td style="width:50%; padding:5px;">
+                                        <table style="margin-left:auto;">
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td><img alt="" id="ConfirmAttachmentGrid_cus_paginatePrev" style="margin-right:10px; cursor:default;" src="@Url.Content("~/Images/iconcontrol/arrow-left-dis.png")" onclick="" /></td>
+                                                            <td><select id="ConfirmAttachmentGrid_cus_paginate" class="cus_paginate" onchange="ConfirmAttachmentGrid.GotoPage(this.value)"><option value="1">1</option></select></td>
+                                                            <td><img alt="" id="ConfirmAttachmentGrid_cus_paginateNext" style="margin-left:10px; cursor:default;" src="@Url.Content("~/Images/iconcontrol/arrow-right-dis.png")" onclick="" /></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td><span style="margin-right:5px;">แสดง</span></td>
+                                                            <td>
+                                                                <select id="ConfirmAttachmentGrid_cus_paginatelength" onchange="ConfirmAttachmentGrid.ChangePageLength(this.value)" class="cus_paginatelength">
+                                                                    <option value="15">15</option>
+                                                                    <option value="25">25</option>
+                                                                    <option value="50">50</option>
+                                                                    <option value="100">100</option>
+                                                                </select>
+                                                            </td>
+                                                            <td><span style="margin-left:5px;">รายการ</span></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                @if (data != null)
+                {
+                    if (data.AnyID.IDType == AnyIDModel.AnyIDType.MSISDN)
+                    {
+                        <tr>
+                            <td>
+                                <table class="page-borderGray" style="width:700px;border-width:2px;margin:30px auto;">
+                                    <tr class="page-cell">
+                                        <td style="width:15%"><span style="font-weight:bold;color:black;">Ref:</span></td>
+                                        <td style="width:20%"><span id="otpRef" style="color:black;">@OTPRef</span></td>
+                                        <td style="width:15%"><span style="font-weight:bold;color:black;">OTP:</span></td>
+                                        <td style="width:30%"><input type="text" id="otpConfirm" style="width:100%;height:28px;font-family:ClanOT_Narrow;font-size:14px;" /></td>
+                                        <td style="width:20%"><input type="button" class="ibtn ibtn-primary" value="Request OTP" style="width:100px;" onclick="Re_OTP('@Url.Content("~/CreateRegistration/RequestOTP")');" /></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    }
+                }
+                <tr>
+                    <td style="text-align:center;padding:30px 0;">
+                        <input type="button" class="ibtn ibtn-primary" value="Confirm" style="width:80px;" onclick="SendConfirm('@Url.Content("~/CreateRegistration/ConfirmAnyID")');" />
+                        &nbsp;&nbsp;
+                        <input type="button" class="ibtn ibtn-primary" value="Back" style="width:80px;" onclick="loading.Show(); setTimeout(function () { ChangeViewPoint(''); loading.Hide(); }, 800);" />
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td style="padding:0px 3px 0px 0px !important;"></td>
+    </tr>
+</table>

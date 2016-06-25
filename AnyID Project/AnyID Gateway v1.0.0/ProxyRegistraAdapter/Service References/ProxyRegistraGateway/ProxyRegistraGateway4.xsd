@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" />
+  <xs:import schemaLocation="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:element name="Register">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="header" nillable="true" type="q1:Header" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="accountProxy" nillable="true" type="q2:AccountProxy" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegisterResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="RegisterResult" nillable="true" type="q3:Response" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="header" nillable="true" type="q4:Header" />
+        <xs:element minOccurs="0" name="registrationID" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Amend">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="header" nillable="true" type="q5:Header" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="accountProxy" nillable="true" type="q6:AccountProxy" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AmendResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="AmendResult" nillable="true" type="q7:Response" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="header" nillable="true" type="q8:Header" />
+        <xs:element minOccurs="0" name="registrationID" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeactivateByAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="header" nillable="true" type="q9:Header" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="account" nillable="true" type="q10:BankAccount" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeactivateByAccountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="DeactivateByAccountResult" nillable="true" type="q11:Response" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="header" nillable="true" type="q12:Header" />
+        <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="registrationIDs" nillable="true" type="q13:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeactivateByAccountNo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="header" nillable="true" type="q14:Header" />
+        <xs:element minOccurs="0" name="accountNo" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeactivateByAccountNoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="DeactivateByAccountNoResult" nillable="true" type="q15:Response" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="header" nillable="true" type="q16:Header" />
+        <xs:element xmlns:q17="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="registrationIDs" nillable="true" type="q17:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeactivateByRegistrationID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="header" nillable="true" type="q18:Header" />
+        <xs:element minOccurs="0" name="registrationID" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeactivateByRegistrationIDResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="DeactivateByRegistrationIDResult" nillable="true" type="q19:Response" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="header" nillable="true" type="q20:Header" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeactivateByAnyID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="header" nillable="true" type="q21:Header" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="anyID" nillable="true" type="q22:AnyID" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeactivateByAnyIDResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="DeactivateByAnyIDResult" nillable="true" type="q23:Response" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" minOccurs="0" name="header" nillable="true" type="q24:Header" />
+        <xs:element minOccurs="0" name="registrationID" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

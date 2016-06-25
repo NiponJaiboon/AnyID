@@ -1,0 +1,447 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{65F46FF5-7C03-46B0-95D1-7C07828A0E1D}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AnyIDAdmin</RootNamespace>
+    <AssemblyName>AnyIDAdmin</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UpgradeBackupLocation />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet">
+      <HintPath>..\packages\DotNetOpenAuth.AspNet.4.1.4.12333\lib\net45-full\DotNetOpenAuth.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core">
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.1.4.12333\lib\net45-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\packages\iTextSharp.5.5.8\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ExternalAssemblies\Microsoft.ReportViewer.WebForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebPages.OAuth, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.OAuth.3.2.3\lib\net45\Microsoft.Web.WebPages.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.4.0.4.4000\lib\net40\NHibernate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\DataTables-1.10.11\images\sort_asc.png" />
+    <Content Include="Content\DataTables-1.10.11\images\sort_both.png" />
+    <Content Include="Content\DataTables-1.10.11\images\sort_desc.png" />
+    <Content Include="Content\datatables.min.css" />
+    <Content Include="Content\fonts\flaticon.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\isabayaDataTable.css" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery.dataTables.css" />
+    <Content Include="Content\multi-select.css" />
+    <Content Include="Content\page-usermanage.css" />
+    <Content Include="Content\isabayaCalendar.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\style.layout.css" />
+    <Content Include="Content\stylescustom.css" />
+    <Content Include="Content\weblayout.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\fonts\ClanOT-NarrowNews.eot" />
+    <Content Include="Content\fonts\ClanOT-NarrowNews.ttf" />
+    <Content Include="Content\fonts\Cordia-New.eot" />
+    <Content Include="Content\fonts\Cordia-New.ttf" />
+    <Content Include="Content\fonts\flaticon.eot" />
+    <Content Include="Content\fonts\flaticon.ttf" />
+    <Content Include="Content\fonts\flaticon.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\Quark-Bold.eot" />
+    <Content Include="Content\fonts\Quark-Bold.otf" />
+    <Content Include="Content\fonts\Quark-Bold.ttf" />
+    <Content Include="Content\fonts\Quark-Light.eot" />
+    <Content Include="Content\fonts\Quark-Light.otf" />
+    <Content Include="Content\fonts\Quark-Light.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <None Include="Properties\PublishProfiles\AnyIDAdmin.pubxml" />
+    <Content Include="errormaxfilesize.html" />
+    <Content Include="hometest.html" />
+    <Content Include="Images\icon\calendar.gif" />
+    <Content Include="ReportTemplates\Detail_Report_By_Branch_Template.xlsx" />
+    <Content Include="ReportTemplates\Detail_Report_By_Customer_Template.xlsx" />
+    <Content Include="ReportTemplates\Transaction_Summary_Report_Template.xlsx" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Images\add.png" />
+    <Content Include="Images\collapse.png" />
+    <Content Include="Images\expand.png" />
+    <Content Include="Images\help.png" />
+    <Content Include="Images\ico-side-accordion-down.png" />
+    <Content Include="Images\ico-side-accordion-up.png" />
+    <Content Include="Images\ico-side-close.png" />
+    <Content Include="Images\ico-side-open.png" />
+    <Content Include="Images\iconcontrol\arrow-buttom-dis.png" />
+    <Content Include="Images\iconcontrol\arrow-buttom.png" />
+    <Content Include="Images\iconcontrol\arrow-left-dis.png" />
+    <Content Include="Images\iconcontrol\arrow-right-dis.png" />
+    <Content Include="Images\iconcontrol\arrow-right.png" />
+    <Content Include="Images\iconcontrol\arrow-top-dis.png" />
+    <Content Include="Images\iconcontrol\arrow-top.png" />
+    <Content Include="Images\iconcontrol\calendar.png" />
+    <Content Include="Images\icon\accept.png" />
+    <Content Include="Images\icon\accept_dis.png" />
+    <Content Include="Images\icon\cross.png" />
+    <Content Include="Images\iconcontrol\arrow-left.png" />
+    <Content Include="Images\icon\doc.png" />
+    <Content Include="Images\icon\excel.png" />
+    <Content Include="Images\icon\favicon.ico" />
+    <Content Include="Images\icon\key.png" />
+    <Content Include="Images\icon\lock.png" />
+    <Content Include="Images\icon\modal.png" />
+    <Content Include="Images\icon\pdf.png" />
+    <Content Include="Images\icon\ppt.png" />
+    <Content Include="Images\icon\search.png" />
+    <Content Include="Images\icon\submenu.png" />
+    <Content Include="Images\icon\submenulast.png" />
+    <Content Include="Images\icon\trash.png" />
+    <Content Include="Images\icon\uncheck.png" />
+    <Content Include="Images\icon\user.png" />
+    <Content Include="Images\icon\user_access.png" />
+    <Content Include="Images\icon\user_access_dis.png" />
+    <Content Include="Images\icon\user_lock.png" />
+    <Content Include="Images\icon\user_lock_dis.png" />
+    <Content Include="Images\icon\user_privilege.png" />
+    <Content Include="Images\icon\user_terminate.png" />
+    <Content Include="Images\icon\user_terminate_dis.png" />
+    <Content Include="Images\icon\word.png" />
+    <Content Include="Images\infomation.png" />
+    <Content Include="Images\loadingicon.gif" />
+    <Content Include="Images\logo-kk-white.png" />
+    <Content Include="Images\logout.png" />
+    <Content Include="Images\icon\menuarrow.png" />
+    <Content Include="Images\logoSite.png" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\datatables.min.js" />
+    <Content Include="Scripts\isabayaPopup.js" />
+    <Content Include="Scripts\isabayaDataTable.js" />
+    <Content Include="Scripts\isabayaCalendar.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.blockUI.js" />
+    <Content Include="Scripts\jquery.form.js" />
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout_Anonymus.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\SearchCustomer\Index.cshtml" />
+    <Content Include="Views\SearchCustomer\Partial\InquiryCustProfileMain.cshtml" />
+    <Content Include="Views\ViewCustomer\Index.cshtml" />
+    <Content Include="Views\CreateRegistration\Index.cshtml" />
+    <Content Include="Views\CreateRegistration\Partial\_AttachmentGridPartial.cshtml" />
+    <Content Include="Views\CreateRegistration\Partial\_Form.cshtml" />
+    <Content Include="Views\CreateRegistration\Partial\_Comfirm.cshtml" />
+    <Content Include="Views\MyWork\Index.cshtml" />
+    <Content Include="Views\MyWork\Partial\_TransactionGridPartial.cshtml" />
+    <Content Include="Views\ApproveRegistration\Index.cshtml" />
+    <Content Include="Views\ViewRegistration\Index.cshtml" />
+    <Content Include="Views\History\Index.cshtml" />
+    <Content Include="Views\History\Partial\_AnyIDGridPartial.cshtml" />
+    <Content Include="Views\ViewHistory\Index.cshtml" />
+    <Content Include="Views\AmendRegistration\Index.cshtml" />
+    <Content Include="Views\AmendRegistration\Partial\_AttachmentGridPartial.cshtml" />
+    <Content Include="Views\AmendRegistration\Partial\_Comfirm.cshtml" />
+    <Content Include="Views\AmendRegistration\Partial\_Form.cshtml" />
+    <Content Include="Views\DeactivateRegistration\Index.cshtml" />
+    <Content Include="Views\DeactivateRegistration\Partial\_AttachmentGridPartial.cshtml" />
+    <Content Include="Views\DeactivateRegistration\Partial\_Comfirm.cshtml" />
+    <Content Include="Views\DeactivateRegistration\Partial\_Form.cshtml" />
+    <Content Include="Views\TransactionSummaryReport\Index.cshtml" />
+    <Content Include="Views\TransactionSummaryReport\Partial\_TransactioSummaryReportGrid.cshtml" />
+    <Content Include="Views\DetailReportByBranch\Index.cshtml" />
+    <Content Include="Views\DetailReportByBranch\Partial\_TransactioReportGrid.cshtml" />
+    <Content Include="Views\DetailReportByCustomer\Index.cshtml" />
+    <Content Include="Views\DetailReportByCustomer\Partial\_TransactioReportGrid.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AmendRegistrationController.cs" />
+    <Compile Include="Controllers\ApproveRegistrationController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CreateRegistrationController.cs" />
+    <Compile Include="Controllers\DeactivateRegistrationController.cs" />
+    <Compile Include="Controllers\DetailReportByBranchController.cs" />
+    <Compile Include="Controllers\DetailReportByCustomerController.cs" />
+    <Compile Include="Controllers\HistoryController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MyWorkController.cs" />
+    <Compile Include="Controllers\SearchCustomerController.cs" />
+    <Compile Include="Controllers\TransactionSummaryReportController.cs" />
+    <Compile Include="Controllers\ViewCustomerController.cs" />
+    <Compile Include="Controllers\ViewHistoryController.cs" />
+    <Compile Include="Controllers\ViewRegistrationController.cs" />
+    <Compile Include="ExcelUtil\ExcelCreator.cs" />
+    <Compile Include="Models\ViewConstant.cs" />
+    <Compile Include="Models\ValidationRules.cs" />
+    <Compile Include="Models\CustomControlSetting\iSabayaDataTableSettings.cs" />
+    <Compile Include="Models\CustomControlSetting\iSabayaCalendarSettings.cs" />
+    <Compile Include="Models\CustomControlSetting\iSabayaPopupSettings.cs" />
+    <Compile Include="Models\CommonUtilities.cs" />
+    <Compile Include="Models\ResourceManagerExtensions.cs" />
+    <Compile Include="Models\HtmlHelperExtension.cs" />
+    <Compile Include="Models\CustomControlSetting\isbayCalendar.cs" />
+    <Compile Include="Models\PrivilegeMenu.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SessionTimeoutFilterAttribute.cs" />
+    <Compile Include="Models\ViewModels\Report\DetailReportByBranchModel.cs" />
+    <Compile Include="Models\ViewModels\Report\DetailReportByCustomerModel.cs" />
+    <Compile Include="Models\ViewModels\Report\TransactionSummaryReportModel.cs" />
+    <Compile Include="Models\ViewModels\ViewModels.cs" />
+    <Compile Include="Models\WebSessionContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AnyID Model\AnyID Model.csproj">
+      <Project>{91b0277d-51a1-4cca-b888-856197c846b1}</Project>
+      <Name>AnyID Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AnyIDModelORM\AnyIDModelORM.csproj">
+      <Project>{fedf8147-601c-43a3-9105-de10a945908b}</Project>
+      <Name>AnyIDModelORM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iSabayaConfig\iSabayaConfig.csproj">
+      <Project>{e4e75898-cb9f-44de-ac2a-39692f41c13a}</Project>
+      <Name>iSabayaConfig</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iSabayaORM\iSabayaORM.csproj">
+      <Project>{f8965a6d-6c8c-4cba-9dbf-85459f9e61b2}</Project>
+      <Name>iSabayaORM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iSabaya\iSabaya.csproj">
+      <Project>{d168c3f8-e236-4bbe-8de4-86b05b12594f}</Project>
+      <Name>iSabaya</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ITMXConnector\ITMXConnector.csproj">
+      <Project>{5afdedd3-8fe2-4b6e-9aa2-6846a2df10fd}</Project>
+      <Name>ITMXConnector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kiatnakin Services\Kiatnakin Services.csproj">
+      <Project>{d99b69cc-413e-437b-885e-df02fb30a4a0}</Project>
+      <Name>Kiatnakin Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProxyRegistraAdapter\ProxyRegistraAdapter.csproj">
+      <Project>{d3dda941-a50b-4aec-a1be-0c1dd2d91846}</Project>
+      <Name>ProxyRegistraAdapter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ResourceLanguages\ResourceLanguages.csproj">
+      <Project>{b5bf5c04-eedc-418e-ae11-7d63639fadfe}</Project>
+      <Name>ResourceLanguages</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>50086</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:50086/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="AnyIDModel">
+  <class name="AnyIDModel.TransactionDocument" table="TB_T_Transaction_Document" >
+
+    <id name="ID" column="PK_Transaction_Document" type="Int64" unsaved-value="0" >
+      <generator class="native"/>
+    </id>
+
+    <component name="UploadAction" >
+      <many-to-one name="ByUser" column="FK_User" />
+      <property name="Timestamp" column="Uploaded_TS" type="datetime2" />
+    </component>
+    <property name="DocumentContent" column="Document_Content" type="BinaryBlob"/>
+    <property name="DocumentFileName" column="Document_File_Name" />
+    <property name="DocumentType" column="Document_Type" />
+    <property name="DocumentFormat" column="Document_Format" />
+    
+    <many-to-one name="Transaction" column="FK_Proxy_Transaction" fetch="join" />
+
+  </class>
+</hibernate-mapping>

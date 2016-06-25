@@ -1,0 +1,247 @@
+﻿@using AnyIDAdmin.Models
+@{
+    string languageCode = ViewData["LanguageCode"] == null ? "th-TH" : ViewData["LanguageCode"].ToString();
+    ViewBag.Title = "Detail Report By Customer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@if (ViewData["ExceptionOnLoad"] != null)
+{<span style="font-family:ClanOT_Narrow;font-size:14px;color:red;">@Html.Raw(ViewData["ExceptionOnLoad"].ToString())</span>}
+else if (ViewData["InsufficientPrivilege"] != null)
+{
+    @section PageHead{
+        <script type="text/javascript">
+            $(document).ready(function () {
+                window.location.replace('@Url.Content("~/Login")');
+            });
+        </script>
+    }
+}
+else
+{
+    @section PageHead {
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/datatables.min.css")">
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/isabayaDataTable.css")">
+        <script type="text/javascript" src="@Url.Content("~/Scripts/datatables.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/isabayaDataTable.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui.js")"></script>
+        <style type="text/css">
+            .page-option14 option {
+                font-family: ClanOT_Narrow;
+                font-size: 14px;
+            }
+
+            .page-lableTH {
+                font-weight: bold;
+                font-size: 15px;
+                vertical-align: middle;
+            }
+
+            .page-tablepadding {
+            }
+
+                .page-tablepadding td {
+                    padding: 5px;
+                }
+
+                .page-tablepadding input {
+                    font-family: ClanOT_Narrow;
+                    font-size: 14px;
+                    height: 28px;
+                }
+        </style>
+    }
+    <table style="width:100%;font-family:ClanOT_Narrow;">
+        <tr>
+            <td class="BGKKGray" style="border-style:solid;border-color:white;border-width:2px 0px 2px 0px;height:30px;">
+                &nbsp;<span class="page-lableTH" style="color:black;">Detail Report By Customer</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="BGKKBlue" style="height:30px;">
+                &nbsp;<span class="page-lableTH" style="color:white;">เงื่อนไขการค้นหา</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:3px 0;">
+                <table class="page-tablepadding" style="width:100%;padding:5px;border-style: inset;border-color: gray;border-width: medium;">
+                    <tr>
+                        <td>
+                            <span class="labelTH">From Date:</span>
+                        </td>
+                        <td>
+                            <input id="operationDateFrom" readonly class="iDatepicker">
+                        </td>
+                        <td>
+                            <span class="labelTH">To Date:</span>
+                        </td>
+                        <td>
+                            <input id="operationDateTo" readonly class="iDatepicker">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="labelTH">ประเภทบัตร</span>
+                            <span class="labelTH" style="color:red;">*</span>
+                            <span class="labelTH">:</span>
+                        </td>
+                        <td>
+                            <select id="cardType" class="page-option14" style="width:220px;border:1px solid #a9a9a9;float:left;">
+                                <option value="">-- ALL --</option>
+                                <option value="I">ID Card</option>
+                            </select>
+                            <table id="vcardType" class="validate" style="display:none;margin-left:230px;">
+                                <tr>
+                                    <td style="padding:0 5px;">
+                                        <span style="font-family:ClanOT_Narrow;font-size:14px;white-space:nowrap;color:white;">กรุณาระบุ : ประเภทบัตร</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <span class="labelTH">เลขที่บัตร</span>
+                            <span class="labelTH" style="color:red;">*</span>
+                            <span class="labelTH">:</span>
+                        </td>
+                        <td>
+                            <input id="cardNo" style="font-family:ClanOT_Narrow !important;font-size:14px !important;width:200px;float:left;" />
+                            <table id="vcardNo" class="validate" style="display:none;margin-left:210px;">
+                                <tr>
+                                    <td style="padding:0 5px;">
+                                        <span style="font-family:ClanOT_Narrow;font-size:14px;white-space:nowrap;color:white;">กรุณาระบุ : เลขที่บัตร</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table class="fontClanOT_Narrow" style="width:100%; margin-top:5px;">
+        <tr>
+            <td>
+                <div class="grp-btn-center">
+                    <input type="button" class="ibtn ibtn-primary" style="width:80px;" value="Search" onclick="search(this);" />
+                    &nbsp;&nbsp;
+                    <input type="button" class="ibtn ibtn-primary" style="width:80px;" value="Reset" onclick="window.location.replace('@Url.Content("~/DetailReportByCustomer")')" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table style="font-family:ClanOT_Narrow;width:100%;margin-top:20px;">
+        <tr class="BGKKGray">
+            <td style="height:30px; padding:0 5px;">
+                &nbsp;<span class="page-lableTH" style="color:black;">ผลการค้นหา</span>
+            </td>
+            <td style="height:30px; padding:5px 10px 5px 0px; text-align:right;">
+                @if (ViewData["CanExport"] != null)
+                {
+                    <div class="ibtn ibtn-primary" style="display:table-cell;float:right;"  onclick="exportExcel()">
+                        &nbsp;<img alt="" style="width:20px;" src="@Url.Content("~/Images/icon/excel.png")" />
+                        <span>Export Excel</span>&nbsp;
+                    </div>
+                }
+            </td>
+        </tr>
+    </table>
+    @Html.iSabayaDataTable(new iSabayaDataTableSettings()
+    {
+        Name = "TransactioReportGrid",
+        Url = Url,
+        Columns = new List<string>() { "No.", "ประเภทบัตร", "เลขที่บัตร", "ชื่อ-นามสกุล", "AnyID Type", "AnyID", "เลขที่บัญชี", "ชื่อบัญชี", "ดำเนินการโดย", "วันที่ดำเนินการ", "Action", "อนุมัติโดย", "วันที่อนุมัติ", "ผลการอนุมัติ", "Status" },
+        PageLength = new List<string>() { "15", "25", "50", "100" },
+        PageLengthShowingText = "แสดง",
+        PageLengthEntriesText = "รายการ"
+    })
+
+    <script type="text/javascript">
+        var LoG = { EmptyTableText: "ไม่มีข้อมูล", InfoText: "จำนวนรายการที่พบ _TOTAL_ รายการ แสดงผลหน้าที่ _PAGE_ จาก _PAGES_", InfoEmptyText: "จำนวนรายการที่พบ 0 รายการ แสดงผลหน้าที่ 1 จาก 1" };
+        $(document).ready(function () {
+            TransactioReportGrid.Initial(LoG);
+            TransactioReportGrid.ChangePageLength(15);
+            InitDatepicker("operationDateFrom", new Date(), "@Url.Content("~/Images/icon/calendar.gif")");
+            InitDatepicker("operationDateTo", new Date(), "@Url.Content("~/Images/icon/calendar.gif")");
+        });
+
+        function Expired() { window.location.replace('@Url.Content("~/Login")'); }
+        function InitDatepicker(s, initDate, urlImg) {
+            $("#" + s).datepicker({
+                showButtonPanel: true,
+                showOn: "button",
+                buttonImage: urlImg,
+                buttonImageOnly: true,
+                buttonText: "",
+                dateFormat: "dd/mm/yy",
+            });
+            $("#" + s).datepicker("setDate", initDate);
+        }
+        function GetiSabayaDateFromDatepicker(s) {
+            var iDatepicker = $("#" + s).datepicker("getDate");
+            if (iDatepicker == null) { return ""; }
+            else {
+                var date = iDatepicker.getDate().toString();
+                var month = (iDatepicker.getMonth() + 1).toString();
+                var year = iDatepicker.getFullYear().toString();
+                while (date.length < 2) { date = "0" + date; }
+                while (month.length < 2) { month = "0" + month; }
+                while (year.length < 4) { year = "0" + year; }
+                return year + month + date
+            }
+        }
+
+        function search(sender) {
+            clearAllValidate(["cardType", "cardNo"]);
+            if ($("#cardType").val() == "") { displayValidate("cardType", true);}
+            if ($("#cardNo").val() == "") { displayValidate("cardNo", true); }
+            if ($("#cardType").val() == "" || $("#cardNo").val() == "") { return; }
+            if (OutOfLimitDateLength($("#operationDateFrom").datepicker("getDate"), $("#operationDateTo").datepicker("getDate"), 30)) { return; }
+            if (IsDateToLessthanDateFrom($("#operationDateFrom").datepicker("getDate"), $("#operationDateTo").datepicker("getDate"), "คุณเลือกวันที่ไม่ถูกต้อง From Date จะต้องมีค่าน้อยกว่าsหรือเท่ากับ To Date เท่านั้น")) { return; }
+
+            this.disabled = true;
+            loading.Show();
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    dateFrom: GetiSabayaDateFromDatepicker("operationDateFrom"),
+                    dateTo: GetiSabayaDateFromDatepicker("operationDateTo"),
+                    cardType: $("#cardType").val(),
+                    cardNo: $("#cardNo").val()
+                },
+                url: '@Url.Action("Search", "DetailReportByCustomer")',
+                success: function (data) {
+                    if (data.responseCode == "000") {
+                        TransactioReportGrid.UpdateDataGrid(data.html);
+                        sender.disabled = false;
+                        loading.Hide();
+                    }
+                    else if (data.responseCode == "500") { Expired(); }
+                    else {
+                        ErrorException999(data.responseCode + ", " + data.responseText + ";" + data.html);
+                        sender.disabled = false;
+                        loading.Hide();
+                    }
+                },
+                error: function (e) {
+                    alert("Error Exception");
+                    console.log(e);
+                }
+            });
+        }
+
+        function exportExcel() {
+            window.location.href = "@Url.Action("ExportExcel", "DetailReportByCustomer")"
+                + "?reportDateFrom=" + $("#reportDateFrom").val()
+                + "&reportDateTo=" + $("#reportDateTo").val()
+                + "&reportIDType=" + $("#reportIDType").val()
+                + "&reportIDNo=" + $("#reportIDNo").val()
+                + "&reportCISID=" + $("#reportCISID").val()
+                + "&reportCustomerName=" + $("#reportCustomerName").val();
+        }
+    </script>
+}
+
+

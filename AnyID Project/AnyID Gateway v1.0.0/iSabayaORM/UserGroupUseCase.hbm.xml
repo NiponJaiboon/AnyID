@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="iSabaya">
+  <class name="iSabaya.UserGroupUseCase" table="UserGroupUseCase" >
+
+    <id name="ID" column="ID" type="Int64" unsaved-value="0" >
+      <generator class="native"/>
+    </id>
+
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+    <property name="Reference" />
+    <property name="Remark" />
+    <many-to-one name="UseCase" column="UseCaseID"/>
+    <many-to-one name="UserGroup" column="UserGroupID"/>
+
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,15 @@
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Release\AnyIDModel.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Release\AnyIDModel.pdb
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Release\Iesi.Collections.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Release\iSabaya.Config.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Release\iSabaya.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Release\log4net.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Release\NHibernate.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Release\iSabaya.Config.pdb
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Release\iSabaya.pdb
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Release\Iesi.Collections.xml
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Release\log4net.xml
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Release\NHibernate.xml
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\obj\Release\AnyID Model.csprojResolveAssemblyReference.cache
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\obj\Release\AnyIDModel.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\obj\Release\AnyIDModel.pdb

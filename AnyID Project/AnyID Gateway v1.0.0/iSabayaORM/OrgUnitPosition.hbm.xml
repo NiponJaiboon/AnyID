@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  <class name="iSabaya.OrgUnitPosition,iSabaya" table="OrgUnitPosition">
+    <id name="ID" type="Int64" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+
+    <many-to-one name="OrgUnit" column="OrgUnitID" />
+    <many-to-one name="Position" column="PositionID" />
+    <many-to-one name="CategoryRoot" column="CategoryRootNodeID" />
+    <many-to-one name="Category" column="CategoryNodeID" />
+    <!--<component name="CurrentSalary" >
+      <property name="Amount" column="CurrentSalary" />
+      <property name="CurrencyCode" column="CurrentSalaryCurrencyCode" />
+    </component>-->
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+    <property name="Reference" />
+    <property name="Remark" />
+  </class>
+</hibernate-mapping>
+
+

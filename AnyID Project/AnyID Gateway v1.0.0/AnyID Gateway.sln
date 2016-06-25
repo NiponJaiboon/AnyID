@@ -1,0 +1,201 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSabaya", "iSabaya\iSabaya.csproj", "{D168C3F8-E236-4BBE-8DE4-86B05B12594F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyID Model", "AnyID Model\AnyID Model.csproj", "{91B0277D-51A1-4CCA-B888-856197C846B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyIDModelORM", "AnyIDModelORM\AnyIDModelORM.csproj", "{FEDF8147-601C-43A3-9105-DE10A945908B}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "AnyID", "AnyID\AnyID.sqlproj", "{B999450C-8C7B-4F19-827A-5C4887D42C26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSabayaORM", "iSabayaORM\iSabayaORM.csproj", "{F8965A6D-6C8C-4CBA-9DBF-85459F9E61B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSabayaConfig", "iSabayaConfig\iSabayaConfig.csproj", "{E4E75898-CB9F-44DE-AC2A-39692F41C13A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITMXConnector", "ITMXConnector\ITMXConnector.csproj", "{5AFDEDD3-8FE2-4B6E-9AA2-6846A2DF10FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceLanguages", "ResourceLanguages\ResourceLanguages.csproj", "{B5BF5C04-EEDC-418E-AE11-7D63639FADFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyIDAdmin", "AnyIDAdmin\AnyIDAdmin.csproj", "{65F46FF5-7C03-46B0-95D1-7C07828A0E1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kiatnakin Services", "Kiatnakin Services\Kiatnakin Services.csproj", "{D99B69CC-413E-437B-885E-DF02FB30A4A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test AnyID Model", "TestAnyIDModel\Test AnyID Model.csproj", "{DA147A5D-ACDB-47D4-8D99-106F0D93D6CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGenOTP", "GenOTPAppTest\TestGenOTP.csproj", "{DC939B02-0CB8-4A77-BF8C-E7ADDE22A656}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResponseImporter", "ResponseImporter\ResponseImporter.csproj", "{95C92806-8C2E-4859-8666-DE8417112345}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionExporter", "TransactionExporter\TransactionExporter.csproj", "{D6009E98-71C0-43DF-B075-CABBE0948DDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITMXTester", "ITMXTester\ITMXTester.csproj", "{CFC833C9-DDD1-4E54-9E0E-5CADF2334E0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProxyRegistraAdapter", "ProxyRegistraAdapter\ProxyRegistraAdapter.csproj", "{D3DDA941-A50B-4AEC-A1BE-0C1DD2D91846}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DD3B205A-48B2-477C-BC76-C24CEA158FE8} = {DD3B205A-48B2-477C-BC76-C24CEA158FE8}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProxyRegistraGateway", "ProxyRegistraGateway\ProxyRegistraGateway.csproj", "{DD3B205A-48B2-477C-BC76-C24CEA158FE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test ProxyRegistraGateway", "Test ProxyRegistraGateway\Test ProxyRegistraGateway.csproj", "{82C795AC-E460-4C0E-B1E8-BFA50DC0C9F3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DD3B205A-48B2-477C-BC76-C24CEA158FE8} = {DD3B205A-48B2-477C-BC76-C24CEA158FE8}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyIDInterface", "AnyIDInterface\AnyIDInterface.csproj", "{10D0CC3A-F423-41DB-809E-C99C07EE535E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D168C3F8-E236-4BBE-8DE4-86B05B12594F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D168C3F8-E236-4BBE-8DE4-86B05B12594F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D168C3F8-E236-4BBE-8DE4-86B05B12594F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D168C3F8-E236-4BBE-8DE4-86B05B12594F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91B0277D-51A1-4CCA-B888-856197C846B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91B0277D-51A1-4CCA-B888-856197C846B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91B0277D-51A1-4CCA-B888-856197C846B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91B0277D-51A1-4CCA-B888-856197C846B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEDF8147-601C-43A3-9105-DE10A945908B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEDF8147-601C-43A3-9105-DE10A945908B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEDF8147-601C-43A3-9105-DE10A945908B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEDF8147-601C-43A3-9105-DE10A945908B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B999450C-8C7B-4F19-827A-5C4887D42C26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B999450C-8C7B-4F19-827A-5C4887D42C26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B999450C-8C7B-4F19-827A-5C4887D42C26}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B999450C-8C7B-4F19-827A-5C4887D42C26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B999450C-8C7B-4F19-827A-5C4887D42C26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B999450C-8C7B-4F19-827A-5C4887D42C26}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F8965A6D-6C8C-4CBA-9DBF-85459F9E61B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8965A6D-6C8C-4CBA-9DBF-85459F9E61B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8965A6D-6C8C-4CBA-9DBF-85459F9E61B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8965A6D-6C8C-4CBA-9DBF-85459F9E61B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4E75898-CB9F-44DE-AC2A-39692F41C13A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4E75898-CB9F-44DE-AC2A-39692F41C13A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4E75898-CB9F-44DE-AC2A-39692F41C13A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4E75898-CB9F-44DE-AC2A-39692F41C13A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AFDEDD3-8FE2-4B6E-9AA2-6846A2DF10FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AFDEDD3-8FE2-4B6E-9AA2-6846A2DF10FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AFDEDD3-8FE2-4B6E-9AA2-6846A2DF10FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AFDEDD3-8FE2-4B6E-9AA2-6846A2DF10FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5BF5C04-EEDC-418E-AE11-7D63639FADFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5BF5C04-EEDC-418E-AE11-7D63639FADFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5BF5C04-EEDC-418E-AE11-7D63639FADFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5BF5C04-EEDC-418E-AE11-7D63639FADFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65F46FF5-7C03-46B0-95D1-7C07828A0E1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65F46FF5-7C03-46B0-95D1-7C07828A0E1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65F46FF5-7C03-46B0-95D1-7C07828A0E1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65F46FF5-7C03-46B0-95D1-7C07828A0E1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D99B69CC-413E-437B-885E-DF02FB30A4A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D99B69CC-413E-437B-885E-DF02FB30A4A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D99B69CC-413E-437B-885E-DF02FB30A4A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D99B69CC-413E-437B-885E-DF02FB30A4A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA147A5D-ACDB-47D4-8D99-106F0D93D6CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA147A5D-ACDB-47D4-8D99-106F0D93D6CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA147A5D-ACDB-47D4-8D99-106F0D93D6CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA147A5D-ACDB-47D4-8D99-106F0D93D6CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC939B02-0CB8-4A77-BF8C-E7ADDE22A656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC939B02-0CB8-4A77-BF8C-E7ADDE22A656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC939B02-0CB8-4A77-BF8C-E7ADDE22A656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC939B02-0CB8-4A77-BF8C-E7ADDE22A656}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95C92806-8C2E-4859-8666-DE8417112345}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95C92806-8C2E-4859-8666-DE8417112345}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95C92806-8C2E-4859-8666-DE8417112345}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95C92806-8C2E-4859-8666-DE8417112345}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6009E98-71C0-43DF-B075-CABBE0948DDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6009E98-71C0-43DF-B075-CABBE0948DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6009E98-71C0-43DF-B075-CABBE0948DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6009E98-71C0-43DF-B075-CABBE0948DDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFC833C9-DDD1-4E54-9E0E-5CADF2334E0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFC833C9-DDD1-4E54-9E0E-5CADF2334E0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFC833C9-DDD1-4E54-9E0E-5CADF2334E0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFC833C9-DDD1-4E54-9E0E-5CADF2334E0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3DDA941-A50B-4AEC-A1BE-0C1DD2D91846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3DDA941-A50B-4AEC-A1BE-0C1DD2D91846}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3DDA941-A50B-4AEC-A1BE-0C1DD2D91846}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3DDA941-A50B-4AEC-A1BE-0C1DD2D91846}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD3B205A-48B2-477C-BC76-C24CEA158FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD3B205A-48B2-477C-BC76-C24CEA158FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD3B205A-48B2-477C-BC76-C24CEA158FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD3B205A-48B2-477C-BC76-C24CEA158FE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82C795AC-E460-4C0E-B1E8-BFA50DC0C9F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82C795AC-E460-4C0E-B1E8-BFA50DC0C9F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82C795AC-E460-4C0E-B1E8-BFA50DC0C9F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82C795AC-E460-4C0E-B1E8-BFA50DC0C9F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10D0CC3A-F423-41DB-809E-C99C07EE535E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10D0CC3A-F423-41DB-809E-C99C07EE535E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10D0CC3A-F423-41DB-809E-C99C07EE535E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10D0CC3A-F423-41DB-809E-C99C07EE535E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 20
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://supoj:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = iSabaya\\iSabaya.csproj
+		SccProjectName1 = iSabaya
+		SccLocalPath1 = iSabaya
+		SccProjectUniqueName2 = iSabayaORM\\iSabayaORM.csproj
+		SccProjectName2 = iSabayaORM
+		SccLocalPath2 = iSabayaORM
+		SccProjectUniqueName3 = iSabayaConfig\\iSabayaConfig.csproj
+		SccProjectName3 = iSabayaConfig
+		SccLocalPath3 = iSabayaConfig
+		SccProjectUniqueName4 = ResourceLanguages\\ResourceLanguages.csproj
+		SccProjectName4 = ResourceLanguages
+		SccLocalPath4 = ResourceLanguages
+		SccProjectUniqueName5 = AnyIDAdmin\\AnyIDAdmin.csproj
+		SccProjectName5 = AnyIDAdmin
+		SccLocalPath5 = AnyIDAdmin
+		SccProjectUniqueName6 = AnyID\u0020Model\\AnyID\u0020Model.csproj
+		SccProjectName6 = AnyID\u0020Model
+		SccLocalPath6 = AnyID\u0020Model
+		SccProjectUniqueName7 = AnyID\\AnyID.sqlproj
+		SccProjectName7 = AnyID
+		SccLocalPath7 = AnyID
+		SccProjectUniqueName8 = AnyIDModelORM\\AnyIDModelORM.csproj
+		SccProjectName8 = AnyIDModelORM
+		SccLocalPath8 = AnyIDModelORM
+		SccProjectUniqueName9 = ITMXConnector\\ITMXConnector.csproj
+		SccProjectName9 = ITMXConnector
+		SccLocalPath9 = ITMXConnector
+		SccProjectUniqueName10 = Kiatnakin\u0020Services\\Kiatnakin\u0020Services.csproj
+		SccProjectName10 = Kiatnakin\u0020Services
+		SccLocalPath10 = Kiatnakin\u0020Services
+		SccProjectUniqueName11 = TestAnyIDModel\\Test\u0020AnyID\u0020Model.csproj
+		SccProjectName11 = TestAnyIDModel
+		SccLocalPath11 = TestAnyIDModel
+		SccProjectUniqueName12 = ResponseImporter\\ResponseImporter.csproj
+		SccProjectName12 = ResponseImporter
+		SccLocalPath12 = ResponseImporter
+		SccProjectUniqueName13 = TransactionExporter\\TransactionExporter.csproj
+		SccProjectName13 = TransactionExporter
+		SccLocalPath13 = TransactionExporter
+		SccProjectUniqueName14 = ITMXTester\\ITMXTester.csproj
+		SccProjectName14 = ITMXTester
+		SccLocalPath14 = ITMXTester
+		SccProjectUniqueName15 = ProxyRegistraAdapter\\ProxyRegistraAdapter.csproj
+		SccProjectName15 = ProxyRegistraAdapter
+		SccLocalPath15 = ProxyRegistraAdapter
+		SccProjectUniqueName16 = ProxyRegistraGateway\\ProxyRegistraGateway.csproj
+		SccProjectName16 = ProxyRegistraGateway
+		SccLocalPath16 = ProxyRegistraGateway
+		SccProjectUniqueName17 = GenOTPAppTest\\TestGenOTP.csproj
+		SccProjectName17 = GenOTPAppTest
+		SccLocalPath17 = GenOTPAppTest
+		SccProjectUniqueName18 = Test\u0020ProxyRegistraGateway\\Test\u0020ProxyRegistraGateway.csproj
+		SccProjectName18 = Test\u0020ProxyRegistraGateway
+		SccLocalPath18 = Test\u0020ProxyRegistraGateway
+		SccProjectUniqueName19 = AnyIDInterface\\AnyIDInterface.csproj
+		SccProjectName19 = AnyIDInterface
+		SccLocalPath19 = AnyIDInterface
+	EndGlobalSection
+EndGlobal

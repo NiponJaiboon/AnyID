@@ -1,0 +1,5 @@
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyIDModelORM\bin\Release\AnyIDModel.ORM.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyIDModelORM\bin\Release\AnyIDModel.ORM.pdb
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyIDModelORM\obj\Release\AnyIDModelORM.csprojResolveAssemblyReference.cache
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyIDModelORM\obj\Release\AnyIDModel.ORM.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyIDModelORM\obj\Release\AnyIDModel.ORM.pdb

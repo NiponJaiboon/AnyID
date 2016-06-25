@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.ChequeBatchItem,iSabaya" table="ChequeBatchItem" >
+    <id name="ChequeBatchItemID" column="ChequeBatchItemID" type="Int32" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+    <property name="ChequeNo" column="ChequeNo" type="String"  not-null="true" />
+    <many-to-one name="ChequeBatch" column="ChequeBatchID" class="iSabaya.ChequeBatch,iSabaya" />
+    <!--<many-to-one name="Cheque" column="ChequeID" class="iSabaya.Cheque,iSabaya" outer-join="false"/>-->
+  </class>
+
+</hibernate-mapping>
+
+

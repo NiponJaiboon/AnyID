@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c056ab31-2531-445d-a2c9-92d9c8dbd33b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ProxyRegistraGateway.xsd" MetadataType="Schema" ID="67b850ef-0748-4b7a-9b96-181efee1b3b3" SourceId="1" SourceUrl="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?xsd=xsd4" />
+    <MetadataFile FileName="ProxyRegistraGateway1.xsd" MetadataType="Schema" ID="231bb985-55e8-4566-937b-99b6d7aefdce" SourceId="1" SourceUrl="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?xsd=xsd0" />
+    <MetadataFile FileName="ProxyRegistraGateway2.xsd" MetadataType="Schema" ID="9b8a1dec-2480-4eab-aac5-c48b569a26b7" SourceId="1" SourceUrl="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?xsd=xsd1" />
+    <MetadataFile FileName="ProxyRegistraGateway3.xsd" MetadataType="Schema" ID="d439dd30-af90-4fd8-ac18-9a023c88c17b" SourceId="1" SourceUrl="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?xsd=xsd5" />
+    <MetadataFile FileName="ProxyRegistraGateway4.xsd" MetadataType="Schema" ID="554cdbdf-f4ba-43b1-96ee-151ea572ce62" SourceId="1" SourceUrl="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?xsd=xsd3" />
+    <MetadataFile FileName="ProxyRegistraGateway5.xsd" MetadataType="Schema" ID="153def73-6e3c-41b6-8b3d-d5bcf4cab417" SourceId="1" SourceUrl="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?xsd=xsd2" />
+    <MetadataFile FileName="ProxyRegistraGateway.wsdl" MetadataType="Wsdl" ID="e1c0c272-7b36-4c18-b83a-a088f718e1b2" SourceId="1" SourceUrl="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?wsdl" />
+    <MetadataFile FileName="ProxyRegistraGateway.disco" MetadataType="Disco" ID="7e7386f8-e242-4af6-b6bc-ebad9a421c07" SourceId="1" SourceUrl="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

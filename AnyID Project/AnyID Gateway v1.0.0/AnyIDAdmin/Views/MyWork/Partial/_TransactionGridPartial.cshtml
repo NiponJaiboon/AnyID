@@ -1,0 +1,59 @@
+﻿@{
+    string langCode = (ViewData["LanguageCode"] == null ? "th-TH" : ViewData["LanguageCode"].ToString());
+
+    IList<AnyIDModel.ProxyTransaction> data = (ViewData["Data"] == null ? null : (IList<AnyIDModel.ProxyTransaction>)ViewData["Data"]);
+    Dictionary<string, AnyIDModel.Customer> cust_dataDict = (ViewData["Cust_Data"] == null ? null : (Dictionary<string, AnyIDModel.Customer>)ViewData["Cust_Data"]);
+
+    string daTacolumns = "";
+    if (data != null)
+    {
+        Dictionary<string, string> cardTypeDict = CommonUtilities.CardType(new Dictionary<string, string>());
+        Dictionary<string, string> anyIDTypeDict = CommonUtilities.AnyIDType(new Dictionary<string, string>());
+        Dictionary<string, string> registrationStatusDict = CommonUtilities.RegistrationStatus(new Dictionary<string, string>());
+        for (int i = 0; i < data.Count; i++)
+        {
+            string fullName = cust_dataDict[data[i].CISID].FullNameThai;
+            daTacolumns = daTacolumns + "<tr><td class=\"text-center\">" + (i + 1).ToString() + "</td>";
+            daTacolumns = daTacolumns + "<td>" + data[i].AccountProxy.CISID + "</td>";
+            daTacolumns = daTacolumns + "<td>" + cardTypeDict[(cust_dataDict[data[i].CISID]).IDType.ToString()] + "</td>";
+            daTacolumns = daTacolumns + "<td>" + (cust_dataDict[data[i].CISID]).IDNo + "</td>";
+            daTacolumns = daTacolumns + "<td class=\"nowrap\">" + fullName + "</td>";
+            daTacolumns = daTacolumns + "<td>" + anyIDTypeDict[data[i].AccountProxy.AnyID.IDType.ToString()] + "</td>";
+            daTacolumns = daTacolumns + "<td>" + data[i].AccountProxy.AnyID.DisplayIDNo + "</td>";
+            daTacolumns = daTacolumns + "<td>" + data[i].AccountProxy.RegistrationID + "</td>";
+            daTacolumns = daTacolumns + "<td class=\"text-center nowrap\" >" + CommonUtilities.GetUserActionTimestampText(data[i].CreateAction) + "</td>";
+            if (data[i] is AnyIDModel.RegisterTransaction) { daTacolumns = daTacolumns + "<td>Create</td>"; }
+            else if (data[i] is AnyIDModel.AmendTransaction) { daTacolumns = daTacolumns + "<td>Amend</td>"; }
+            else if (data[i] is AnyIDModel.DeactivateTransaction) { daTacolumns = daTacolumns + "<td>Deactivate</td>"; }
+            else { daTacolumns = daTacolumns + "<td>N/A</td>"; }
+            daTacolumns = daTacolumns + "<td>" + data[i].AccountProxy.KKRequiredStateDescription + "</td>";
+            if (ViewData["IsMaker"] != null)
+            {
+                daTacolumns = daTacolumns + "<td class=\"text-center\"><img alt=\"\" class=\"imgIcon\" src=\"" + Url.Content("~/Images/icon/search.png") + "\" onclick=\"GoViewResgister('" + data[i].ID + "', '" + data[i].AccountProxy.CISID + "')\" /></td></tr>";
+            }
+            else
+            {
+                daTacolumns = daTacolumns + "<td class=\"text-center\"><img alt=\"\" class=\"imgIcon\" src=\"" + Url.Content("~/Images/icon/search.png") + "\" onclick=\"GoApprove('" + data[i].ID + "', '" + data[i].AccountProxy.CISID + "')\" /></td></tr>";
+            }
+        }
+    }
+}
+<table id="MyWorkGrid" class="display fontClanOT_Narrow" style="font-size:14px; width:99%; margin:1px auto 0px auto;">
+    <thead class="BGKKBlue" style="color:white;">
+        <tr>
+            <th class="tableHeaderLabel">No.</th>
+            <th class="tableHeaderLabel">CIS ID</th>
+            <th class="tableHeaderLabel">ประเภทบัตร</th>
+            <th class="tableHeaderLabel">เลขที่บัตร</th>
+            <th class="tableHeaderLabel">ชื่อ-นามสกุล (ไทย)</th>
+            <th class="tableHeaderLabel">ประเภท AnyID</th>
+            <th class="tableHeaderLabel">AnyID</th>
+            <th class="tableHeaderLabel">Registration ID</th>
+            <th class="tableHeaderLabel">วันที่ดำเนินการ</th>
+            <th class="tableHeaderLabel">Action</th>
+            <th class="tableHeaderLabel">Registration Status</th>
+            <th class="tableHeaderLabel">Detail</th>
+        </tr>
+    </thead>
+    <tbody>@Html.Raw(daTacolumns)</tbody>
+</table>

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  <class name="iSabaya.PersonOrgRelation,iSabaya" table="PersonOrgRelation" discriminator-value="0">
+    <id name="ID" type="Int64" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+    
+    <discriminator column="Discriminator" type="byte" />
+
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+    <many-to-one name="Person" column="PersonID" />
+
+    <property name="Reference" />
+    <property name="Remark" />
+
+    <subclass name="iSabaya.Employee,iSabaya" discriminator-value="10" >
+      <property name="EmployeeNo" />
+      <many-to-one name="Employer" column="OrgID" class="iSabaya.Organization,iSabaya" />
+      <many-to-one name="PersonnelClassification" column="PersonnelClassificationNodeID" />
+      <many-to-one name="StartingPosition" column="StartingPositionID" class="iSabaya.OrgUnitPosition,iSabaya"/>
+      <property name="ProbationEndDate" type="datetime2" />
+      <property name="RetirementDate" type="datetime2" />
+      <property name="WorkStoppageDays" />
+
+      <bag name="WorkSchedules" lazy="true" cascade="delete" 
+          collection-type="iSabaya.PersistentListType`3[
+	          [iSabaya.EmployeeWorkSchedule,iSabaya], 
+	          [iSabaya.TemporalList`1[iSabaya.EmployeeWorkSchedule, iSabaya], iSabaya], 
+	          [iSabaya.PersistentTemporalList`1[iSabaya.EmployeeWorkSchedule, iSabaya], iSabaya]], iSabaya">
+        <key column="PartyID"/>
+        <one-to-many class="iSabaya.EmployeeWorkSchedule, iSabaya"/>
+      </bag>
+
+    </subclass>
+
+    <subclass name="iSabaya.Staff,iSabaya" discriminator-value="15" >
+      <many-to-one name="AppointCategory" column="AppointCategoryNodeID" />
+      <many-to-one name="DismissCategory" column="DismissCategoryNodeID" />
+      <many-to-one name="OrgUnit" column="OrgUnitID" class="iSabaya.OrgUnit,iSabaya" />
+    </subclass>
+  </class>
+</hibernate-mapping>
+
+

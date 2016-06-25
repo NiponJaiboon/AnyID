@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  <class name="iSabaya.OrgName,iSabaya" table="OrgName">
+    <id name="ID" type="Int64" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+
+    <any name="Owner" meta-type="byte" id-type="Int64" >
+      <meta-value value="10" class="iSabaya.Organization,iSabaya"/>
+      <meta-value value="15" class="iSabaya.OrgUnit,iSabaya"/>
+      <!--<meta-value value="20" class="iSabaya.Person,iSabaya"/>-->
+      <!--<meta-value value="30" class="imSabaya.MutualFund,imSabaya"/>-->
+      <!--<meta-value value="35" class="imSabaya.ProvidentFund,imSabaya"/>-->
+      <!--<meta-value value="50" class="imSabaya.MutualFundSystem.MFAccount,imSabaya"/>
+      <meta-value value="60" class="imSabaya.ProvidentFundSystem.Member,imSabaya"/>-->
+      <column name="OwnerDiscriminator"/>
+      <column name="OwnerID"/>
+    </any>
+    <property name="Code" />
+    <many-to-one name="Name" column="NameMLSID" class="iSabaya.MultilingualString,iSabaya" cascade="save-update" />
+    <many-to-one name="ShortName" column="ShortNameMLSID" class="iSabaya.MultilingualString,iSabaya" cascade="save-update"/>
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+    <!--<property name="OrderedDate" />-->
+    <property name="Reference" />
+    <property name="Remark" />
+    <!--<property name="UpdatedTS" />-->
+    <!--<many-to-one name="UpdatedBy" column="UpdatedBy" class="iSabaya.User,iSabaya"  not-null="false" />-->
+  </class>
+</hibernate-mapping>
+
+

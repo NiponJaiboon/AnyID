@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  <class name="iSabaya.DurationRateSchedule,iSabaya" table="DurationRateSchedule" >
+    <!-- Primary key-->
+    <id name="ID" type="Int32" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+    <bag name="Brackets" table="BracketedDurationRate">
+      <key column="DurationRateScheduleID"/>
+      <one-to-many class="iSabaya.BracketedDurationRate,iSabaya" />
+    </bag>
+    <property name="Code" />
+    <property name="Description" />
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2" />
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+    <property name="LowerBoundIsInclusive" />
+    <!--<property name="RateType" type="iSabaya.RateType,iSabaya" />-->
+    <property name="Reference" />
+    <property name="Remark" />
+    <many-to-one name="Title" column="TitleMLSID" class="iSabaya.MultilingualString,iSabaya" />
+    <!--<property name="UpdatedTS" />-->
+    <!--<many-to-one name="UpdatedBy" class="iSabaya.User,iSabaya" fetch="join" />-->
+  </class>
+
+</hibernate-mapping>
+
+

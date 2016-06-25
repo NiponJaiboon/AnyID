@@ -1,0 +1,5 @@
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\iSabayaORM\bin\Release\iSabaya.ORM.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\iSabayaORM\bin\Release\iSabaya.ORM.pdb
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\iSabayaORM\obj\Release\iSabayaORM.csprojResolveAssemblyReference.cache
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\iSabayaORM\obj\Release\iSabaya.ORM.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\iSabayaORM\obj\Release\iSabaya.ORM.pdb

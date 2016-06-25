@@ -1,0 +1,305 @@
+﻿@using AnyIDAdmin.Models
+@{
+    string languageCode = ViewData["LanguageCode"] == null ? "th-TH" : ViewData["LanguageCode"].ToString();
+    ViewBag.Title = "Search Customer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewData["InsufficientPrivilege"] != null)
+{
+    @section PageHead{
+        <script>
+            window.onload = function () {
+                window.location.replace('@Url.Content("~/Login")');
+            }
+        </script>
+    }
+}
+else
+{
+    @section PageHead {
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/datatables.min.css")">
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/isabayaDataTable.css")">
+        <script type="text/javascript" src="@Url.Content("~/Scripts/datatables.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/isabayaDataTable.js")"></script>
+        <style type="text/css">
+            .page-selectEN {
+                font-family:ClanOT_Narrow;
+                font-size:14px;
+                height:30px;
+            }
+
+                .page-selectEN option{
+                    font-family:ClanOT_Narrow;
+                    font-size:14px;
+                }
+
+            .page-lableTH {
+                font-weight:bold;
+                font-size:15px;
+                vertical-align:middle;
+            }
+
+            .page-tablepadding {
+            }
+
+                .page-tablepadding td {
+                    padding: 5px;
+                }
+
+                .page-tablepadding input {
+                    font-family: ClanOT_Narrow;
+                    font-size:14px;
+                    height:28px;
+                }
+
+            .page-cellCenter {
+                text-align: center;
+            }
+        </style>
+        <script type="text/javascript">
+            var LoG = { EmptyTableText: "ไม่มีข้อมูล", InfoText: "จำนวนรายการที่พบ _TOTAL_ รายการ แสดงผลหน้าที่ _PAGE_ จาก _PAGES_", InfoEmptyText: "จำนวนรายการที่พบ 0 รายการ แสดงผลหน้าที่ 1 จาก 1" };
+            $(document).ready(function () {
+                example.Initial(LoG);
+                example.ChangePageLength(15);
+            });
+
+
+            function GetData(sender) {
+                clearAllValidate(["cardType", "cardNo"]);
+                if ($("#cardNo").val() != "" && $("#cardType").val() == "") {
+                    displayValidate("cardType", true);
+                    sender.disabled = false;
+                }
+                else if ($("#cardType").val() != "" && $("#cardNo").val() == "") {
+                    displayValidate("cardNo", true);
+                    sender.disabled = false;
+                }
+                else if ($("#cardNo").val() == "" && $("#cardType").val() == "" && $("#fnameTH").val() == "" && $("#lnameTH").val() == "") {
+                    alert("กรุณาระบุเงื่อนไขในการค้นหา");
+                    sender.disabled = false;
+                }
+                else {
+                    document.getElementById("cardType").style.border = "1px solid #a9a9a9";
+                    loading.Show();
+                    GetPartialData(sender, 1, 0);
+                    @*loading.Show();
+                    $.ajax({
+                        cache: false,
+                        type: 'GET',
+                        dataType: "json",
+                        data: {
+                            target: "example",
+                            cardType: $("#cardType").val(),
+                            cardNo: $("#cardNo").val(),
+                            fnameTH: $("#fnameTH").val(),
+                            lnameTH: $("#lnameTH").val(),
+                        },
+                        url: '@Url.Content("~/SearchCustomer/GetCustomer")',
+                        success: function (data) {
+                            if (data.responseCode == "500") { window.location.replace('@Url.Content("~/Login")'); }
+                            else {
+                                if (data.responseCode == "000") {
+                                    loading.Hide();
+                                    example.UpdateDataGrid(data.html);
+                                    sender.disabled = false;
+                                }
+                                else if (data.responseCode == "001") { document.getElementById("cardType").style.border = "1px solid red"; }
+                                else if (data.responseCode == "") { alert(data.responseText); }
+                                else { ErrorException999(data.responseCode + ", " + data.responseText + ";" + data.html); }
+                                loading.Hide();
+                                sender.disabled = false;
+                            }
+                        },
+                        error: function (e) {
+                            loading.Hide();
+                            alert("Error Exception");
+                            console.log(e);
+                            sender.disabled = false;
+                        }
+                    });*@
+                }
+            }
+
+            var exampleDataRows;
+            function finnishData(sender)
+            {
+                example.Destroy();
+                $("#example tbody").remove();
+                $('#example').append(exampleDataRows);
+                example = new isabayaDataTable('example', '/AnyID/Images/iconcontrol/');
+                example.Initial(LoG);
+                example.ChangePageLength(15);
+                sender.disabled = false;
+                loading.Hide();
+            }
+            function GetPartialData(sender, rPage, rRunning)
+            {
+                sender.disabled = true;
+                $.ajax({
+                    cache: false,
+                    type: 'GET',
+                    dataType: "json",
+                    data: {
+                        target: "example",
+                        cardType: $("#cardType").val(),
+                        cardNo: $("#cardNo").val(),
+                        fnameTH: $("#fnameTH").val(),
+                        lnameTH: $("#lnameTH").val(),
+                        page: rPage,
+                        running: rRunning
+                    },
+                    url: '@Url.Content("~/SearchCustomer/GetCustomerPartail")',
+                    success: function (data) {
+                        if (data.responseCode == "500") { window.location.replace('@Url.Content("~/Login")'); }
+                        else {
+                            if (data.responseCode == "000") {
+                                if (data.table.totalPage == 0) {
+                                    exampleDataRows = "";
+                                    finnishData(sender);
+                                }
+                                else if (data.table.currentPage == data.table.totalPage) {
+                                    if (data.table.currentPage == 1) { exampleDataRows = ""; }
+                                    exampleDataRows = exampleDataRows + data.table.rows
+                                    finnishData(sender);
+                                }
+                                else {
+                                    if (data.table.currentPage == 1) { exampleDataRows = ""; }
+                                    exampleDataRows = exampleDataRows + data.table.rows
+                                    GetPartialData(sender, rPage + 1, data.table.endrunning);
+                                }
+                            }
+                            else if (data.responseCode == "001") { document.getElementById("cardType").style.border = "1px solid red"; finnishData(sender); }
+                            else if (data.responseCode == "") { alert(data.responseText); finnishData(sender); }
+                            else { ErrorException999(data.responseCode + ", " + data.responseText + ";" + data.html); finnishData(sender); }
+                        }
+                    },
+                    error: function (e) {
+                        loading.Hide();
+                        alert("Error Exception");
+                        console.log(e);
+                    }
+                });
+            }
+
+            function GoToViewCust(sender) {
+                loading.Show();
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    dataType: "json",
+                    data: { referance: sender },
+                    url: '@Url.Content("~/SearchCustomer/GotoViewCustomer")',
+                    success: function (data) {
+                        if (data.responseCode == "000") { window.location.replace(data.url); }
+                        else if (data.responseCode == "500") { window.location.replace('@Url.Content("~/Login")'); }
+                        else {
+                            loading.Hide();
+                            ErrorException999(data.responseCode + ", " + data.responseText);
+                        }
+                    },
+                    error: function (e) {
+                        loading.Hide();
+                        alert("Error Exception");
+                        console.log(e);
+                    }
+                });
+            }
+        </script>
+    }
+    <table style="width:100%;font-family:ClanOT_Narrow;">
+        <tr>
+            <td class="BGKKGray" style="border-style:solid;border-color:white;border-width:2px 0px 2px 0px;height:30px;">
+                &nbsp;<span class="page-lableTH" style="color:black;">ค้นหาข้อมูลลูกค้าเพื่อการสมัคร AnyID</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="BGKKBlue" style="height:30px;">
+                &nbsp;<span class="page-lableTH" style="color:white;">เงื่อนไขการค้นหา</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:3px 0;">
+                <table class="page-tablepadding" style="width:100%;padding:5px;border-style: inset;border-color: gray;border-width: medium;">
+                    <tr>
+                        <td>
+                            <span class="labelTH">ประเภทบัตร:</span>
+                        </td>
+                        <td>
+                            <select id="cardType" class="page-selectEN" style="border:1px solid #a9a9a9;width:220px;float:left;">
+                                <option value="">-- All --</option>
+                                <option value="I">ID Card</option>
+                            </select>
+                            <table id="vcardType" class="validate" style="margin-left:230px;display:none;">
+                                <tr>
+                                    <td style="padding:0 5px;">
+                                        <span style="font-family:ClanOT_Narrow;font-size:14px;white-space:nowrap;color:white;">กรุณาเลือกประเภทบัตร</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <span class="labelTH">เลขที่บัตร:</span>
+                        </td>
+                        <td>
+                            <input id="cardNo" style="padding:0 5px;width:250px;border:1px solid #a9a9a9; float:left;" />
+                            <table id="vcardNo" class="validate" style="margin-left:255px;display:none;">
+                                <tr>
+                                    <td style="padding:0 5px;">
+                                        <span style="font-family:ClanOT_Narrow;font-size:14px;white-space:nowrap;color:white;">กรุณาระบุเลขที่บัตร</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="labelTH">ชื่อ (ไทย):</span>
+                        </td>
+                        <td>
+                            <input id="fnameTH" style="padding:0 5px;width:250px;border:1px solid #a9a9a9;" />
+                        </td>
+                        <td>
+                            <span class="labelTH">นามสกุล (ไทย):</span>
+                        </td>
+                        <td>
+                            <input id="lnameTH" style="padding:0 5px;width:250px;border:1px solid #a9a9a9;" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table class="fontClanOT_Narrow" style="width:100%; margin-top:5px;">
+        <tr>
+            <td>
+                <div class="grp-btn-center">
+                    <input type="button" class="ibtn ibtn-primary" style="width:80px;" value="Search" onclick="this.disabled = true; GetData(this);" />
+                    &nbsp;&nbsp;
+                    <input type="button" class="ibtn ibtn-primary" style="width:80px;" value="Reset" onclick="window.location.replace('@Url.Content("~/SearchCustomer")')" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table style="font-family:ClanOT_Narrow;width:100%;margin-top:20px;">
+        <tr>
+            <td class="BGKKBlue" style="height:30px;">
+                &nbsp;<span class="page-lableTH" style="color:white;">ผลการค้นหา</span>
+            </td>
+        </tr>
+    </table>
+    @Html.iSabayaDataTable(new iSabayaDataTableSettings()
+    {
+        Name = "example",
+        Url = Url,
+        Columns = new List<string>() { "No.", "CIS ID", "ประเภทบัตร", "เลขที่บัตร", "ชื่อ-นามสกุล (ไทย)", "Name-Surname (Eng)", "ประเภทลูกค้า", "Action" },
+        PageLength = new List<string>() { "15", "25", "50", "100" },
+        PageLengthShowingText = "แสดง",
+        PageLengthEntriesText = "รายการ"
+    })
+    @Html.iSabayaPopup(new iSabayaPopupSettings()
+    {
+        Name = "PopupAlert",
+        CloseOnClickOutside = true,
+    })
+}

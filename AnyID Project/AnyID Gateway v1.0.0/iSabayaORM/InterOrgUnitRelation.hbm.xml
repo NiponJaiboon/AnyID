@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.InterOrgUnitRelation,iSabaya" table="InterOrgUnitRelation" abstract="1" discriminator-value="0">
+    <id name="ID" type="Int64" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+    <discriminator column="Discriminator" type="byte" />
+    <many-to-one name="Category" column="CategoryNodeID" />
+    <many-to-one name="CategoryRoot" column="CategoryRootNodeID" />
+    <property name="Code" />
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+    <property name="Level" />
+    <property name="Reference" />
+    <property name="Remark" />
+    <property name="RelationshipNo" />
+    <property name="SeqNo" />
+
+    <subclass name="iSabaya.Subunit,iSabaya" discriminator-value="10" >
+      <many-to-one name="ParentUnit" column="PrimaryOrgUnitID" class="iSabaya.OrgUnit,iSabaya" />
+      <many-to-one name="ChildUnit" column="SecondaryOrgUnitID" class="iSabaya.OrgUnit,iSabaya" />
+    </subclass>
+    <!--<property name="UpdatedTS" type="datetime2" />-->
+    <!--<many-to-one name="UpdatedBy" class="iSabaya.User, iSabaya" />-->
+  </class>
+</hibernate-mapping>
+
+

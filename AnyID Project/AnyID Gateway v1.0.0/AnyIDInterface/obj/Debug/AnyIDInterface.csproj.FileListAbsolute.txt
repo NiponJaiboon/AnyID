@@ -1,0 +1,5 @@
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyIDInterface\bin\Debug\AnyIDInterface.dll
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyIDInterface\bin\Debug\AnyIDInterface.pdb
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyIDInterface\obj\Debug\AnyIDInterface.dll
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyIDInterface\obj\Debug\AnyIDInterface.pdb
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyIDInterface\obj\Debug\AnyIDInterface.csprojResolveAssemblyReference.cache

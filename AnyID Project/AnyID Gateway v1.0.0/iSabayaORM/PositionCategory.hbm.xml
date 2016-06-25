@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.PositionCategory,iSabaya" table="PositionCategory">
+    <id name="ID" type="Int64" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+
+    <property name="Code" />
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type ="datetime2"/>
+    </component>
+
+    <property name="Remark" />
+    <property name="MaxPersonnelLevel" />
+    <property name="MinPersonnelLevel" />
+    <many-to-one name="Parent" column="ParentID" />
+    <many-to-one name="Description" column="DescriptionMLSID" />
+    <many-to-one name="ShortTitle" column="ShortTitleMLSID" />
+    <many-to-one name="ProfessionCategory" column="ProfessionCategoryID" />
+    <property name="TermLimit" />
+    <many-to-one name="Title" column="TitleMLSID" />
+
+    <component name="MaxSalary" class="iSabaya.Money,iSabaya">
+      <property name="Amount" column="MaxSalaryAmount"/>
+      <property name="CurrencyCode" column="MaxSalaryCurrencyID" />
+    </component>
+
+    <component name="MinSalary" class="iSabaya.Money,iSabaya">
+      <property name="Amount" column="MinSalaryAmount"/>
+      <property name="CurrencyCode" column="MinSalaryCurrencyID" />
+    </component>
+
+    <bag name="Levels" table="Level">
+      <key column="PositionCategoryID"/>
+      <one-to-many class="iSabaya.PositionLevel,iSabaya"/>
+    </bag>
+
+    <bag name="Children" >
+      <key column="ParentID"/>
+      <one-to-many class="iSabaya.PositionCategory,iSabaya"/>
+    </bag>
+
+    <!--<bag name="Positions" table="Position">
+      <key column="PositionCategoryID"/>
+      <one-to-many class="iSabaya.Position, iSabaya"/>
+    </bag>-->
+ 
+   
+  </class>
+</hibernate-mapping>
+
+

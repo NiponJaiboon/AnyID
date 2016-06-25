@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <!--<class name="iSabaya.InterPersontRelation,iSabaya" table="InterPersontRelation" abstract="1" discriminator-value="0">-->
+  <class name="iSabaya.InterPersonRelation,iSabaya" table="InterPersonRelation" >
+    <id name="ID" type="Int64" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+    <!--<discriminator column="Discriminator" type="byte" />-->
+    <many-to-one name="CategoryRoot" column="CategoryRootNodeID" />
+    <many-to-one name="Category" column="CategoryNodeID" />
+    <property name="Code" />
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+    <property name="Level" />
+    <property name="Reference" />
+    <property name="Remark" />
+    <property name="RelationshipNo" />
+    <property name="SeqNo" />
+
+    <many-to-one name="PrimaryPerson" column="PrimaryPersonID" class="iSabaya.Person,iSabaya" />
+    <many-to-one name="SecondaryPerson" column="SecondaryPersonID" class="iSabaya.Person,iSabaya" />
+  </class>
+</hibernate-mapping>
+
+

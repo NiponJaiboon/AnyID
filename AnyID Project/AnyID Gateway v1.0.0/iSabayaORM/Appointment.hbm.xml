@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  <class name="iSabaya.Appointment,iSabaya" table="Appointment">
+    <id name="ID" type="Int64" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+    
+    <many-to-one name="Category" column="CategoryNodeID" />
+    <property name="Code" />
+    <many-to-one  name="Position" column="PositionID" />
+    <many-to-one name="Person" column="PersonID" />
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2" />
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+    <property name="Reference" />
+    <property name="Remark" />
+  </class>
+</hibernate-mapping>
+
+

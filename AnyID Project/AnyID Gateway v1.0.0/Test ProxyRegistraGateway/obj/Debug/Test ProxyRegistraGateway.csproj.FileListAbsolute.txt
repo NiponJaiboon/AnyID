@@ -1,0 +1,16 @@
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\bin\Debug\Test ProxyRegistraGateway.dll.config
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\bin\Debug\Test ProxyRegistraGateway.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\bin\Debug\Test ProxyRegistraGateway.pdb
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\obj\Debug\Test ProxyRegistraGateway.csprojResolveAssemblyReference.cache
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\obj\Debug\Test ProxyRegistraGateway.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\obj\Debug\Test ProxyRegistraGateway.pdb
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\bin\Debug\Test ProxyRegistraGateway.dll.config
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\bin\Debug\Test ProxyRegistraGateway.dll
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\bin\Debug\Test ProxyRegistraGateway.pdb
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\obj\Debug\Test ProxyRegistraGateway.dll
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\obj\Debug\Test ProxyRegistraGateway.pdb
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\Test ProxyRegistraGateway\obj\Debug\Test ProxyRegistraGateway.csprojResolveAssemblyReference.cache

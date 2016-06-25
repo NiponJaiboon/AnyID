@@ -1,0 +1,37 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>jQuery UI Datepicker - Default functionality</title>
+    <link rel="stylesheet" type="text/css" href="//localhost/AnyID/Content/jquery-ui.css">
+    <script type="text/javascript" src="//localhost/AnyID/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="//localhost/AnyID/Scripts/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $("#datepicker").datepicker({
+                showButtonPanel: true,
+                changeMonth: true,
+                changeYear: true,
+                showOn: "button",
+                buttonImage: "//localhost/AnyID/Images/icon/calendar.gif",
+                buttonImageOnly: true,
+                buttonText: "",
+                dateFormat: "dd/mm/yy",
+
+                monthNames: ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"]
+            });
+        });
+
+        //var currentDate = $(".selector").datepicker("getDate");
+    </script>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <input type="text" id="datepicker" readonly>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.PartyWorkSchedule,iSabaya" table="PartyWorkSchedule">
+    <id name="ID" type="Int64" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+
+    <property name="Code" />
+
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+
+    <any name="Party" meta-type="byte" id-type="Int64" >
+      <meta-value value="10" class="iSabaya.Organization,iSabaya"/>
+      <meta-value value="15" class="iSabaya.OrgUnit,iSabaya"/>
+      <meta-value value="20" class="iSabaya.Person,iSabaya"/>
+      <!--<meta-value value="30" class="imSabaya.MutualFund,imSabaya"/>-->
+      <!--<meta-value value="35" class="imSabaya.ProvidentFund,imSabaya"/>-->
+      <!--<meta-value value="50" class="imSabaya.MutualFundSystem.MFAccount,imSabaya"/>
+      <meta-value value="60" class="imSabaya.ProvidentFundSystem.Member,imSabaya"/>-->
+      <column name="PartyDiscriminator"/>
+      <column name="PartyID"/>
+    </any>
+    
+    <property name="Reference" />
+    <property name="Remark" />
+    <many-to-one name="WorkSchedule" column="WorkScheduleID" />
+  </class>
+</hibernate-mapping>
+
+

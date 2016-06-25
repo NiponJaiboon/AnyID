@@ -1,0 +1,30 @@
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\AnyIDModel.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\AnyIDModel.pdb
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\Iesi.Collections.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\iSabaya.Config.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\iSabaya.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\log4net.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\NHibernate.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\iSabaya.Config.pdb
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\iSabaya.pdb
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\Iesi.Collections.xml
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\log4net.xml
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\NHibernate.xml
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\obj\Debug\AnyID Model.csprojResolveAssemblyReference.cache
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\obj\Debug\AnyIDModel.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AnyID Model\obj\Debug\AnyIDModel.pdb
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\AnyIDModel.dll
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\AnyIDModel.pdb
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\Iesi.Collections.dll
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\iSabaya.Config.dll
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\iSabaya.dll
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\log4net.dll
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\NHibernate.dll
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\iSabaya.Config.pdb
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\iSabaya.pdb
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\Iesi.Collections.xml
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\log4net.xml
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyID Model\bin\Debug\NHibernate.xml
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyID Model\obj\Debug\AnyID Model.csprojResolveAssemblyReference.cache
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyID Model\obj\Debug\AnyIDModel.dll
+D:\Work\iSabaya\AnyID\AnyID Project\AnyID Gateway v1.0.0\AnyID Model\obj\Debug\AnyIDModel.pdb

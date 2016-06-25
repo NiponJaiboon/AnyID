@@ -1,0 +1,304 @@
+﻿@using AnyIDAdmin.Models
+@{
+    string languageCode = ViewData["LanguageCode"] == null ? "th-TH" : ViewData["LanguageCode"].ToString();
+    ViewBag.Title = "Transaction Summary Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+   
+}
+
+@if (ViewData["ExceptionOnLoad"] != null)
+{<span style="font-family:ClanOT_Narrow;font-size:14px;color:red;">@Html.Raw(ViewData["ExceptionOnLoad"].ToString())</span>}
+else if (ViewData["InsufficientPrivilege"] != null)
+{
+    @section PageHead{
+        <script type="text/javascript">
+            $(document).ready(function () {
+                window.location.replace('@Url.Content("~/Login")');
+            });
+        </script>
+    }
+}
+else
+{
+    @section PageHead {
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/datatables.min.css")">
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/isabayaDataTable.css")">
+        <script type="text/javascript" src="@Url.Content("~/Scripts/datatables.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/isabayaDataTable.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui.js")"></script>
+        <style type="text/css">
+            .page-option14 option{
+                font-family:ClanOT_Narrow;
+                font-size:14px;
+            }
+
+            .page-lableTH {
+                font-weight: bold;
+                font-size: 15px;
+                vertical-align: middle;
+            }
+
+            .page-tablepadding {
+            }
+
+                .page-tablepadding td {
+                    padding: 5px;
+                }
+
+                .page-tablepadding input {
+                    font-family: ClanOT_Narrow;
+                    font-size: 14px;
+                    height: 28px;
+                }
+        </style>
+        <script type="text/javascript">
+            var LoG = { EmptyTableText: "ไม่มีข้อมูล", InfoText: "จำนวนรายการที่พบ _TOTAL_ รายการ แสดงผลหน้าที่ _PAGE_ จาก _PAGES_", InfoEmptyText: "จำนวนรายการที่พบ 0 รายการ แสดงผลหน้าที่ 1 จาก 1" };
+            $(document).ready(function () {
+                TransactioSummaryReportGrid.Initial(LoG);
+                TransactioSummaryReportGrid.ChangePageLength(15);
+                InitDatepicker("operationDateFrom", new Date(), "@Url.Content("~/Images/icon/calendar.gif")");
+                InitDatepicker("operationDateTo", new Date(), "@Url.Content("~/Images/icon/calendar.gif")");
+            });
+
+            function Expired() { window.location.replace('@Url.Content("~/Login")'); }
+            function InitDatepicker(s, initDate, urlImg) {
+                $("#" + s).datepicker({
+                    showButtonPanel: true,
+                    showOn: "button",
+                    buttonImage: urlImg,
+                    buttonImageOnly: true,
+                    buttonText: "",
+                    dateFormat: "dd/mm/yy",
+                });
+                $("#" + s).datepicker("setDate", initDate);
+            }
+            function GetiSabayaDateFromDatepicker(s) {
+                var iDatepicker = $("#" + s).datepicker("getDate");
+                if (iDatepicker == null) { return ""; }
+                else {
+                    var date = iDatepicker.getDate().toString();
+                    var month = (iDatepicker.getMonth() + 1).toString();
+                    var year = iDatepicker.getFullYear().toString();
+                    while (date.length < 2) { date = "0" + date; }
+                    while (month.length < 2) { month = "0" + month; }
+                    while (year.length < 4) { year = "0" + year; }
+                    return year + month + date
+                }
+            }
+
+            function GetData(sender, urlAction) {
+                if (OutOfLimitDateLength($("#operationDateFrom").datepicker("getDate"), $("#operationDateTo").datepicker("getDate"), 30)) { return; }
+                if (IsDateToLessthanDateFrom($("#operationDateFrom").datepicker("getDate"), $("#operationDateTo").datepicker("getDate"), "คุณเลือกวันที่ไม่ถูกต้อง From Date จะต้องมีค่าน้อยกว่าsหรือเท่ากับ To Date เท่านั้น")) { return; }
+
+                sender.disabled = true;
+                loading.Show();
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    dataType: "json",
+                    data: {
+                        dateForm: GetiSabayaDateFromDatepicker("operationDateFrom"),
+                        dateTo: GetiSabayaDateFromDatepicker("operationDateTo"),
+                        branchCode: $("#branch").val()
+                    },
+                    url: urlAction,
+                    success: function (data) {
+                        if (data.responseCode == "000") {
+                            loading.Hide();
+                            TransactioSummaryReportGrid.UpdateDataGrid(data.html);
+                            sender.disabled = false;
+                        }
+                        else if (data.responseCode == "500") { Expired(); }
+                        else {
+                            ErrorException999(data.responseCode + ", " + data.responseText + ";" + data.html);
+                            loading.Hide();
+                            sender.disabled = false;
+                        }
+                    },
+                    error: function (e) {
+                        loading.Hide();
+                        alert("Error Exception");
+                        console.log(e);
+                        sender.disabled = false;
+                    }
+                });
+            }
+            function exportExcel() {
+                window.location.href = "@Url.Action("ExportExcel", "TransactionSummaryReport")"
+                    + "?reportDateFrom=" + $("#reportDateFrom").val()
+                    + "&reportDateTo=" + $("#reportDateTo").val()
+                    + "&reportBranch=" + $("#reportBranch").val();
+            }
+        </script>
+    }
+    <table style="width:100%;font-family:ClanOT_Narrow;">
+        <tr>
+            <td class="BGKKGray" style="border-style:solid;border-color:white;border-width:2px 0px 2px 0px;height:30px;">
+                &nbsp;<span class="page-lableTH" style="color:black;">Transaction Summary Report</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="BGKKBlue" style="height:30px;">
+                &nbsp;<span class="page-lableTH" style="color:white;">เงื่อนไขการค้นหา</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:3px 0;">
+                <table class="page-tablepadding" style="width:100%;padding:5px;border-style: inset;border-color: gray;border-width: medium;">
+                    <tr>
+                        <td>
+                            <span class="labelTH">From Date:</span>
+                        </td>
+                        <td>
+                            <input id="operationDateFrom" readonly class="iDatepicker">
+                        </td>
+                        <td>
+                            <span class="labelTH">To Date:</span>
+                        </td>
+                        <td>
+                            <input id="operationDateTo" readonly class="iDatepicker">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="labelTH">Branch Name:</span>
+                        </td>
+                        <td colspan="3">
+                            <select id="branch" class="page-option14" style="border:1px solid #a9a9a9;">
+                                <option value="">-- All --</option>
+                                <option value="0001">สำนักงานใหญ่</option>
+                                <option value="0002">เพลินจิตเซ็นเตอร์</option>
+                                <option value="0003">อโศก</option>
+                                <option value="0004">ซีคอนสแควร์ ศรีนครินทร์</option>
+                                <option value="0005">เพชรเกษม-กาญจนาภิเษก</option>
+                                <option value="0006">เยาวราช</option>
+                                <option value="0007">สี่พระยา</option>
+                                <option value="0008">รามอินทรา</option>
+                                <option value="0009">สุขสวัสดิ์</option>
+                                <option value="0010">เมเจอร์ รัชโยธิน</option>
+                                <option value="0011">นครราชสีมา</option>
+                                <option value="0012">หาดใหญ่</option>
+                                <option value="0013">ราชบุรี</option>
+                                <option value="0014">พิษณุโลก</option>
+                                <option value="0015">เชียงใหม่</option>
+                                <option value="0016">ชลบุรี</option>
+                                <option value="0017">ขอนแก่น</option>
+                                <option value="0018">สุนีย์ ทาวเวอร์</option>
+                                <option value="0019">เซ็นทรัลพลาซา ระยอง</option>
+                                <option value="0020">สุราษฎร์ธานี</option>
+                                <option value="0022">นครสวรรค์</option>
+                                <option value="0023">อุดรธานี</option>
+                                <option value="0024">นครศรีธรรมราช</option>
+                                <option value="0025">เชียงราย</option>
+                                <option value="0026">ภูเก็ต</option>
+                                <option value="0027">จันทบุรี</option>
+                                <option value="0028">ฉะเชิงเทรา</option>
+                                <option value="0029">ชุมพร</option>
+                                <option value="0030">สระบุรี</option>
+                                <option value="0031">นครปฐม</option>
+                                <option value="0032">พัทยา</option>
+                                <option value="0033">กาญจนบุรี</option>
+                                <option value="0034">ลำปาง</option>
+                                <option value="0035">กระบี่</option>
+                                <option value="0036">สุรินทร์</option>
+                                <option value="0037">ร้อยเอ็ด</option>
+                                <option value="0038">หัวหิน</option>
+                                <option value="0039">ปราจีนบุรี</option>
+                                <option value="0040">สุพรรณบุรี</option>
+                                <option value="0041">เพชรบูรณ์</option>
+                                <option value="0042">ตรัง</option>
+                                <option value="0043">พระนครศรีอยุธยา</option>
+                                <option value="0044">สมุทรปราการ</option>
+                                <option value="0045">ปทุมธานี</option>
+                                <option value="0046">นนทบุรี</option>
+                                <option value="0047">แพร่</option>
+                                <option value="0048">สกลนคร</option>
+                                <option value="0049">สมุทรสาคร</option>
+                                <option value="0050">ชัยภูมิ</option>
+                                <option value="0051">ลพบุรี</option>
+                                <option value="0052">กำแพงเพชร</option>
+                                <option value="0053">ศรีสะเกษ</option>
+                                <option value="0054">เพชรบุรี</option>
+                                <option value="0055">เลย</option>
+                                <option value="0056">พิจิตร</option>
+                                <option value="0057">สีลม</option>
+                                <option value="0058">สุวรรณภูมิ</option>
+                                <option value="0059">เดอะมอลล์บางกะปิ</option>
+                                <option value="0060">เซ็นทรัลเฟสติวัล อีสต์วิลล์</option>
+                                <option value="0061">สระแก้ว</option>
+                                <option value="0062">เจริญกรุง</option>
+                                <option value="0063">กาฬสินธุ์</option>
+                                <option value="0064">เซ็นทรัลพลาซา ปิ่นเกล้า</option>
+                                <option value="0065">ลำพูน</option>
+                                <option value="0066">ยโสธร</option>
+                                <option value="0067">พระราม 3</option>
+                                <option value="0068">พะเยา</option>
+                                <option value="0069">ทองหล่อ</option>
+                                <option value="0070">ชัยนาท</option>
+                                <option value="0071">หนองคาย</option>
+                                <option value="0072">พหลโยธินเพลส</option>
+                                <option value="0073">ประจวบคีรีขันธ์</option>
+                                <option value="0074">บุรีรัมย์</option>
+                                <option value="0075">เซ็นทรัลพลาซา เวสต์เกต</option>
+                                <option value="0076">พระราม 4</option>
+                                <option value="0077">ปากช่อง</option>
+                                <option value="0078">เดอะมอลล์ ท่าพระ</option>
+                                <option value="0079">มุกดาหาร</option>
+                                <option value="0080">มหานาค</option>
+                                <option value="0082">แฟชั่นไอส์แลนด์</option>
+                                <option value="0083">เซ็นทรัลพลาซา บางนา</option>
+                                <option value="0084">พาราไดซ์พาร์ค</option>
+                                <option value="0085">สยามพารากอน</option>
+                                <option value="0086">ซีคอนบางแค</option>
+                                <option value="0087">บางบอน</option>
+                                <option value="0089">ทุ่งสง</option>
+                                <option value="0090">สุโขทัย</option>
+                                <option value="0091">วงเวียน 22 กรกฎา</option>
+                                <option value="0092">อาคารเมืองไทย-ภัทร คอมเพล็กซ์</option>
+                                <option value="0093">เซ็นทรัลเฟสติวัล เชียงใหม่</option>
+                                <option value="0094">ศรีราชา</option>
+                                <option value="0999">INVENTORY DEPARTMENT</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table class="fontClanOT_Narrow" style="width:100%; margin-top:5px;">
+        <tr>
+            <td>
+                <div class="grp-btn-center">
+                    <input type="button" class="ibtn ibtn-primary" style="width:80px;" value="Search" onclick="GetData(this, '@Url.Content("~/TransactionSummaryReport/GetReportData")');" />
+                    &nbsp;&nbsp;
+                    <input type="button" class="ibtn ibtn-primary" style="width:80px;" value="Reset" onclick="window.location.replace('@Url.Content("~/TransactionSummaryReport")')" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table style="font-family:ClanOT_Narrow;width:100%;margin-top:20px;">
+        <tr class="BGKKGray">
+            <td style="height:30px; padding:0 5px;">
+                &nbsp;<span class="page-lableTH" style="color:black;">ผลการค้นหา</span>
+            </td>
+            <td style="height:30px; padding:5px 10px 5px 0px; text-align:right;">
+                @if (ViewData["CanExport"] != null)
+                {
+                    <div class="ibtn ibtn-primary" style="display:table-cell;float:right;" onclick="exportExcel()">
+                        &nbsp;<img alt="" style="width:20px;" src="@Url.Content("~/Images/icon/excel.png")" />
+                        <span>Export Excel</span>&nbsp;
+                    </div>
+                }
+            </td>
+        </tr>
+    </table>
+    @Html.iSabayaDataTable(new iSabayaDataTableSettings()
+    {
+        Name = "TransactioSummaryReportGrid",
+        Url = Url,
+        Columns = new List<string>() { "No.", "Branch Code", "Branch Name", "Success", "Waiting for Approve", "Failed", "Total" },
+        PageLength = new List<string>() { "15", "25", "50", "100" },
+        PageLengthShowingText = "แสดง",
+        PageLengthEntriesText = "รายการ"
+    })
+}

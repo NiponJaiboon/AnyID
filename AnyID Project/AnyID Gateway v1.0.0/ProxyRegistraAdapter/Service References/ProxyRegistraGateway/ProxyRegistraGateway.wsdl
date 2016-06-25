@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ProxyRegistraGateway" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?xsd=xsd3" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/AnyIDModel" />
+      <xsd:import schemaLocation="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/iSabaya" />
+      <xsd:import schemaLocation="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ProxyRegistraGateway" />
+      <xsd:import schemaLocation="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IProxyRegistraGateway_Register_InputMessage">
+    <wsdl:part name="parameters" element="tns:Register" />
+  </wsdl:message>
+  <wsdl:message name="IProxyRegistraGateway_Register_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProxyRegistraGateway_Amend_InputMessage">
+    <wsdl:part name="parameters" element="tns:Amend" />
+  </wsdl:message>
+  <wsdl:message name="IProxyRegistraGateway_Amend_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AmendResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProxyRegistraGateway_DeactivateByAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateByAccount" />
+  </wsdl:message>
+  <wsdl:message name="IProxyRegistraGateway_DeactivateByAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateByAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProxyRegistraGateway_DeactivateByAccountNo_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateByAccountNo" />
+  </wsdl:message>
+  <wsdl:message name="IProxyRegistraGateway_DeactivateByAccountNo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateByAccountNoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProxyRegistraGateway_DeactivateByRegistrationID_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateByRegistrationID" />
+  </wsdl:message>
+  <wsdl:message name="IProxyRegistraGateway_DeactivateByRegistrationID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateByRegistrationIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProxyRegistraGateway_DeactivateByAnyID_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateByAnyID" />
+  </wsdl:message>
+  <wsdl:message name="IProxyRegistraGateway_DeactivateByAnyID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateByAnyIDResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IProxyRegistraGateway">
+    <wsdl:operation name="Register">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProxyRegistraGateway/Register" message="tns:IProxyRegistraGateway_Register_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProxyRegistraGateway/RegisterResponse" message="tns:IProxyRegistraGateway_Register_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Amend">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProxyRegistraGateway/Amend" message="tns:IProxyRegistraGateway_Amend_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProxyRegistraGateway/AmendResponse" message="tns:IProxyRegistraGateway_Amend_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateByAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProxyRegistraGateway/DeactivateByAccount" message="tns:IProxyRegistraGateway_DeactivateByAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProxyRegistraGateway/DeactivateByAccountResponse" message="tns:IProxyRegistraGateway_DeactivateByAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateByAccountNo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProxyRegistraGateway/DeactivateByAccountNo" message="tns:IProxyRegistraGateway_DeactivateByAccountNo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProxyRegistraGateway/DeactivateByAccountNoResponse" message="tns:IProxyRegistraGateway_DeactivateByAccountNo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateByRegistrationID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProxyRegistraGateway/DeactivateByRegistrationID" message="tns:IProxyRegistraGateway_DeactivateByRegistrationID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProxyRegistraGateway/DeactivateByRegistrationIDResponse" message="tns:IProxyRegistraGateway_DeactivateByRegistrationID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateByAnyID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProxyRegistraGateway/DeactivateByAnyID" message="tns:IProxyRegistraGateway_DeactivateByAnyID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProxyRegistraGateway/DeactivateByAnyIDResponse" message="tns:IProxyRegistraGateway_DeactivateByAnyID_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IProxyRegistraGateway" type="tns:IProxyRegistraGateway">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Register">
+      <soap:operation soapAction="http://tempuri.org/IProxyRegistraGateway/Register" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Amend">
+      <soap:operation soapAction="http://tempuri.org/IProxyRegistraGateway/Amend" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateByAccount">
+      <soap:operation soapAction="http://tempuri.org/IProxyRegistraGateway/DeactivateByAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateByAccountNo">
+      <soap:operation soapAction="http://tempuri.org/IProxyRegistraGateway/DeactivateByAccountNo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateByRegistrationID">
+      <soap:operation soapAction="http://tempuri.org/IProxyRegistraGateway/DeactivateByRegistrationID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateByAnyID">
+      <soap:operation soapAction="http://tempuri.org/IProxyRegistraGateway/DeactivateByAnyID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ProxyRegistraGateway">
+    <wsdl:port name="BasicHttpBinding_IProxyRegistraGateway" binding="tns:BasicHttpBinding_IProxyRegistraGateway">
+      <soap:address location="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

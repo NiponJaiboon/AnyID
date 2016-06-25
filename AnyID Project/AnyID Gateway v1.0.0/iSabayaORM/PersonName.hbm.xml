@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.PersonName,iSabaya" table="PersonName" >
+
+    <!-- Primary key-->
+    <id name="ID" column="ID" type="Int64" unsaved-value="0" >
+      <generator class="native"/>
+    </id>
+
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+    <!--xxx-->
+    <many-to-one name="Person" column="PersonID" />
+    <many-to-one name="Title" column="TitleMLSID" />
+    <many-to-one name="FirstName" column="FirstNameMLSID" />
+    <many-to-one name="LastName" column="LastNameMLSID"/>
+    <many-to-one name="MiddleName" column="MiddleNameMLSID" />
+    <many-to-one name="Prefix" column="NamePrefixID" />
+    <many-to-one name="Suffix" column="NameSuffixID" />
+    <!--<property name="OrderedDate" />-->
+    <property name="Reference" />
+    <property name="Remark" />
+  </class>
+</hibernate-mapping>

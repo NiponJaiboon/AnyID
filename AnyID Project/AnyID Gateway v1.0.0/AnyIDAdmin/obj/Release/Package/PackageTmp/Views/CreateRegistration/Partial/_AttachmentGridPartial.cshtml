@@ -1,0 +1,38 @@
+﻿@{
+    string langCode = (ViewData["LanguageCode"] == null ? "th-TH" : ViewData["LanguageCode"].ToString());
+    List<AnyIDModel.TransactionDocument> datas = (ViewData["FileData"] == null ? null : (List<AnyIDModel.TransactionDocument>)ViewData["FileData"]);
+}
+<table id="@ViewData["Name"].ToString()" class="display fontClanOT_Narrow" style="font-size:14px;width:99%;margin:1px auto 0px auto;">
+    <thead class="BGKKBlue" style="color:white;">
+        <tr>
+            <th class="tableHeaderLabel">No.</th>
+            <th class="tableHeaderLabel">ชื่อไฟล์</th>
+            <th class="tableHeaderLabel">ประเภทเอกสาร</th>
+            <th class="tableHeaderLabel">ดำเนินการโดย</th>
+            <th class="tableHeaderLabel">วันที่ดำเนินการ</th>
+            <th class="tableHeaderLabel">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (datas != null)
+        {
+            int i = 0;
+            foreach (AnyIDModel.TransactionDocument item in datas)
+            {
+                if (item != null)
+                {
+                    <tr>
+                        <td class="text-center">
+                            @Html.Raw(++i)
+                        </td>
+                        <td>@item.DocumentFileName</td>
+                        <td>@item.DocumentType</td>
+                        <td>@CommonUtilities.GetUserActionNameText(item.UploadAction)</td>
+                        <td class="text-center">@CommonUtilities.GetUserActionTimestampText(item.UploadAction)</td>
+                        <td class="text-center"><img class="point" style="width:20px;" alt="" src="@Url.Content("~/Images/icon/trash.png")" onclick="confirmDelAttachFile('@item.Tag.ToString()', '@item.DocumentFileName');" /></td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>

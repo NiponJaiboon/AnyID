@@ -1,0 +1,370 @@
+﻿@using AnyIDAdmin.Models
+@{
+    string languageCode = ViewData["LanguageCode"] == null ? "th-TH" : ViewData["LanguageCode"].ToString();
+    ViewBag.Title = "View Customer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    AnyIDModel.Customer data = (ViewData["Cust_Data"] == null ? null : (AnyIDModel.Customer)ViewData["Cust_Data"]);
+    IList<AnyIDModel.AccountProxy> anyID_Data = (ViewData["AnyID_Data"] == null ? null : (List<AnyIDModel.AccountProxy>)ViewData["AnyID_Data"]);
+
+    bool isPerson = true;
+    AnyIDModel.Person person_Data = null;
+    AnyIDModel.Organization org_Data = null;
+    if (data == null)
+    {
+        data = new AnyIDModel.Person(){ IDType = AnyIDModel.IDType.I, BirthDate = new DateTime(1, 1, 1) };
+        person_Data = (AnyIDModel.Person)data;
+    }
+    else
+    {
+        isPerson = (data is AnyIDModel.Person);
+        person_Data = (data is AnyIDModel.Person ? (AnyIDModel.Person)data : null);
+        org_Data = (data is AnyIDModel.Person ? null : (AnyIDModel.Organization)data);
+    }
+
+    List<AnyIDModel.AccountProxy> resultAccountProxy = new List<AnyIDModel.AccountProxy>();
+    IList<AnyIDModel.AccountProxy> accountProxyRegistrationIDEmpty = anyID_Data.Where(x => string.IsNullOrEmpty(x.RegistrationID)).ToList();
+    IList<AnyIDModel.AccountProxy> accountProxyRegistrationIDDistinct = anyID_Data.Where(x => !string.IsNullOrEmpty(x.RegistrationID)).GroupBy(x => x.RegistrationID).Select(group => group.First()).ToList();
+
+    resultAccountProxy.AddRange(accountProxyRegistrationIDEmpty);
+    foreach (AnyIDModel.AccountProxy item in accountProxyRegistrationIDDistinct)
+    {
+        if (anyID_Data.Any(x => x.RegistrationID == item.RegistrationID && x.Status == AnyIDModel.EntityStatus.Active))
+        {
+            resultAccountProxy.Add(anyID_Data.Where(x => x.RegistrationID == item.RegistrationID && x.Status == AnyIDModel.EntityStatus.Active).SingleOrDefault());
+        }
+        else
+        {
+            List<AnyIDModel.AccountProxy> accountProxyDeactivate = anyID_Data.Where(x => x.RegistrationID == item.RegistrationID).OrderBy(x => x.LatestTransaction.ID).ToList();
+            resultAccountProxy.Add(accountProxyDeactivate[accountProxyDeactivate.Count - 1]);
+        }
+    }
+
+
+    string dataRow = "";
+    Dictionary<string, string> anyIDTypeDict = CommonUtilities.AnyIDType(new Dictionary<string, string>());
+    if (anyID_Data != null)
+    {
+        int runningNumber = 0;
+        //foreach (AnyIDModel.AccountProxy item in anyID_Data)
+        foreach (AnyIDModel.AccountProxy item in resultAccountProxy.OrderByDescending(x => x.LatestTransaction.CreateAction.Timestamp))
+        {
+            dataRow = dataRow + "<tr><td class=\"text-center\">" + (++runningNumber).ToString() + "</td>";
+            dataRow = dataRow + "<td>" + anyIDTypeDict[item.AnyID.IDType.ToString()] + "</td>";
+            dataRow = dataRow + "<td>" + item.AnyID.DisplayIDNo + "</td>";
+            dataRow = dataRow + "<td>" + item.RegistrationID + "</td>";
+            dataRow = dataRow + "<td>" + CommonUtilities.GetUserActionNameText(item.LatestTransaction.CreateAction) + "</td>";
+            dataRow = dataRow + "<td>" + CommonUtilities.Branch(new Dictionary<string,string>())[item.RegisteringBranch] + "</td>";
+            dataRow = dataRow + "<td class=\"nowrap\">" + CommonUtilities.GetUserActionTimestampText(item.LatestTransaction.CreateAction) + "</td>";
+            dataRow = dataRow + "<td class=\"nowrap\">" + item.KKRequiredStateDescription + "</td>";
+            dataRow = dataRow + "<td class=\"text-center\"><img alt=\"\" class=\"imgIcon\" src=\"" + Url.Content("~/Images/icon/search.png") + "\" onclick=\"GoViewResgister('" + item.ID + "', '" + data.CISID + "')\" /></td></tr>";
+        }
+    }
+}
+@if (ViewData["ExceptionOnLoad"] != null){<span style="font-family:ClanOT_Narrow;font-size:14px;color:red;">@Html.Raw(ViewData["ExceptionOnLoad"].ToString())</span>}
+else if (ViewData["InsufficientPrivilege"] != null)
+{
+    @section PageHead{
+        <script type="text/javascript">
+            $(document).ready(function () { window.location.replace('@ViewData["PrevScreen"].ToString()'); });
+        </script>
+    }
+}
+else
+{
+    @section PageHead{
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/datatables.min.css")">
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/isabayaDataTable.css")">
+        <script type="text/javascript" src="@Url.Content("~/Scripts/datatables.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/isabayaDataTable.js")"></script>
+        <style type="text/css">
+            .page-lableTH {
+                font-weight: bold;
+                font-size: 14px;
+                vertical-align: middle;
+            }
+
+            .page-borderGray {
+                border-style: inset;
+                border-color: gray;
+            }
+
+            .page-table {
+                width: 100%;
+            }
+
+                .page-table td {
+                    padding: 5px;
+                }
+        </style>
+        <script type="text/javascript">
+            var LoG = { EmptyTableText: "ไม่มีข้อมูล", InfoText: "จำนวนรายการที่พบ _TOTAL_ รายการ แสดงผลหน้าที่ _PAGE_ จาก _PAGES_", InfoEmptyText: "จำนวนรายการที่พบ 0 รายการ แสดงผลหน้าที่ 1 จาก 1" };
+            $(document).ready(function () {
+                AnyIDInfo.Initial(LoG);
+                AnyIDInfo.ChangePageLength(15);
+            });
+
+            function Expired() { window.location.replace('@Url.Content("~/Login")'); }
+
+            function GoCreate(sender) {
+                loading.Show();
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    dataType: "json",
+                    data: { referance: sender },
+                    url: '@Url.Content("~/ViewCustomer/GotoCreateRegister")',
+                    success: function (data) {
+                        if (data.responseCode == "000") { window.location.replace(data.url); }
+                        else if (data.responseCode == "500") { Expired(); }
+                        else {
+                            loading.Hide();
+                            ErrorException999(data.responseCode + ", " + data.responseText);
+                        }
+                    },
+                    error: function (e) {
+                        loading.Hide();
+                        alert("Error Exception");
+                        console.log(e);
+                    }
+                });
+            }
+
+            function GoViewResgister(a, c) {
+                loading.Show();
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    dataType: "json",
+                    url: '@Url.Content("~/ViewCustomer/GotoViewRegsitration")',
+                    data: { anyID: a, cisID: c, referance: '@ViewData["RefSession"].ToString()' },
+                    success: function (data) {
+                        if (data.responseCode == "000") { window.location.replace(data.url); }
+                        else if (data.responseCode == "500") { Expired(); }
+                        else {
+                            ErrorException999(data.responseCode + ", " + data.responseText + ";" + data.html);
+                            loading.Hide();
+                        }
+                    },
+                    error: function (e) {
+                        alert("Error Exception");
+                        console.log(e);
+                    }
+                });
+            }
+        </script>
+    }
+    <table style="width:100%;font-family:ClanOT_Narrow;">
+        <tr>
+            <td class="BGKKGray" style="border-style:solid;border-color:white;border-width:2px 0px 2px 0px;height:30px;">
+                &nbsp;<span class="page-lableTH" style="color:black;">ข้อมูลการลงทะเบียน AnyID</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="BGKKBlue" style="height:30px;">
+                &nbsp;<span class="page-lableTH" style="color:white;">ข้อมูลลูกค้า</span>&nbsp; &nbsp;<img alt="collapse" src="@Url.Content("~/Images/collapse.png")" style="cursor:pointer;width:18px;" onclick="if (this.alt == 'collapse') { this.alt = 'expand'; this.src = '@Url.Content("~/Images/expand.png")';document.getElementById('userinfo').style.display='none'; }else{this.alt = 'collapse'; this.src = '@Url.Content("~/Images/collapse.png")';document.getElementById('userinfo').style.display='table'; }" />
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:3px 0px;">
+                <table id="userinfo" class="page-table" style="font-size:14px;color:black;">
+                    <tr class="page-borderGray" style="border-width:2px">
+                        <td>
+                            <span style="font-weight:bold;">Segment:</span>
+                        </td>
+                        <td>
+                            @data.CustomerSegment
+                        </td>
+                        <td colspan="2">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <span style="font-weight:bold;">RM:</span>
+                                    </td>
+                                    <td>
+                                        @data.CustomerRM
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td colspan="2">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="text-align:right;">
+                                        <span style="font-weight:bold;">Main Branch:</span>
+                                    </td>
+                                    <td>
+                                        @CommonUtilities.CustomerInfo.GetBranchFromCIS(data.HomeBranchCode)
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">ชื่อ-นามสกุล:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(data.FullNameThai)
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">Name-Surname:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(data.FullNameEnglish)
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">CIS ID:</span>
+                        </td>
+                        <td>
+                            @data.CISID
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">ประเภทบัตร:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(CommonUtilities.CardType(new Dictionary<string, string>())[data.IDType.ToString()])
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">เลขที่บัตร:</span>
+                        </td>
+                        <td>
+                            @data.IDNo
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">วันเดือนปีเกิด:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(isPerson ? CommonUtilities.CustomerInfo.GetBtirthDate(person_Data.BirthDate) : "N/A")
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">สถานะสมรส:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(isPerson ? person_Data.MaritalStatus : "N/A")
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">เพศ:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(isPerson ? (person_Data.Gender == "F" ? "หญิง" : (person_Data.Gender == "M" ? "ชาย" : "")) : "N/A")
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">ที่อยู่ตามทะเบียนบ้าน:</span>
+                        </td>
+                        <td colspan="5">
+                            @data.RegisteredAddress
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">ที่อยู่ปัจจุบัน:</span>
+                        </td>
+                        <td colspan="5">
+                            @data.CurrentAddress
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">ที่อยู่จัดส่งเอกสาร:</span>
+                        </td>
+                        <td colspan="5">
+                            @data.MailingAddress
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">โทรศัพท์บ้าน:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(isPerson ? person_Data.HomePhoneNo : "N/A")
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">โทรศัพท์มือถือ:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(isPerson ? person_Data.MobilePhoneNo : "N/A")
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">โทรศัพท์ที่ทำงาน:</span>
+                        </td>
+                        <td>
+                            @data.OfficePhoneNo
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">email:</span>
+                        </td>
+                        <td colspan="5">
+                            @data.EmailAddress
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">สถานที่ทำงาน:</span>
+                        </td>
+                        <td colspan="5">
+                            @data.OfficeAddress
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:2px">
+                        <td>
+                            <span style="font-weight:bold;">FATCA:</span>
+                        </td>
+                        <td>
+                            @CommonUtilities.CustomerInfo.GetFATCA(data.FATCA)
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">Sanction List:</span>
+                        </td>
+                        <td>
+                            @CommonUtilities.CustomerInfo.GetSanctionListFromCIS(data.Sanction)
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">ระดับความเสี่ยงฟอกเงิน:</span>
+                        </td>
+                        <td>
+                            @CommonUtilities.CustomerInfo.GetNomineeLevel(data.KYCLevel)
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table style="font-family:ClanOT_Narrow;width:100%;font-size:14px;margin-top:30px;">
+        <tr class="BGKKGray">
+            <td style="height:30px; padding:0 5px;">
+                <span style="font-weight:bold;color:black;">รายละเอียดการลงทะเบียน AnyID</span>
+            </td>
+            <td style="height:30px; padding:5px 30px 5px 0px; text-align:right;">
+                @if ((bool)ViewData["CanCreate"])
+                {
+                    <div class="ibtn ibtn-primary" style="display:table-cell;float:right;" onclick="GoCreate('@ViewData["RefSession"].ToString()')">
+                        &nbsp;<img alt="" src="@Url.Content("~/Images/add.png")" />
+                        <span>Create</span>&nbsp;
+                    </div>
+                    <div style="clear:both;"></div>
+                }
+            </td>
+        </tr>
+    </table>
+    @Html.iSabayaDataTable(new iSabayaDataTableSettings()
+    {
+        Name = "AnyIDInfo",
+        Url = Url,
+        Columns = new List<string>() { "No.", "ประเภท AnyID", "AnyID", "Registration ID", "ดำเนินการโดย", "สาขา", "วันที่ดำเนินการ", "Registration Status", "Action" },
+        ColumnDatas = dataRow,
+        PageLength = new List<string>() { "15", "25", "50", "100" },
+        PageLengthShowingText = "แสดง",
+        PageLengthEntriesText = "รายการ"
+    })
+}

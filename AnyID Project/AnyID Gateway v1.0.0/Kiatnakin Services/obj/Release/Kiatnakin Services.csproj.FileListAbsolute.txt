@@ -1,0 +1,23 @@
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\KiatnakinServices.dll.config
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\KiatnakinServices.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\KiatnakinServices.pdb
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\AnyIDModel.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\iSabaya.Config.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\iSabaya.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\Iesi.Collections.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\AnyIDModel.pdb
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\iSabaya.Config.pdb
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\iSabaya.pdb
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\NHibernate.xml
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\Iesi.Collections.xml
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\obj\Release\Kiatnakin Services.csprojResolveAssemblyReference.cache
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\obj\Release\KiatnakinServices.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\obj\Release\KiatnakinServices.pdb
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\log4net.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\Newtonsoft.Json.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\RestSharp.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\System.Net.Http.Formatting.dll
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\log4net.xml
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\Newtonsoft.Json.xml
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\RestSharp.xml
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\Kiatnakin Services\bin\Release\System.Net.Http.Formatting.xml

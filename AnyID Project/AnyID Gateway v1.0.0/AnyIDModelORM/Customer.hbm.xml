@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="AnyIDModel">
+  <class name="AnyIDModel.Customer" table="TB_T_Customer" >
+
+    <id name="ID" column="PK_Customer" type="Int64" unsaved-value="0" >
+      <generator class="native"/>
+    </id>
+    <discriminator column="Discriminator" />
+    <property name="CISID" column="CIS_ID"/>
+    <property name="CustomerType" column="Customer_Type" />
+    <property name="CustomerRM" column="Customer_RM" />
+    <property name="CustomerSegment" column="Customer_Segment" />
+    <property name="EmailAddress" column="Email_Address" />
+    <property name="FATCA" />
+    <property name="IDType" column="ID_Type" />
+    <property name="IDNo" column="ID_No" />
+    <property name="KYCLevel" column="KYC_Level" />
+    <property name="OfficePhoneNo" column="Office_Phone_No" />
+    <property name="Sanction" />
+
+    <subclass name="AnyIDModel.Person" discriminator-value="10">
+      <property name="BirthDate" column="Birth_Date" />
+      <property name="FirstName" column="First_Name" />
+      <property name="FirstNameEnglish" column="First_Name_Eng" />
+      <property name="Gender" />
+      <property name="LastName" column="Last_Name" />
+      <property name="LastNameEnglish" column="Last_Name_Eng" />
+      <property name="MaritalStatus" column="Marital_Status" />
+      <property name="MobilePhoneNo" column="Mobile_Phone_No" />
+      <property name="HomePhoneNo" column="Home_Phone_No" />
+    </subclass>
+
+    <subclass name="AnyIDModel.Organization" discriminator-value="20">
+      <property name="RegisteredDate" column="Birth_Date" />
+      <property name="NameThai" column="First_Name" />
+      <property name="NameEnglish" column="First_Name_Eng" />
+    </subclass>
+  </class>
+</hibernate-mapping>

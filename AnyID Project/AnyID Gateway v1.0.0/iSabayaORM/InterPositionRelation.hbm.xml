@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.InterPositionRelation,iSabaya" table="InterPositionRelation" discriminator-value="0">
+    <!--<class name="iSabaya.InterPositionRelation,iSabaya" table="InterPositionRelation" >-->
+    <id name="ID" type="Int64" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+    <discriminator column="Discriminator" type="byte" />
+    <!--<many-to-one name="CategoryRoot" column="CategoryRootNodeID" />-->
+    <many-to-one name="Category" column="CategoryNodeID" />
+    <property name="Code" />
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+    <property name="Level" />
+    <property name="Reference" />
+    <property name="RelationshipNo" />
+    <property name="Remark" />
+    <property name="SeqNo" />
+
+    <subclass name="iSabaya.LinkOfCommand,iSabaya" discriminator-value="10">
+      <many-to-one name="SuperiorPosition" column="PrimaryPositionID" />
+      <many-to-one name="SubordinatePosition" column="SecondaryPositionID" />
+    </subclass>
+
+    <subclass name="iSabaya.LeaveRequestApprovalLink,iSabaya" discriminator-value="20">
+      <many-to-one name="NextApproverPosition" column="PrimaryPositionID" />
+      <many-to-one name="PreviousApproverPosition" column="SecondaryPositionID" />
+    </subclass>
+
+  </class>
+</hibernate-mapping>
+
+

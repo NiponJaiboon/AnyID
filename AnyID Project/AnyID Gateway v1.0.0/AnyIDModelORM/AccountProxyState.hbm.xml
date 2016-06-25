@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="AnyIDModel">
+  <class name="AnyIDModel.AccountProxyState" table="TB_T_Account_Proxy_State" >
+
+    <id name="ID" column="PK_Account_Proxy_State" type="Int64" unsaved-value="0" >
+      <generator class="native"/>
+    </id>
+
+    <many-to-one name="AccountProxy" column="FK_Account_Proxy"/>
+    <component name="CreateAction">
+      <many-to-one name="ByUser" column="FK_User" />
+      <property name="Timestamp" column="Created_TS" type="datetime2"/>
+    </component>
+    <property name="IsFinal" column="Is_Final" />
+    <property name="Reference" />
+    <property name="Remark" />
+    <property name="StateCategory" column="State_Category" />
+
+  </class>
+</hibernate-mapping>

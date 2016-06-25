@@ -1,0 +1,577 @@
+﻿@using AnyIDAdmin.Models
+@{
+    string languageCode = ViewData["LanguageCode"] == null ? "th-TH" : ViewData["LanguageCode"].ToString();
+    ViewBag.Title = "Approver Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    AnyIDModel.Customer data = (ViewData["Cust_Data"] == null ? null : (AnyIDModel.Customer)ViewData["Cust_Data"]);
+    AnyIDModel.ProxyTransaction trans_data = (ViewData["Transaction_Data"] == null ? null : (AnyIDModel.ProxyTransaction)ViewData["Transaction_Data"]);
+    AnyIDModel.AccountProxy accountProxy_data = (ViewData["AccountProxy_Data"] == null ? null : (AnyIDModel.AccountProxy)ViewData["AccountProxy_Data"]);
+    
+    IList<AnyIDModel.TransactionDocument> data_File = (ViewData["File_Data"] == null ? null : (IList<AnyIDModel.TransactionDocument>)ViewData["File_Data"]);
+
+    bool isPerson = true;
+    AnyIDModel.Person person_Data = null;
+    AnyIDModel.Organization org_Data = null;
+    if (data == null)
+    {
+        data = new AnyIDModel.Person() { IDType = AnyIDModel.IDType.I, BirthDate = new DateTime(1, 1, 1) };
+        person_Data = (AnyIDModel.Person)data;
+    }
+    else
+    {
+        isPerson = (data is AnyIDModel.Person);
+        person_Data = (data is AnyIDModel.Person ? (AnyIDModel.Person)data : null);
+        org_Data = (data is AnyIDModel.Person ? null : (AnyIDModel.Organization)data);
+    }
+}
+
+@if (ViewData["ExceptionOnLoad"] != null)
+{<span style="font-family:ClanOT_Narrow;font-size:14px;color:red;">@Html.Raw(ViewData["ExceptionOnLoad"].ToString())</span>}
+else if (ViewData["InsufficientPrivilege"] != null)
+{
+    @section PageHead{
+        <script>
+            window.onload = function () {
+                window.location.replace('@Url.Content("~/Login")');
+            }
+        </script>
+    }
+}
+else
+{
+    @section PageHead{
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/datatables.min.css")">
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/isabayaDataTable.css")">
+        <script type="text/javascript" src="@Url.Content("~/Scripts/datatables.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/isabayaDataTable.js")"></script>
+        <style type="text/css">
+            .page-lableTH {
+                font-weight: bold;
+                font-size: 14px;
+                vertical-align: middle;
+            }
+
+            .page-borderGray {
+                border-style: inset;
+                border-color: gray;
+            }
+
+            .page-table {
+                width: 100%;
+            }
+
+                .page-table td {
+                    padding: 5px;
+                }
+
+            .page-cell td {
+                padding:5px;
+            }
+        </style>
+        <script type="text/javascript">
+            var LoG = { EmptyTableText: "ไม่มีข้อมูล", InfoText: "จำนวนรายการที่พบ _TOTAL_ รายการ แสดงผลหน้าที่ _PAGE_ จาก _PAGES_", InfoEmptyText: "จำนวนรายการที่พบ 0 รายการ แสดงผลหน้าที่ 1 จาก 1" };
+            var ConfirmAttachmentGrid;
+            $(document).ready(function () {
+                ConfirmAttachmentGrid = new isabayaDataTable("ConfirmAttachmentGrid", '@Url.Content("~/Images/iconcontrol/")')
+                ConfirmAttachmentGrid.Initial(LoG);
+                ConfirmAttachmentGrid.ChangePageLength(15);
+            });
+
+            function ValidateConfirm()
+            {
+                clearAllValidate(["approverChoice", "approveReason"]);
+                if ($("#approverChoice").val()) {
+                    if ($("#approverChoice").val() == "0" && !$("#approveReason").val()) { displayValidate("approveReason", true); }
+                    else {
+                        clearAllValidate(["approverChoice", "approveReason"]);
+                        ConfirmPopup.Show();
+                    }
+                }
+                else { displayValidate("approverChoice", true); }
+            }
+            function ApproverAction(k, urlAction) {
+                loading.Show();
+                ConfirmPopup.Hide();
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    dataType: "json",
+                    url: urlAction,
+                    data: {
+                        reference: k,
+                        approverChoice: $("#approverChoice").val(),
+                        reason: $("#approveReason").val(),
+                    },
+                    success: function (data) {
+                        ConfirmPopup.Hide();
+                        if (data.responseCode == "000") {
+                            $("#textResponse").text(data.responseText);
+                            SendMailFailedPopup.Show();
+                            loading.Hide();
+                        }
+                        else if (data.responseCode == "500") { window.location.replace(data.html); }
+                        else {
+                            if (data.responseCode == "100") { displayValidate("approveReason", true); }
+                            else if (data.responseCode == "102") { displayValidate("approverChoice", true); }
+                            else if (data.responseCode == "200") { $("#textResponse").text(data.responseText); SendMailFailedPopup.Show(); loading.Hide(); }
+                            else { ErrorException999(data.responseCode + ", " + data.responseText + ";" + data.html); }
+                            loading.Hide();
+                        }
+                    },
+                    error: function (e) {
+                        alert("Error Exception");
+                        console.log(e);
+                    }
+                });
+            }
+            function downloadAttached(id) { window.open('@Url.Content("~/ApproveRegistration/DownloadAttachedDoc")?id=' + id.toString()); }
+        </script>
+    }
+
+    <table style="width:100%;font-family:ClanOT_Narrow;">
+        <tr>
+            <td class="BGKKGray" style="border-style:solid;border-color:white;border-width:2px 0px 2px 0px;height:30px;">
+                &nbsp;<span class="page-lableTH" style="color:black;">ข้อมูลการลงทะเบียน AnyID</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="BGKKBlue" style="height:30px;">
+                &nbsp;<span class="page-lableTH" style="color:white;">ข้อมูลลูกค้า</span>&nbsp; &nbsp;<img alt="collapse" src="@Url.Content("~/Images/collapse.png")" style="cursor:pointer;width:18px;" onclick="if (this.alt == 'collapse') { this.alt = 'expand'; this.src = '@Url.Content("~/Images/expand.png")';document.getElementById('userinfo').style.display='none'; }else{this.alt = 'collapse'; this.src = '@Url.Content("~/Images/collapse.png")';document.getElementById('userinfo').style.display='table'; }" />
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:3px 0px;">
+                <table id="userinfo" class="page-table" style="font-size:14px;color:black;">
+                    <tr class="page-borderGray" style="border-width:2px">
+                        <td>
+                            <span style="font-weight:bold;">Segment:</span>
+                        </td>
+                        <td>
+                            @data.CustomerSegment
+                        </td>
+                        <td colspan="2">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <span style="font-weight:bold;">RM:</span>
+                                    </td>
+                                    <td>
+                                        @data.CustomerRM
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td colspan="2">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="text-align:right;">
+                                        <span style="font-weight:bold;">Main Branch:</span>
+                                    </td>
+                                    <td>
+                                        @CommonUtilities.CustomerInfo.GetBranchFromCIS(data.HomeBranchCode)
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">ชื่อ-นามสกุล:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(data.FullNameThai)
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">Name-Surname:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(data.FullNameEnglish)
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">CIS ID:</span>
+                        </td>
+                        <td>
+                            @data.CISID
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">ประเภทบัตร:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(CommonUtilities.CardType(new Dictionary<string, string>())[data.IDType.ToString()])
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">เลขที่บัตร:</span>
+                        </td>
+                        <td>
+                            @data.IDNo
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">วันเดือนปีเกิด:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(isPerson ? CommonUtilities.CustomerInfo.GetBtirthDate(person_Data.BirthDate) : "N/A")
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">สถานะสมรส:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(isPerson ? person_Data.MaritalStatus : "N/A")
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">เพศ:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(isPerson ? (person_Data.Gender == "F" ? "หญิง" : (person_Data.Gender == "M" ? "ชาย" : "")) : "N/A")
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">ที่อยู่ตามทะเบียนบ้าน:</span>
+                        </td>
+                        <td colspan="5">
+                            @data.RegisteredAddress
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">ที่อยู่ปัจจุบัน:</span>
+                        </td>
+                        <td colspan="5">
+                            @data.CurrentAddress
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">ที่อยู่จัดส่งเอกสาร:</span>
+                        </td>
+                        <td colspan="5">
+                            @data.MailingAddress
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">โทรศัพท์บ้าน:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(isPerson ? person_Data.HomePhoneNo : "N/A")
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">โทรศัพท์มือถือ:</span>
+                        </td>
+                        <td>
+                            @Html.Raw(isPerson ? person_Data.MobilePhoneNo : "N/A")
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">โทรศัพท์ที่ทำงาน:</span>
+                        </td>
+                        <td>
+                            @data.OfficePhoneNo
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">email:</span>
+                        </td>
+                        <td colspan="5">
+                            @data.EmailAddress
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:0px 2px">
+                        <td>
+                            <span style="font-weight:bold;">สถานที่ทำงาน:</span>
+                        </td>
+                        <td colspan="5">
+                            @data.OfficeAddress
+                        </td>
+                    </tr>
+                    <tr class="page-borderGray" style="border-width:2px">
+                        <td>
+                            <span style="font-weight:bold;">FATCA:</span>
+                        </td>
+                        <td>
+                            @CommonUtilities.CustomerInfo.GetFATCA(data.FATCA)
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">Sanction List:</span>
+                        </td>
+                        <td>
+                            @CommonUtilities.CustomerInfo.GetSanctionListFromCIS(data.Sanction)
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">ระดับความเสี่ยงฟอกเงิน:</span>
+                        </td>
+                        <td>
+                            @CommonUtilities.CustomerInfo.GetNomineeLevel(data.KYCLevel)
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table class="page-borderGray" style="font-family:ClanOT_Narrow !important;width:100%;font-size:14px;margin-top:30px;border-width:0px;">
+        <tr>
+            <td colspan="6" class="BGKKBlue" style="height:30px;padding:0px 5px;">
+                <span style="font-weight:bold;color:white;">ข้อมูลการลงทะเบียน AnyID</span>
+            </td>
+        </tr>
+        <tr class="page-cell">
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+            <td>
+                <span style="font-weight:bold;color:black;">Registration Status:</span>
+            </td>
+            <td>
+                <span style="color:black;">@accountProxy_data.KKRequiredStateDescription</span>
+            </td>
+            <td></td>
+            <td></td>
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+        </tr>
+        <tr class="page-cell">
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+            <td>
+                <span style="font-weight:bold;color:black;">Registration ID:</span>
+            </td>
+            <td>
+                <span style="color:black;">@accountProxy_data.RegistrationID</span>
+            </td>
+            <td>
+                <span style="font-weight:bold;color:black;">วันที่ดำเนินการ:</span>
+            </td>
+            <td>
+                <span style="color:black;">@CommonUtilities.GetUserActionTimestampText(trans_data.CreateAction)</span>
+            </td>
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+        </tr>
+        <tr class="page-cell">
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+            <td>
+                <span style="font-weight:bold;color:black;">ดำเนินการโดย:</span>
+            </td>
+            <td>
+                <span style="color:black;">@CommonUtilities.GetUserActionNameText(trans_data.CreateAction)</span>
+            </td>
+            <td>
+                <span style="font-weight:bold;color:black;">สาขา:</span>
+            </td>
+            <td>
+                <span style="color:black;">@CommonUtilities.Branch(new Dictionary<string, string>())[trans_data.BranchCode]</span>
+            </td>
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+        </tr>
+        <tr class="page-cell">
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+            <td>
+                <span style="font-weight:bold;color:black;">ประเภท AnyID:</span>
+            </td>
+            <td>
+                <span style="color:black;">@CommonUtilities.AnyIDType(new Dictionary<string, string>())[accountProxy_data.AnyID.IDType.ToString()]</span>
+            </td>
+            <td>
+                <span style="font-weight:bold;color:black;">AnyID:</span>
+            </td>
+            <td>
+                <span style="color:black;">@accountProxy_data.AnyID.DisplayIDNo</span>
+            </td>
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+        </tr>
+        <tr class="page-cell">
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+            <td>
+                <span style="font-weight:bold;color:black;">เลขที่บัญชี:</span>
+            </td>
+            <td>
+                <span style="color:black;">@accountProxy_data.BankAccount.AccountNo</span>
+            </td>
+            <td>
+                <span style="font-weight:bold;color:black;">ชื่อบัญชี:</span>
+            </td>
+            <td>
+                <span style="color:black;">@accountProxy_data.BankAccount.Name</span>
+            </td>
+            <td style="padding:0px 3px 0px 0px !important;"></td></tr>
+        <tr>
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+            <td colspan="4">
+                <table style="width:100%;">
+                    <tr class="page-cell"><td class="BGKKBlue"><span style="font-weight:bold;color:white;">เอกสารแนบ</span></td></tr>
+                    <tr>
+                        <td>
+                            <div id="ConfirmAttachmentGrid_data">
+                                <table id="ConfirmAttachmentGrid" class="display fontClanOT_Narrow" style="font-size:14px;width:99%;margin:1px auto 0px auto;">
+                                    <thead class="BGKKBlue" style="color:white;">
+                                        <tr>
+                                            <th class="tableHeaderLabel">ลำดับ</th>
+                                            <th class="tableHeaderLabel">ชื่อไฟล์</th>
+                                            <th class="tableHeaderLabel">ประเภทเอกสาร</th>
+                                            <th class="tableHeaderLabel">ดำเนินการโดย</th>
+                                            <th class="tableHeaderLabel">วันที่ดำเนินการ</th>
+                                            <th class="tableHeaderLabel">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (data_File != null)
+                                        {
+                                            int i = 0;
+                                            foreach (AnyIDModel.TransactionDocument item in data_File)
+                                            {
+                                                if (item != null)
+                                                {
+                                                    <tr>
+                                                        <td class="text-center">@Html.Raw(++i)</td>
+                                                        <td>@item.DocumentFileName</td>
+                                                        <td>@item.DocumentType</td>
+                                                        <td>@CommonUtilities.GetUserActionNameText(item.UploadAction)</td>
+                                                        <td class="text-center">@CommonUtilities.GetUserActionTimestampText(item.UploadAction)</td>
+                                                        <td class="text-center">
+                                                            <img alt="" class="imgIcon" src="@Url.Content("~/Images/icon/search.png")" onclick="downloadAttached('@item.ID');" />
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="ConfirmAttachmentGrid_footerT">
+                                <table id="ConfirmAttachmentGrid_footer" class="BGKKBlue fontclanot_narrow" style="width:99%;font-size:14px;color:white;margin:0px auto 10px auto;">
+                                    <tr>
+                                        <td id="ConfirmAttachmentGrid_footer_col1" style="width:50%; padding:5px;"></td>
+                                        <td style="width:50%; padding:5px;">
+                                            <table style="margin-left:auto;">
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <img alt="" id="ConfirmAttachmentGrid_cus_paginatePrev" style="margin-right:10px; cursor:default;" src="@Url.Content("~/Images/iconcontrol/arrow-left-dis.png")" onclick="" />
+                                                                </td>
+                                                                <td>
+                                                                    <select id="ConfirmAttachmentGrid_cus_paginate" class="cus_paginate" onchange="ConfirmAttachmentGrid.GotoPage(this.value)">
+                                                                        <option value="1">1</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <img alt="" id="ConfirmAttachmentGrid_cus_paginateNext" style="margin-left:10px; cursor:default;" src="@Url.Content("~/Images/iconcontrol/arrow-right-dis.png")" onclick="" />
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td><span style="margin-right:5px;">แสดง</span></td>
+                                                                <td>
+                                                                    <select id="ConfirmAttachmentGrid_cus_paginatelength" onchange="ConfirmAttachmentGrid.ChangePageLength(this.value)" class="cus_paginatelength">
+                                                                        <option value="15">15</option>
+                                                                        <option value="25">25</option>
+                                                                        <option value="50">50</option>
+                                                                        <option value="100">100</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td><span style="margin-left:5px;">รายการ</span></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+        </tr>
+    </table>
+    <table class="page-borderGray" style="font-family:ClanOT_Narrow !important;width:100%;font-size:14px;margin-top:30px;border-width:0px;">
+        <tr>
+            <td colspan="4" class="BGKKBlue" style="height:30px;padding:0px 5px;">
+                <span style="font-weight:bold;color:white;">อนุมัติรายการ</span>
+            </td>
+        </tr>
+        <tr class="page-cell">
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+            <td>
+                <span style="font-weight:bold;color:black;">การอนุมัติ</span>
+            </td>
+            <td>
+                <table cellpadding="0" cellspacing="0" style="height:30px;display:table-cell;float:left;">
+                    <tr>
+                        <td>
+                            <input type="radio" name="approverChoice" onclick="if (this.checked == true) { document.getElementById('approverChoice').value = '1'; }" /> <span style="color:black;">อนุมัติ</span>
+                            <input type="radio" name="approverChoice" onclick="if (this.checked == true) { document.getElementById('approverChoice').value = '0'; }" /> <span style="color:black;">ไม่อนุมัติ</span>
+                            <input type="hidden" id="approverChoice" />
+                        </td>
+                    </tr>
+                </table>
+                <table id="vapproverChoice" class="validate" style="display:none;margin-left: 165px;">
+                    <tr>
+                        <td style="padding:0 5px;">
+                            <span style="font-family:ClanOT_Narrow;font-size:14px;white-space:nowrap;color:white;">กรุณาระบุ : การอนุมัติ</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+        </tr>
+        <tr class="page-cell">
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+            <td>
+                <span style="font-weight:bold;color:black;">เหตุผล</span>
+            </td>
+            <td>
+                <script type="text/javascript">
+                    function textareaMaxLength(ta) {
+                        if (ta.value.length > 500) {
+                            ta.value = ta.value.substring(0, 500);
+                        }
+                    }
+                </script>
+                <textarea id="approveReason" maxlength="500" onchange="textareaMaxLength(this);" onkeyup="textareaMaxLength(this);" onpaste="textareaMaxLength(this);" style="font-family:ClanOT_Narrow !important;font-size:14px;width:400px;height:80px;float:left;"></textarea>
+                <table id="vapproveReason" class="validate" style="display:none;margin-left: 405px;">
+                    <tr>
+                        <td style="padding:0 5px;">
+                            <span style="font-family:ClanOT_Narrow;font-size:14px;white-space:nowrap;color:white;">กรุณากรอกเหตุผล</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+        </tr>
+        <tr class="page-cell">
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+            <td>
+            </td>
+            <td>
+                <input type="button" class="ibtn ibtn-primary" style="width:80px;" value="Submit" onclick="ValidateConfirm();" />
+                &nbsp;&nbsp;
+                <input type="button" class="ibtn ibtn-primary" style="width:80px;" value="Back" onclick="window.location.replace('@Url.Content("~/MyWork")');" />
+            </td>
+            <td style="padding:0px 3px 0px 0px !important;"></td>
+        </tr>
+    </table>
+    @Html.iSabayaPopup(new iSabayaPopupSettings()
+    {
+        Name = "ConfirmPopup",
+        Width = "300",
+        CloseOnClickOutside = false,
+        TemplateContent = "<table style=\"font-family:ClanOT_Narrow !important;font-size:14px;width:250px;margin:0 auto;\"><tr><td style=\"width:40px;\"><img alt=\"\" style=\"width:40px;\" src=\"" + Url.Content("~/Images/infomation.png") + "\" /></td><td><span style=\"color:black;margin-left:20px;\">ยืนยันการอนุมัติ กด OK</span></td></tr><tr><td style=\"height:20px;\"></td></tr><tr><td colspan=\"2\" style=\"text-align:center;\"><input type=\"button\" class=\"ibtn ibtn-primary\" style=\"width:80px;\" value=\"OK\" onclick=\"ApproverAction('" + trans_data.ID + "', '" + Url.Content("~/ApproveRegistration/ApproverEvent") + "');\" />&nbsp;&nbsp;<input type=\"button\" class=\"ibtn ibtn-primary\" style=\"width:80px;\" value=\"Cancel\" onclick=\"ConfirmPopup.Hide();\" /></td></tr></table>",
+    })
+    @Html.iSabayaPopup(new iSabayaPopupSettings()
+    {
+        Name = "SendMailFailedPopup",
+        Width = "350",
+        CloseOnClickOutside = false,
+        TemplateContent = "<table style=\"font-family:ClanOT_Narrow !important;font-size:14px;width:100%;margin:0 auto;\"><tr><td style=\"width:40px;\"><img alt=\"\" style=\"width:40px;\" src=\"" + Url.Content("~/Images/infomation.png") + "\" /></td><td style=\"padding-left:20px;\"><span id=\"textResponse\" style=\"color:black;\">ส่ง Email ไม่สำเร็จ</span></td></tr><tr><td style=\"height:20px;\"></td></tr><tr><td colspan=\"2\" style=\"text-align:center;\"><input type=\"button\" class=\"ibtn ibtn-primary\" style=\"width:80px;\" value=\"OK\" onclick=\"window.location.replace('" + Url.Content("~/MyWork") + "');\" /></td></tr></table>",
+    })
+}

@@ -1,0 +1,43 @@
+﻿@{
+    string langCode = (ViewData["LanguageCode"] == null ? "th-TH" : ViewData["LanguageCode"].ToString());
+    List<AnyIDModel.Customer> custData = (ViewData["InquiryCustProfileMainData"] == null ? null : (List<AnyIDModel.Customer>)ViewData["InquiryCustProfileMainData"]);
+    string[] allowCustType = ViewData["AllowCustType"].ToString().Split(',');
+}
+<table id="@ViewData["Name"].ToString()" class="display fontClanOT_Narrow" style="font-size:14px;width:99%; margin:1px auto 0px auto;">
+    <thead class="BGKKBlue" style="color:white;">
+        <tr>
+            <th class="tableHeaderLabel">No.</th>
+            <th class="tableHeaderLabel">CIS ID</th>
+            <th class="tableHeaderLabel">ประเภทบัตร</th>
+            <th class="tableHeaderLabel">เลขที่บัตร</th>
+            <th class="tableHeaderLabel">ชื่อ-นามสกุล (ไทย)</th>
+            <th class="tableHeaderLabel">Name-Surname (Eng)</th>
+            <th class="tableHeaderLabel">ประเภทลูกค้า</th>
+            <th class="tableHeaderLabel">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (custData != null)
+        {
+            int i = 0;
+            foreach (AnyIDModel.Customer item in custData)
+            {
+                <tr>
+                    <td class="page-cellCenter">@(++i)</td>
+                    <td class="page-cellCenter">@item.CISID</td>
+                    <td>@(CommonUtilities.CardType(new Dictionary<string,string>())[item.IDType.ToString()])</td>
+                    <td>@item.IDNo</td>
+                    <td>@item.FullNameThai</td>
+                    <td>@item.FullNameEnglish</td>
+                    <td>@(item.CustomerType)</td>
+                    <td class="page-cellCenter">
+                        @if (allowCustType.Contains(item.CustomerType))
+                        {
+                            <img alt="" src="@Url.Content("~/Images/icon/search.png")" style="cursor:pointer;width:24px;" onclick="GoToViewCust('@item.CISID')" />
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.UserRole,iSabaya" table="UserRole">
+
+    <!-- Primary key-->
+    <id name="ID" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+    <many-to-one name="User" class="iSabaya.User,iSabaya" column="UserId" fetch="join"/>
+    <many-to-one name="Role" class="iSabaya.Role,iSabaya" column="RoleId"/>
+
+  </class>
+</hibernate-mapping>
+
+

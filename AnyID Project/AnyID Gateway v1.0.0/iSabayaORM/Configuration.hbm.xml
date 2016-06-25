@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.Configuration,iSabaya" table="Configuration">
+    <id name="ID" type="Int32" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+
+    <component name="EffectivePeriod" class="iSabaya.TimeInterval, iSabaya.Config">
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+
+    <!--<many-to-one name="DefaultCountry" column="DefaultCountryCode" />-->
+    <many-to-one name="DefaultCurrency" column="DefaultCurrencyCode"  />
+    <many-to-one name="DefaultLanguage" column="DefaultLanguageCode" />
+    <many-to-one name="DefaultNationality" column="DefaultNationalityNodeID" />
+
+    <!--<many-to-one name="GeographicAddressCategoryRootNode" column="GeographicAddressCategoryRootNodeID" class="iSabaya.TreeListNode,iSabaya"/>-->
+    <!--<many-to-one name="IncomeTaxSchedule" class="iSabaya.MoneyRateSchedule,iSabaya" column="IncomeTaxScheduleID"/>-->
+    <!--<many-to-one name="InvestmentAdviceSourceParentNode" column="InvestmentAdviceSourceParentNodeID" class="iSabaya.TreeListNode,iSabaya"/>-->
+    <!--<many-to-one name="IPCategoryRootNode" column="IPCategoryRootNodeID" class="iSabaya.TreeListNode,iSabaya"/>-->
+    <!--<many-to-one name="NationalityParentNode" column="NationalityParentNodeID" class="iSabaya.TreeListNode,iSabaya" />-->
+    <!--<many-to-one name="NonworkCalendar" column="NonworkCalendarID" class="iSabaya.TimeSchedule,iSabaya"/>-->
+
+    <!--<property name="OneFundPerAccount" />-->
+    <!--<many-to-one name="RegulatorFundCategoryRootNode" column="RegulatorFundCategoryRootNodeID" class="iSabaya.TreeListNode,iSabaya" />-->
+    <!--<many-to-one name="RelationshipCategoryParentNode" column="RelationshipCategoryParentNodeID" class="iSabaya.TreeListNode,iSabaya" />-->
+    <!--<many-to-one name="ReserveCategoryRootNode" column="ReserveCategoryRootNodeID" class="iSabaya.TreeListNode,iSabaya"/>-->
+
+    <!--<property name="SalesTaxRate" />-->
+    <!--<many-to-one name="SalesTaxSchedule" class="iSabaya.MoneyRateSchedule,iSabaya" column="SalesTaxScheduleID"/>-->
+    <!--<many-to-one name="ScheduleCategoryParentNode" column="ScheduleCategoryParentNodeID" class="iSabaya.TreeListNode,iSabaya"/>-->
+    <!--<many-to-one name="SequenceNumberGeneratingRule" column="SequenceNumberGeneratingRuleID" class="iSabaya.Rule,iSabaya"/>-->
+    <!--<property name="ServiceTaxRate" />-->
+    <property name="SystemID" />
+    <!--<many-to-one name="SystemOwnerOrg" column="SystemOwnerOrgID" class="iSabaya.Organization,iSabaya" />-->
+    <!--<many-to-one name="TaxScheduleCategoryRootNode" column="TaxScheduleCategoryRootNodeID" class="iSabaya.TreeListNode,iSabaya" />-->
+
+    <!--<property name="WithholdSalesTaxRate" />-->
+    <!--<property name="WithholdServiceTaxRate" />-->
+    <!--<property name="WithholdDividendTaxRate" />-->
+    <!--<many-to-one name="WorkCalendar" column="WorkCalendarID" class="iSabaya.TimeSchedule,iSabaya"/>-->
+
+    <component name="Organization" class="iSabaya.OrganizationConfig,iSabaya">
+      <!--<many-to-one name="AttributeKeyParentNode" column="OrganizationAttributeKeyParentNodeID" class="iSabaya.TreeListNode,iSabaya"/>-->
+      <!--<many-to-one name="BusinessCategoryRootNode" column="OrganizationBusinessCategoryRootNodeID" class="iSabaya.TreeListNode,iSabaya" />-->
+      <!--<many-to-one name="CategoryBankNode" column="OrganizationCategoryBankNodeID" class="iSabaya.TreeListNode,iSabaya" />-->
+      <!--<many-to-one name="CategoryParentNode" column="OrganizationCategoryRootNodeID" class="iSabaya.TreeListNode,iSabaya"/>-->
+      <!--<many-to-one name="CategorySellingAgentNode" column="OrganizationCategorySellingAgentNodeID" class="iSabaya.TreeListNode,iSabaya" />-->
+      <!--<many-to-one name="IdentityCategoryParentNode" column="OrganizationIdentityCategoryParentNodeID" class="iSabaya.TreeListNode,iSabaya" />-->
+      <!--<many-to-one name="NamePrefixParentNode" column="OrganizationNamePrefixParentNodeID" class="iSabaya.TreeListNode,iSabaya" />
+ <many-to-one name="NameSuffixParentNode" column="OrganizationNameSuffixParentNodeID" class="iSabaya.TreeListNode,iSabaya"/>-->
+      <!--<many-to-one name="NationalityParentNode" column="OrganizationNationalityParentNodeID" class="iSabaya.TreeListNode,iSabaya"/>-->
+      <!--<many-to-one name="AppointmentCategoryRootNode" column="OrganizationAppointmentCategoryRootNodeID" />-->
+      <!--<many-to-one name="HolidaySchedule" column="HolidayScheduleID" />
+      <many-to-one name="DefaultWorkSchedule" column="DefaultWorkScheduleID" />-->
+      <many-to-one name="IdentityCategoryRootNode" column="OrganizationIdentityCategoryRootNodeID"  />
+      <many-to-one name="InterOrgUnitRelationCategoryRootNode" column="InterOrgUnitRelationCategoryRootNodeID"  />
+      <many-to-one name="OrgUnitPositionCategoryRootNode" column="OrgUnitPositionCategoryRootNodeID"  />
+      <many-to-one name="PersonnelClassificationRootNode" column="HiringCategoryRootNodeID"  />
+      <!--<many-to-one name="PositionCategoryRoot" column="PositionCategoryRootID"  />-->
+      <!--<many-to-one name="ProfessionCategoryRootNode" column="ProfessionCategoryRootID"  />-->
+      <!--<many-to-one name="WorkCalendar" column="WorkCalendarID" class="iSabaya.TimeSchedule,iSabaya"/>-->
+    </component>
+
+    <component name="Person" class="iSabaya.PersonConfig,iSabaya">
+      <!--<many-to-one name="AttributeKeyParentNode" column="PersonAttributeKeyParentNodeID" class="iSabaya.TreeListNode,iSabaya"/>
+      <many-to-one name="BloodGroupParentNode" column="BloodGroupParentNodeID" class="iSabaya.TreeListNode,iSabaya"/>
+      <many-to-one name="CategoryParentNode" column="PersonCategoryParentNodeID" class="iSabaya.TreeListNode,iSabaya"/>
+      <many-to-one name="GenderParentNode" column="GenderParentNodeID" class="iSabaya.TreeListNode,iSabaya"/>
+      <many-to-one name="IdentityCategoryParentNode" column="PersonIdentityCategoryParentNodeID" class="iSabaya.TreeListNode,iSabaya" />
+      <many-to-one name="NamePrefixParentNode" column="PersonNamePrefixParentNodeID" class="iSabaya.TreeListNode,iSabaya" />
+      <many-to-one name="NameSuffixParentNode" column="PersonNameSuffixParentNodeID" class="iSabaya.TreeListNode,iSabaya"/>
+      <many-to-one name="OccupationParentNode" column="PersonOccupationParentNodeID" class="iSabaya.TreeListNode,iSabaya" />
+      <many-to-one name="ReligionParentNode" column="ReligionParentNodeID" class="iSabaya.TreeListNode,iSabaya"/>-->
+
+      <many-to-one name="AcademicRankRootNode" column="AcademicRankRootNodeID" />
+      <many-to-one name="BloodGroupRootNode" column="BloodGroupRootNodeID" />
+      <many-to-one name="EducationLevelRootNode" column="EducationLevelRootNodeID" />
+      <many-to-one name="GenderRootNode" column="GenderRootNodeID" />
+      <many-to-one name="IdentityCategoryRootNode" column="PersonIdentityCategoryRootNodeID"  />
+      <many-to-one name="InterPersonRelationshipCategoryRoot" column="InterPersonRelationshipCategoryRootNodeID" />
+      <many-to-one name="NamePrefixRootNode" column="PersonNamePrefixRootNodeID"  />
+      <many-to-one name="NameSuffixRootNode" column="PersonNameSuffixRootNodeID" />
+      <many-to-one name="NationalityRootNode" column="NationalityRootNodeID" />
+      <many-to-one name="ReligionRootNode" column="ReligionRootNodeID" />
+    </component>
+  </class>
+</hibernate-mapping>

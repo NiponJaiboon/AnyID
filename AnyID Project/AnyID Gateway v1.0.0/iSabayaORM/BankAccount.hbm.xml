@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.BankAccount,iSabaya" table="BankAccount">
+
+    <!-- Primary key-->
+    <id name="ID" column="ID" type="Int64" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+
+    <!--<many-to-one name="MultilingualName" column="AccountNameMLSID" />-->
+    <property name="Name" />
+    <property name="AccountNo" />
+    <!--<property name="AccountType" type="iSabaya.BankAccountType,iSabaya" />-->
+    <property name="AccountType" />
+    <!--<many-to-one name="Bank" class="iSabaya.Organization,iSabaya" column="BankID" not-null="true"/>-->
+    <!--<many-to-one name="Branch" class="iSabaya.OrgUnit,iSabaya" column="BranchID" />-->
+    <property name="BankCode" />
+    <property name="BranchCode" />
+    <!--<many-to-one name="Category" column="CategoryNodeID" />-->
+    <!--<many-to-one name="CurrentBalance" class="iSabaya.BankAccountBalance,iSabaya" column="CurrentBalanceID" />-->
+    <!--<property name="ConsecutiveDebitRejects" />-->
+    <!--<property name="CurrencyCode" />-->
+    <!--<many-to-one name="Currency" class="iSabaya.Currency,iSabaya" column="CurrencyCode" />-->
+    <!--<property name="DirectDebitStatus" column="DirectDebitStatus" type="iSabaya.DirectDebitStatus,iSabaya" />-->
+    <!--<property name="DirectDebitFailCount" />-->
+    <!--<component name="EffectivePeriod"  >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>-->
+    <!--<property name="GrantRemark" />-->
+    <!--<property name="IsEFTEnable" />-->
+    <!--<component name="PowerOfAttorneyGrantPeriod" >
+      <property name="From" column="PowerOfAttorneyGrantFrom"/>
+      <property name="To" column="PowerOfAttorneyGrantTo"/>
+    </component>-->
+    <!--<property name="Status" type="iSabaya.BankAccountStatus,iSabaya" />-->
+    <property name="Status" />
+    <property name="StatusDate" type="datetime2" />
+    <!--<many-to-one name="UpdatedBy" column="UpdatedBy" class="iSabaya.User,iSabaya" fetch="join" />-->
+    <!--<property name="UpdatedTS" />-->
+    <!--<property name="UniqueAccountNo" column="UniqueAccountNo" />-->
+    <!--<property name="ZoneNo" />-->
+
+    <!--<bag name="Owners" table="BankAccountOwner" cascade="delete">
+      <key column="BankAccountID"/>
+      <one-to-many class="iSabaya.BankAccountOwner,iSabaya"/>
+    </bag>-->
+    <!--<bag name="Balances" table="BankAccountBalance" cascade="delete" order-by="Timestamp">
+      <key column="BankAccountID"/>
+      <one-to-many class="iSabaya.BankAccountBalance,iSabaya"/>
+    </bag>-->
+  </class>
+</hibernate-mapping>

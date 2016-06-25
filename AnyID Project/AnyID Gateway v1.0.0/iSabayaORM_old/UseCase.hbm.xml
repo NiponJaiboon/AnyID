@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.UseCase,iSabaya" table="UseCase">
+    <id name="ID" type="Int64" unsaved-value="0">
+      <generator class="native" />
+    </id>
+    <component name="EffectivePeriod"  >
+      <property name="From" column="EffectiveFrom" type="datetime2" />
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+
+    <property name="Code" />
+    <many-to-one name="Description" column="DescriptionMLSID"/>
+    <property name="PageCode" />
+    <many-to-one name="Parent" column="ParentID"/>
+    <property name="Reference" />
+    <property name="Remark" />
+    <property name="SeqNo" />
+    <property name="SystemID" />
+    <!--<many-to-one name="ShortTitle" column="ShortTitleMLSID"/>-->
+    <many-to-one name="Title" column="TitleMLSID"/>
+    <property name="URL" />
+    
+    <bag name="Children" cascade="delete">
+      <key column="ParentID" />
+      <one-to-many class="iSabaya.UseCase,iSabaya" />
+    </bag>
+
+  </class>
+</hibernate-mapping>

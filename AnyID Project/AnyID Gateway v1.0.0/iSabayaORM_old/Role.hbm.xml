@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.Role,iSabaya" table="Role">
+
+    <!-- Primary key-->
+    <id name="ID" type="Int64" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+
+    <property name="Code" />
+    <many-to-one name="Description" column="DescriptionMLSID" />
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+    <property name="IsAdministrator" />
+    <property name="IsBuiltin" />
+    <many-to-one name="OrgUnit" column="OrgUnitID" />
+    <property name="PrivilegeLevel" />
+    <property name="SeqNo" />
+    <property name="SystemID" />
+    <many-to-one name="Title" column="TitleMLSID" />
+
+    <bag name="UseCases" table="RoleUseCase">
+      <key column="RoleID"/>
+      <one-to-many class="iSabaya.RoleUseCase,iSabaya"/>
+    </bag>
+
+    <bag name="UserRoles" cascade="delete">
+      <key column="RoleID" />
+      <one-to-many class="iSabaya.UserRole,iSabaya" />
+    </bag>
+
+  </class>
+
+</hibernate-mapping>
+
+

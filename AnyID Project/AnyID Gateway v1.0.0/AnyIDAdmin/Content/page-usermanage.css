@@ -1,0 +1,95 @@
+﻿.tablePage {
+}
+
+    .tablePage td {
+        border: 1px solid black;
+    }
+
+.tablePage-Header {
+    width: 99%;
+    border-bottom-style: groove;
+    border-bottom-width: medium;
+    border-bottom-color: #C0C0C0;
+    font-size: 18px;
+    color: rgb(153,153,153);
+    margin-bottom: 20px;
+    padding: 5px;
+}
+
+.tablePage-pad {
+    padding: 5px;
+}
+
+.tablePage-sub {
+    padding-left: 25px;
+    padding-right: 5px;
+}
+
+    .tablePage-sub * {
+        vertical-align: middle;
+    }
+
+.tablePage-p-pic {
+    text-align: center;
+    cursor: pointer;
+    min-width: 50px;
+}
+
+.tablePage-ud {
+    width: 50%;
+    vertical-align: top;
+}
+
+    .tablePage-ud .header {
+        width: 90%;
+        margin: 0 auto;
+        font-weight: bold;
+    }
+
+        .tablePage-ud .header td {
+            padding: 0 0 10px 0;
+        }
+
+    .tablePage-ud .info {
+        width: 90%;
+        margin: 0 auto;
+        background-color: rgb(247,247,247);
+        border: 1px solid black;
+    }
+
+        .tablePage-ud .info .lb {
+            width: 120px;
+        }
+
+        .tablePage-ud .info .fcolL {
+            padding: 10px 5px 5px 10px;
+        }
+
+        .tablePage-ud .info .fcolR {
+            padding: 10px 10px 5px 0px;
+        }
+
+        .tablePage-ud .info .colL {
+            padding: 5px 5px 5px 10px;
+        }
+
+        .tablePage-ud .info .colR {
+            padding: 5px 10px 5px 0px;
+        }
+
+        .tablePage-ud .info .lcolL {
+            padding: 5px 5px 10px 10px;
+        }
+
+        .tablePage-ud .info .lcolR {
+            padding: 5px 10px 10px 0px;
+        }
+
+        .tablePage-ud .info input {
+            border: 1px solid black;
+            padding: 0 5px;
+            font-size: 14px;
+            height: 27px;
+            background-color: silver;
+            width: 95%;
+        }

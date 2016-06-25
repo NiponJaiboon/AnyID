@@ -1,0 +1,556 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\Users\Vongola\Desktop\AnyIDAdmin</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/AnyIDAdmin.dll">
+      <publishTime>06/24/2016 16:51:30</publishTime>
+    </File>
+    <File Include="bin/AnyIDModel.dll">
+      <publishTime>06/24/2016 16:51:28</publishTime>
+    </File>
+    <File Include="bin/AnyIDModel.ORM.dll">
+      <publishTime>06/19/2016 17:55:05</publishTime>
+    </File>
+    <File Include="bin/DocumentFormat.OpenXml.dll">
+      <publishTime>06/11/2016 21:55:18</publishTime>
+    </File>
+    <File Include="bin/DotNetOpenAuth.AspNet.dll">
+      <publishTime>05/28/2016 15:48:15</publishTime>
+    </File>
+    <File Include="bin/DotNetOpenAuth.Core.dll">
+      <publishTime>05/28/2016 15:48:17</publishTime>
+    </File>
+    <File Include="bin/DotNetOpenAuth.OAuth.Consumer.dll">
+      <publishTime>05/28/2016 15:48:19</publishTime>
+    </File>
+    <File Include="bin/DotNetOpenAuth.OAuth.dll">
+      <publishTime>05/28/2016 15:48:21</publishTime>
+    </File>
+    <File Include="bin/DotNetOpenAuth.OpenId.dll">
+      <publishTime>05/28/2016 15:48:24</publishTime>
+    </File>
+    <File Include="bin/DotNetOpenAuth.OpenId.RelyingParty.dll">
+      <publishTime>05/28/2016 15:48:26</publishTime>
+    </File>
+    <File Include="bin/en-US/ResourceLanguages.resources.dll">
+      <publishTime>06/03/2016 17:39:08</publishTime>
+    </File>
+    <File Include="bin/Iesi.Collections.dll">
+      <publishTime>05/28/2016 15:48:26</publishTime>
+    </File>
+    <File Include="bin/iSabaya.Config.dll">
+      <publishTime>06/22/2016 15:12:20</publishTime>
+    </File>
+    <File Include="bin/iSabaya.dll">
+      <publishTime>06/23/2016 10:37:08</publishTime>
+    </File>
+    <File Include="bin/iSabaya.ORM.dll">
+      <publishTime>06/23/2016 11:06:06</publishTime>
+    </File>
+    <File Include="bin/itextsharp.dll">
+      <publishTime>05/28/2016 15:48:29</publishTime>
+    </File>
+    <File Include="bin/ITMXConnector.dll">
+      <publishTime>06/24/2016 16:51:28</publishTime>
+    </File>
+    <File Include="bin/KiatnakinServices.dll">
+      <publishTime>06/24/2016 16:51:29</publishTime>
+    </File>
+    <File Include="bin/log4net.dll">
+      <publishTime>05/28/2016 15:48:36</publishTime>
+    </File>
+    <File Include="bin/Microsoft.ReportViewer.Common.dll">
+      <publishTime>06/28/2011 01:35:08</publishTime>
+    </File>
+    <File Include="bin/Microsoft.ReportViewer.WebForms.dll">
+      <publishTime>06/28/2011 01:35:08</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>05/28/2016 15:48:48</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.WebPages.OAuth.dll">
+      <publishTime>05/28/2016 15:48:46</publishTime>
+    </File>
+    <File Include="bin/Mono.Math.dll">
+      <publishTime>05/28/2016 15:48:24</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>05/28/2016 15:48:51</publishTime>
+    </File>
+    <File Include="bin/NHibernate.dll">
+      <publishTime>05/28/2016 15:48:57</publishTime>
+    </File>
+    <File Include="bin/Org.Mentalis.Security.Cryptography.dll">
+      <publishTime>05/28/2016 15:48:24</publishTime>
+    </File>
+    <File Include="bin/ProxyRegistraAdapter.dll">
+      <publishTime>06/24/2016 16:51:29</publishTime>
+    </File>
+    <File Include="bin/ResourceLanguages.dll">
+      <publishTime>06/03/2016 17:39:08</publishTime>
+    </File>
+    <File Include="bin/RestSharp.dll">
+      <publishTime>06/05/2016 15:22:31</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>05/28/2016 15:48:40</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>05/28/2016 15:48:43</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>05/28/2016 15:48:41</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>05/28/2016 15:48:42</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>05/28/2016 15:48:38</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>05/28/2016 15:48:38</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>05/28/2016 15:48:43</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>05/28/2016 15:48:43</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>05/28/2016 15:48:43</publishTime>
+    </File>
+    <File Include="Content/bootstrap.min.css">
+      <publishTime>05/31/2016 17:53:24</publishTime>
+    </File>
+    <File Include="Content/bootstrap.min.css.map">
+      <publishTime>06/17/2016 23:19:20</publishTime>
+    </File>
+    <File Include="Content/DataTables-1.10.11/images/sort_asc.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/DataTables-1.10.11/images/sort_both.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/DataTables-1.10.11/images/sort_desc.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/datatables.min.css">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/datepicker.css">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/fonts/ClanOT-NarrowNews.eot">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/fonts/ClanOT-NarrowNews.ttf">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/fonts/Cordia-New.eot">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/fonts/Cordia-New.ttf">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/fonts/flaticon.eot">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/fonts/flaticon.svg">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/fonts/flaticon.ttf">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/fonts/flaticon.woff">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.eot">
+      <publishTime>05/31/2016 11:35:42</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.svg">
+      <publishTime>05/31/2016 11:35:38</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>05/31/2016 11:35:33</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.woff">
+      <publishTime>05/31/2016 11:35:20</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.woff2">
+      <publishTime>05/31/2016 11:35:10</publishTime>
+    </File>
+    <File Include="Content/fonts/Quark-Bold.eot">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/fonts/Quark-Bold.otf">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/fonts/Quark-Bold.ttf">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/fonts/Quark-Light.eot">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/fonts/Quark-Light.otf">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/fonts/Quark-Light.ttf">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/images/ui-icons_222222_256x240.png">
+      <publishTime>06/16/2016 13:38:53</publishTime>
+    </File>
+    <File Include="Content/isabayaCalendar.css">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/isabayaDataTable.css">
+      <publishTime>06/18/2016 15:36:02</publishTime>
+    </File>
+    <File Include="Content/jquery-ui.css">
+      <publishTime>06/17/2016 22:49:16</publishTime>
+    </File>
+    <File Include="Content/jquery.dataTables.css">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/multi-select.css">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/page-usermanage.css">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/style.css">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Content/style.layout.css">
+      <publishTime>06/18/2016 15:33:55</publishTime>
+    </File>
+    <File Include="Content/stylescustom.css">
+      <publishTime>06/19/2016 15:02:21</publishTime>
+    </File>
+    <File Include="Content/weblayout.css">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="errormaxfilesize.html">
+      <publishTime>06/14/2016 10:54:34</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>05/28/2016 10:47:40</publishTime>
+    </File>
+    <File Include="hometest.html">
+      <publishTime>06/16/2016 14:17:21</publishTime>
+    </File>
+    <File Include="Images/add.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/collapse.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/expand.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/help.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/ico-side-accordion-down.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/ico-side-accordion-up.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/ico-side-close.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/ico-side-open.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/accept.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/accept_dis.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/calendar.gif">
+      <publishTime>06/16/2016 13:36:02</publishTime>
+    </File>
+    <File Include="Images/icon/cross.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/doc.png">
+      <publishTime>06/05/2016 13:31:41</publishTime>
+    </File>
+    <File Include="Images/icon/excel.png">
+      <publishTime>06/05/2016 13:31:41</publishTime>
+    </File>
+    <File Include="Images/icon/favicon.ico">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/key.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/lock.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/menuarrow.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/modal.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/pdf.png">
+      <publishTime>06/05/2016 13:31:41</publishTime>
+    </File>
+    <File Include="Images/icon/ppt.png">
+      <publishTime>06/05/2016 13:31:41</publishTime>
+    </File>
+    <File Include="Images/icon/search.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/submenu.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/submenulast.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/trash.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/uncheck.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/user.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/user_access.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/user_access_dis.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/user_lock.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/user_lock_dis.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/user_privilege.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/user_terminate.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/user_terminate_dis.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/icon/word.png">
+      <publishTime>06/05/2016 13:31:41</publishTime>
+    </File>
+    <File Include="Images/iconcontrol/arrow-buttom-dis.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/iconcontrol/arrow-buttom.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/iconcontrol/arrow-left-dis.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/iconcontrol/arrow-left.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/iconcontrol/arrow-right-dis.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/iconcontrol/arrow-right.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/iconcontrol/arrow-top-dis.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/iconcontrol/arrow-top.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/iconcontrol/calendar.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/infomation.png">
+      <publishTime>05/29/2016 13:44:02</publishTime>
+    </File>
+    <File Include="Images/loadingicon.gif">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/logo-kk-white.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/logoSite.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="Images/logout.png">
+      <publishTime>05/28/2016 10:47:41</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>06/23/2016 17:00:53</publishTime>
+    </File>
+    <File Include="ReportTemplates/Detail_Report_By_Branch_Template.xlsx">
+      <publishTime>06/12/2016 22:13:42</publishTime>
+    </File>
+    <File Include="ReportTemplates/Detail_Report_By_Customer_Template.xlsx">
+      <publishTime>06/12/2016 22:13:42</publishTime>
+    </File>
+    <File Include="ReportTemplates/Transaction_Summary_Report_Template.xlsx">
+      <publishTime>06/12/2016 22:13:42</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap.min.js">
+      <publishTime>05/31/2016 17:51:22</publishTime>
+    </File>
+    <File Include="Scripts/datatables.min.js">
+      <publishTime>05/28/2016 10:47:42</publishTime>
+    </File>
+    <File Include="Scripts/isabayaCalendar.js">
+      <publishTime>05/28/2016 10:47:42</publishTime>
+    </File>
+    <File Include="Scripts/isabayaDataTable.js">
+      <publishTime>05/28/2016 10:47:42</publishTime>
+    </File>
+    <File Include="Scripts/isabayaPopup.js">
+      <publishTime>05/28/2016 10:47:42</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.10.2.js">
+      <publishTime>05/28/2016 10:47:42</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.10.2.min.js">
+      <publishTime>05/28/2016 10:47:42</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.10.2.min.map">
+      <publishTime>05/28/2016 10:47:42</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui.js">
+      <publishTime>06/17/2016 00:43:33</publishTime>
+    </File>
+    <File Include="Scripts/jquery.blockUI.js">
+      <publishTime>05/28/2016 10:47:42</publishTime>
+    </File>
+    <File Include="Scripts/jquery.form.js">
+      <publishTime>05/28/2016 10:47:42</publishTime>
+    </File>
+    <File Include="Service References/ServiceReference1/AnyIDAdmin.ServiceReference1.authenticateResponse.datasource">
+      <publishTime>06/17/2016 13:37:22</publishTime>
+    </File>
+    <File Include="Service References/ServiceReference1/AnyIDAdmin.ServiceReference1.AuthenticationResponse.datasource">
+      <publishTime>06/17/2016 13:37:22</publishTime>
+    </File>
+    <File Include="Views/AmendRegistration/Index.cshtml">
+      <publishTime>06/23/2016 14:39:51</publishTime>
+    </File>
+    <File Include="Views/AmendRegistration/Partial/_AttachmentGridPartial.cshtml">
+      <publishTime>06/18/2016 15:07:03</publishTime>
+    </File>
+    <File Include="Views/AmendRegistration/Partial/_Comfirm.cshtml">
+      <publishTime>06/19/2016 17:37:34</publishTime>
+    </File>
+    <File Include="Views/AmendRegistration/Partial/_Form.cshtml">
+      <publishTime>06/01/2016 22:10:24</publishTime>
+    </File>
+    <File Include="Views/ApproveRegistration/Index.cshtml">
+      <publishTime>06/23/2016 16:52:30</publishTime>
+    </File>
+    <File Include="Views/CreateRegistration/Index.cshtml">
+      <publishTime>06/21/2016 09:54:37</publishTime>
+    </File>
+    <File Include="Views/CreateRegistration/Partial/_AttachmentGridPartial.cshtml">
+      <publishTime>06/18/2016 14:57:22</publishTime>
+    </File>
+    <File Include="Views/CreateRegistration/Partial/_Comfirm.cshtml">
+      <publishTime>06/19/2016 17:38:22</publishTime>
+    </File>
+    <File Include="Views/CreateRegistration/Partial/_Form.cshtml">
+      <publishTime>06/11/2016 14:18:59</publishTime>
+    </File>
+    <File Include="Views/DeactivateRegistration/Index.cshtml">
+      <publishTime>06/21/2016 09:54:37</publishTime>
+    </File>
+    <File Include="Views/DeactivateRegistration/Partial/_AttachmentGridPartial.cshtml">
+      <publishTime>06/18/2016 15:09:08</publishTime>
+    </File>
+    <File Include="Views/DeactivateRegistration/Partial/_Comfirm.cshtml">
+      <publishTime>06/19/2016 17:38:00</publishTime>
+    </File>
+    <File Include="Views/DeactivateRegistration/Partial/_Form.cshtml">
+      <publishTime>06/02/2016 22:49:17</publishTime>
+    </File>
+    <File Include="Views/DetailReportByBranch/Index.cshtml">
+      <publishTime>06/23/2016 13:26:02</publishTime>
+    </File>
+    <File Include="Views/DetailReportByBranch/Partial/_TransactioReportGrid.cshtml">
+      <publishTime>06/12/2016 22:50:06</publishTime>
+    </File>
+    <File Include="Views/DetailReportByCustomer/Index.cshtml">
+      <publishTime>06/23/2016 13:26:01</publishTime>
+    </File>
+    <File Include="Views/DetailReportByCustomer/Partial/_TransactioReportGrid.cshtml">
+      <publishTime>06/12/2016 23:14:38</publishTime>
+    </File>
+    <File Include="Views/History/Index.cshtml">
+      <publishTime>06/23/2016 13:30:49</publishTime>
+    </File>
+    <File Include="Views/History/Partial/_AnyIDGridPartial.cshtml">
+      <publishTime>06/19/2016 14:00:29</publishTime>
+    </File>
+    <File Include="Views/Home/Index.cshtml">
+      <publishTime>06/03/2016 15:22:49</publishTime>
+    </File>
+    <File Include="Views/Login/Index.cshtml">
+      <publishTime>06/21/2016 09:37:54</publishTime>
+    </File>
+    <File Include="Views/MyWork/Index.cshtml">
+      <publishTime>06/23/2016 13:29:11</publishTime>
+    </File>
+    <File Include="Views/MyWork/Partial/_TransactionGridPartial.cshtml">
+      <publishTime>06/19/2016 14:00:29</publishTime>
+    </File>
+    <File Include="Views/SearchCustomer/Index.cshtml">
+      <publishTime>06/24/2016 16:36:55</publishTime>
+    </File>
+    <File Include="Views/SearchCustomer/Partial/InquiryCustProfileMain.cshtml">
+      <publishTime>06/09/2016 18:06:38</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout.cshtml">
+      <publishTime>06/23/2016 13:23:25</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout_Anonymus.cshtml">
+      <publishTime>05/28/2016 10:47:42</publishTime>
+    </File>
+    <File Include="Views/Shared/_Menu.cshtml">
+      <publishTime>06/11/2016 15:49:09</publishTime>
+    </File>
+    <File Include="Views/TransactionSummaryReport/Index.cshtml">
+      <publishTime>06/23/2016 13:26:02</publishTime>
+    </File>
+    <File Include="Views/TransactionSummaryReport/Partial/_TransactioSummaryReportGrid.cshtml">
+      <publishTime>06/12/2016 22:12:53</publishTime>
+    </File>
+    <File Include="Views/ViewCustomer/Index.cshtml">
+      <publishTime>06/21/2016 09:54:36</publishTime>
+    </File>
+    <File Include="Views/ViewHistory/Index.cshtml">
+      <publishTime>06/23/2016 11:57:51</publishTime>
+    </File>
+    <File Include="Views/ViewRegistration/Index.cshtml">
+      <publishTime>06/21/2016 09:54:36</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>06/09/2016 18:15:50</publishTime>
+    </File>
+    <File Include="Views/_ViewStart.cshtml">
+      <publishTime>05/28/2016 10:47:42</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>06/23/2016 17:03:23</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

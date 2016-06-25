@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate , max-age=0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="iSabaya">
+    <title>@ViewBag.Title</title>
+
+    <!-- Core CSS -->
+    <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/Images/icon/favicon.ico")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap.min.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/weblayout.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/multi-select.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/jquery-ui.css")">
+    @*<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/jquery.dataTables.css")">*@
+
+    <!-- Add custom CSS here -->
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/style.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/style.layout.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/stylescustom.css")">
+
+    <!-- JS -->
+    @*<script src="./Kiatnakin Bank - ATS_files/jquery.min.js"></script>
+        <script type="text/javascript" src="./Kiatnakin Bank - ATS_files/jquery-1.7.1.js"></script>
+        <script type="text/javascript" src="./Kiatnakin Bank - ATS_files/respond.src.js"></script>
+        <script type="text/javascript" src="./Kiatnakin Bank - ATS_files/jquery.json.js"></script>
+        <script type="text/javascript" src="./Kiatnakin Bank - ATS_files/jquery.validate-vsdoc.js"></script>
+        <script type="text/javascript" src="./Kiatnakin Bank - ATS_files/jquery.validate.js"></script>
+        <script type="text/javascript" src="./Kiatnakin Bank - ATS_files/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="./Kiatnakin Bank - ATS_files/jquery.validate.unobtrusive.js"></script>
+        <script type="text/javascript" src="./Kiatnakin Bank - ATS_files/jquery.validate.unobtrusive.min.js"></script>
+         KKP
+        <script type="text/javascript" src="./Kiatnakin Bank - ATS_files/Common.js"></script>
+        <script type="text/javascript" src="./Kiatnakin Bank - ATS_files/Home.js"></script>*@
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.blockUI.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/isabayaPopup.js")"></script>
+
+    <script type="text/javascript">
+        var lastActionTS;
+        var ckSession;
+        window.onload = function () {
+            var e = document.getElementById("refreshed");
+            if (e.value == "no") e.value = "yes";
+            else { e.value = "no"; location.reload(); }
+
+            lastActionTS = new Date();
+            ckSession = setInterval(function () {
+                var dateCurrent = new Date();
+                if (Math.abs(dateCurrent - lastActionTS) > 599000){
+                    clearInterval(ckSession);
+                    sessionExpire.Show();
+                    $.ajax({
+                        url: '@Url.Content("~/Base/SessionExpired")',
+                        type: 'POST',
+                        data: { },
+                        dataType: "json",
+                        success: function (data) { console.log('Session Expire!!') },
+                        error: function (data) { console.log(data); }
+                    });
+                }
+            }, 20000);
+        }
+
+        function displayValidate(sender, show) {var s = document.getElementById(sender);if (s) {s.style.border = (show == true ? "1px solid red" : "1px solid #a9a9a9");}var vs = document.getElementById("v" + sender);if (vs) {vs.style.display = (show == true ? "table" : "none");}}
+        function clearAllValidate(senders) { for (var i = 0; i < senders.length; i++) { displayValidate(senders[i], false); } }
+        function OutOfLimitDateLength(date1, date2, limitDay) {
+            var actuaLimitDay = 86400000 * limitDay;
+            if (Math.abs(date1 - date2) <= actuaLimitDay) { return false; }
+            else { alert("กรุณาเลือกช่วง \"วันที่\" ห่างกันไม่เกิน 30 วัน"); return true; }
+        }
+        function IsDateToLessthanDateFrom(datefrom, dateTo, txt)
+        {
+            if (dateTo < datefrom) { alert(txt); return true; }
+            else { return false; }
+        }
+        function ErrorException999(logText) { alert("@CommonUtilities.Messages.CommonErrorText"); console.log(logText); }
+
+        function logout() {
+            $.ajax({
+                url: '@Url.Content("~/Login/Logout")',
+                type: 'GET',
+                data: { },
+                dataType: "json",
+                success: function (data) {
+                    window.location.replace('@Url.Content("~/Login")');
+                },
+                error: function (data) {
+                    console.log(data)
+                    alert("Logout failed. Exception");
+                }
+            });
+        }
+
+        function DisplayNavbar() {
+            var navClass = $("#nav").attr('class');
+            if (navClass == "nav nav-wide") { $("#nav").attr('class', 'nav nav-hide'); }
+            else { $("#nav").attr('class', 'nav nav-wide') }
+        }
+    </script>
+    @if (IsSectionDefined("PageHead"))
+    {
+        @RenderSection("PageHead", required: false)
+    }
+</head>
+<body onmousemove="lastActionTS = new Date();">
+    <input type="hidden" id="refreshed" value="no">
+    <!-- Row-fluid -->
+    <div class="row-fluid">
+        <div class="span12">
+            <!-- Navigation Bar -->
+            <div id="navi">
+                <!-- Nav Side Bar -->
+                <div class="nav nav-wide" id="nav">
+                    <div id="btn_close" class="nav_button btn-side" onclick="DisplayNavbar();"></div>
+                    <div class="brand">
+                        <img src="@Url.Content("~/Images/logo-kk-white.png")" alt="" style="cursor:pointer;" onclick="window.location.replace('@Url.Content("~/Home")')">
+                    </div>
+                    @Html.Partial("_Menu")
+                </div>
+                <!-- End Nav Side Bar -->
+            </div>
+            <!-- End Navigation Bar -->
+            <div class="header-bar-blank"></div>
+
+            <!-- Contain -->
+            <div class="contain">
+                <!-- Content -->
+                <div id="content" class="content-wide">
+                    <div class="content">
+                        <!-- ROW -->
+                        <div class="row">
+                            <!-- Header Bar -->
+                            <div id="header_bar" class="header-bar">
+                                <div class="row">
+                                    <div class="header-section section-left">
+                                        <div class="title"><h2>AnyID Web</h2></div>
+                                    </div>
+                                    <div class="section-right pull-right ">
+                                        <div class="header-right-top pull-right">
+                                            <div class="user-status">
+                                                <div class="detail">
+                                                    <span class="font-blue"> </span>(&nbsp;@(ViewData["User"] == null ? "" : (string)ViewData["User"]) &nbsp;)
+                                                </div>
+                                                <div class="detail">บทบาท : @(ViewData["RoleName"] == null ? "" : (string)ViewData["RoleName"])</div>
+                                            </div>
+                                        </div>
+                                        <div class="clr"></div>
+                                        <div class="header-right-bottom  pull-right">
+                                            <div class="header-menu">
+                                                <a id="btn-logout" style="cursor:pointer" onclick="logout();">Log Out</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Header Bar -->
+                            <!-- Breadcrumb -->
+                            <div class="section-breadcrumb row">
+                                <div class="pull-right"></div>
+                            </div>
+                            <!-- End Breadcrumb -->
+                            <div id="kkpContent">
+                                <!-- START Header -->
+                                <div class="header-content">
+                                    <div class="row">
+                                        <h2 class="pull-left">@ViewBag.Title</h2>
+                                    </div>
+                                </div>
+                                <!-- END Header -->
+                                <div class="well well-bg">
+                                    @RenderBody()
+                                    @Html.iSabayaPopup(new iSabayaPopupSettings()
+                                    {
+                                        Name = "loading",
+                                        Width = "160",
+                                        CloseOnClickOutside = false,
+                                        TemplateContent = "<img alt=\"\" style=\"width:30px;\" src=\"" + Url.Content("~/Images/loadingicon.gif") + "\" /><span style=\"font-family:Quark_Bold;font-size:14px;margin-left:10px;\">Please wait....</span>",
+                                    })
+                                    @Html.iSabayaPopup(new iSabayaPopupSettings()
+                                    {
+                                        Name = "sessionExpire",
+                                        Width = "250",
+                                        CloseOnClickOutside = false,
+                                        TemplateContent = "<table style=\"width:100%;font-family:ClanOT_Narrow !important;font-size:14px !important;\"><tr><td style=\"text-align:center\"><span style=\"color:black;\">Session Expired</span></td></tr><tr><td style=\"text-align:center\"><input type=\"button\" value=\"OK\" style=\"margin-top:20px;width:80px;font-size:14px;\" class=\"ibtn ibtn-primary\" onclick=\"this.disabled=true;window.location.replace('" + Url.Content("~/Login") + "');\" /></td></tr></table>",
+                                    })
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END ROW -->
+                    </div>
+                </div>
+                <!-- End Content -->
+            </div>
+            <!-- End Contain -->
+            <!-- Footer -->
+            <div id="footer" class="footer-wide">
+                <div class="footer-login">
+                    <div>
+                        Privacy Policy / Terms &amp; Conditions of Use
+                    </div>
+                    <div>
+                        Kiatnakin Bank Public Company Limited, 500 Amarin Tower 11th Floor, Ploenchit Road, Lumpini, Pathumwan, Bangkok 10330
+                        <br>
+                        Tel: +662 165 5555, © Copyright 2015 Kiatnakin Bank Public Company Limited  All rights reserved.
+                    </div>
+                </div>
+            </div>
+            <!-- End Footer -->
+        </div>
+        <!-- End Div class = span12 -->
+    </div>
+</body>
+</html>

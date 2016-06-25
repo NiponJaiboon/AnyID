@@ -1,0 +1,5 @@
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AuthenticationTest\bin\Debug\AuthenticationTest.exe.config
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AuthenticationTest\bin\Debug\AuthenticationTest.exe
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AuthenticationTest\bin\Debug\AuthenticationTest.pdb
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AuthenticationTest\obj\Debug\AuthenticationTest.exe
+D:\TFS\AnyID Gateway\Release\AnyID Gateway v1.0.0\AuthenticationTest\obj\Debug\AuthenticationTest.pdb

@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  <class name="iSabaya.Person,iSabaya" table="Person">
+
+    <!-- Primary key-->
+    <id name="ID" type="Int64" unsaved-value="0" >
+      <generator class="native"/>
+    </id>
+
+    <!--<component name="CreateAction" class="iSabaya.UserAction,iSabaya">
+      <many-to-one name="ByUser" column="CreatedBy" />
+      <property name="Timestamp" column="CreatedTS" />
+    </component>
+    <component name="ApproveAction" class="iSabaya.UserAction,iSabaya">
+      <many-to-one name="ByUser" column="ApprovedBy" />
+      <property name="Timestamp" column="ApprovedTS" />
+    </component>-->
+    <component name="EffectivePeriod"  >
+      <property name="From" column="BirthDate"/>
+      <property name="To" column="DeceasedDate"/>
+    </component>
+    <property name="Reference" />
+    <property name="Remark" />
+
+    <bag name="Addresses" table="PartyAddress" lazy="true" where="PartyDiscriminator=20"
+      collection-type="iSabaya.PersistentListType`3[
+          [iSabaya.PartyAddress, iSabaya],
+          [iSabaya.CategorizedTemporalList`1[iSabaya.PartyAddress, iSabaya], iSabaya],
+          [iSabaya.PersistentCategorizedTemporalList`1[iSabaya.PartyAddress, iSabaya], iSabaya]], iSabaya">
+      <key column="PartyID"/>
+      <one-to-many class="iSabaya.PartyAddress, iSabaya"/>
+    </bag>
+
+    <bag name="Appointments" >
+      <key column="PersonID"/>
+      <one-to-many class="iSabaya.Appointment, iSabaya"/>
+    </bag>
+
+    <bag name="Attributes" table="PartyAttribute" lazy="true" where="PartyDiscriminator=20"
+      collection-type="iSabaya.PersistentListType`3[
+          [iSabaya.PartyAttribute, iSabaya],
+          [iSabaya.CategorizedTemporalList`1[iSabaya.PartyAttribute, iSabaya], iSabaya],
+          [iSabaya.PersistentCategorizedTemporalList`1[iSabaya.PartyAttribute, iSabaya], iSabaya]], iSabaya">
+      <key column="PartyID"/>
+      <one-to-many class="iSabaya.PartyAttribute, iSabaya"/>
+    </bag>
+    <!--<bag name="AssociatedBankAccounts" table="PartyBankAccount" access="field.camelcase"
+       collection-type="iSabaya.PersistentListType`3[
+        [iSabaya.PartyBankAccount,iSabaya],
+        [iSabaya.TemporalList`1[iSabaya.PartyBankAccount,iSabaya], iSabaya],
+        [iSabaya.PersistentTemporalList`1[iSabaya.PartyBankAccount,iSabaya], iSabaya]], iSabaya">
+        <key column="PartyID"/>
+        <one-to-many class="iSabaya.PartyBankAccount,iSabaya"/>
+        <loader query-ref="LoadPersonBankAccounts"/>
+      </bag>-->
+    <!--<bag name="AssociatedBankAccounts" table="PartyBankAccount" access="field.camelcase" where="PartyDiscriminator=20" >
+      <key column="PartyID"/>
+      <one-to-many class="iSabaya.PartyBankAccount,iSabaya"/>
+    </bag>-->
+    <!--<many-to-one name="Properties" column="Properties" class="iSabaya.PropertyValue, iSabaya" not-found="ignore"/>-->
+    <many-to-one name="BloodGroup" column="BloodGroupNodeID" class="iSabaya.TreeListNode, iSabaya" />
+    <!--<many-to-one name="Category" column="CategoryNodeID" class="iSabaya.TreeListNode, iSabaya" access="field.camelcase" />-->
+    <!--<bag name="Categories" table="PartyCategory" access="field.camelcase" lazy="true" where="PartyDiscriminator=20"
+        collection-type="iSabaya.PersistentListType`3[
+	          [iSabaya.PartyCategory, iSabaya], 
+	          [iSabaya.CategorizedTemporalList`1[iSabaya.PartyCategory, iSabaya], iSabaya], 
+	          [iSabaya.PersistentCategorizedTemporalList`1[iSabaya.PartyCategory, iSabaya], iSabaya]], iSabaya">
+      <key column="PartyID"/>
+      <one-to-many class="iSabaya.PartyCategory, iSabaya"/>
+    </bag>-->
+    <many-to-one name="CitizenOf" column="CitizenCountryCode" />
+    <bag name="Contacts" table="PartyContact" inverse="1" where="PartyDiscriminator=20"
+      collection-type="iSabaya.PersistentListType`3[
+        [iSabaya.PartyContact,iSabaya],
+        [iSabaya.CategorizedTemporalList`1[iSabaya.PartyContact,iSabaya],iSabaya],
+        [iSabaya.PersistentCategorizedTemporalList`1[iSabaya.PartyContact,iSabaya],iSabaya]],iSabaya">
+      <key column="PartyID"/>
+      <one-to-many class="iSabaya.PartyContact,iSabaya"/>
+    </bag>
+    <!--<many-to-one name="CurrentName" column="CurrentNameID" class="iSabaya.PersonName, iSabaya" access="field.camelcase"/>-->
+    <property name="EmailAddress"  />
+
+    <bag name="Employees" >
+      <key column="PersonID"/>
+      <one-to-many class="iSabaya.Employee, iSabaya"/>
+    </bag>
+
+    <property name="Faxes"  />
+    <many-to-one name="Gender" column="GenderNodeID" class="iSabaya.TreeListNode, iSabaya" />
+    <bag name="Identities" table="PartyIdentity" lazy="true" where="PartyDiscriminator=20"
+      collection-type="iSabaya.PersistentListType`3[
+		        [iSabaya.PartyIdentity, iSabaya], 
+		        [iSabaya.CategorizedTemporalList`1[iSabaya.PartyIdentity, iSabaya], iSabaya], 
+		        [iSabaya.PersistentCategorizedTemporalList`1[iSabaya.PartyIdentity, iSabaya], iSabaya]], iSabaya">
+      <key column="PartyID"/>
+      <one-to-many class="iSabaya.PartyIdentity, iSabaya"/>
+    </bag>
+    <bag name="Images" lazy="true" where="PartyDiscriminator=20"
+      collection-type="iSabaya.PersistentListType`3[
+		        [iSabaya.PartyImage, iSabaya], 
+		        [iSabaya.CategorizedTemporalList`1[iSabaya.PartyImage, iSabaya], iSabaya], 
+		        [iSabaya.PersistentCategorizedTemporalList`1[iSabaya.PartyImage, iSabaya], iSabaya]], iSabaya">
+      <key column="PartyID"/>
+      <one-to-many class="iSabaya.PartyImage, iSabaya"/>
+    </bag>
+    <property name="MobilePhone" />
+    <!--<bag name="MoneyRateSchedules" table="PartyMoneyRateSchedule" lazy="true" where="PartyDiscriminator=20"
+      collection-type="iSabaya.PersistentListType`3[
+          [iSabaya.PartyMoneyRateSchedule,iSabaya],
+          [iSabaya.CategorizedTemporalList`1[iSabaya.PartyMoneyRateSchedule,iSabaya],iSabaya],
+          [iSabaya.PersistentCategorizedTemporalList`1[iSabaya.PartyMoneyRateSchedule,iSabaya],iSabaya]],iSabaya">
+      <key column="PartyID"/>
+      <one-to-many class="iSabaya.PartyMoneyRateSchedule,iSabaya"/>
+    </bag>-->
+    <bag name="Names" table="PersonName"  lazy="true"
+        collection-type="iSabaya.PersistentListType`3[
+	          [iSabaya.PersonName,iSabaya], 
+	          [iSabaya.TemporalList`1[iSabaya.PersonName, iSabaya], iSabaya], 
+	          [iSabaya.PersistentTemporalList`1[iSabaya.PersonName, iSabaya], iSabaya]], iSabaya">
+      <key column="PersonID"/>
+      <one-to-many class="iSabaya.PersonName, iSabaya"/>
+    </bag>
+    <!--<many-to-one name="Nationality" column="NationalityNodeID" />-->
+    <property name="OfficialIDNo" />
+    <many-to-one name="Occupation" column="OccupationNodeID" />
+    <property name="Phone" />
+    <many-to-one name="Religion" column="ReligionNodeID" />
+
+    <bag name="Staffs" >
+      <key column="PersonID"/>
+      <one-to-many class="iSabaya.Staff, iSabaya"/>
+    </bag>
+
+    <property name="URL" />
+
+    <bag name="WorkSchedules" lazy="true" cascade="delete" where="PartyDiscriminator=20"
+        collection-type="iSabaya.PersistentListType`3[
+	          [iSabaya.PartyWorkSchedule,iSabaya], 
+	          [iSabaya.TemporalList`1[iSabaya.PartyWorkSchedule, iSabaya], iSabaya], 
+	          [iSabaya.PersistentTemporalList`1[iSabaya.PartyWorkSchedule, iSabaya], iSabaya]], iSabaya">
+      <key column="PartyID"/>
+      <one-to-many class="iSabaya.PartyWorkSchedule, iSabaya"/>
+    </bag>
+
+  </class>
+
+</hibernate-mapping>

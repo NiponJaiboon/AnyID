@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  <class name="iSabaya.Position,iSabaya" table="Position">
+    <id name="ID" type="Int64" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+
+    <property name="Code" />
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+    <property name="IsHead" />
+    <many-to-one name="ShortTitle" column="ShortTitleMLSID" />
+    <many-to-one name="Title" column="TitleMLSID" />
+    <many-to-one name="Organization" column="OrganizationID" class="iSabaya.Organization,iSabaya"/>
+    <property name="PayrollAccountNo" />
+    <many-to-one name="PositionCategory" column="PositionCategoryID" />
+    <!--<property name="TermLimit" />-->
+    <property name="PositionNo" />
+    <property name="Reference" />
+    <property name="Remark" />
+
+    <bag name="Appointments" >
+      <key column="PositionID"/>
+      <one-to-many class="iSabaya.Appointment, iSabaya"/>
+    </bag>
+
+    <bag name="LaterApproverLinks" >
+      <key column="PrimaryPositionID"/>
+      <one-to-many class="iSabaya.LeaveRequestApprovalLink, iSabaya"/>
+    </bag>
+
+    <bag name="EarlierApproverLinks" >
+      <key column="SecondaryPositionID"/>
+      <one-to-many class="iSabaya.LeaveRequestApprovalLink, iSabaya"/>
+    </bag>
+
+    <bag name="Subordinates" >
+      <key column="PrimaryPositionID"/>
+      <one-to-many class="iSabaya.LinkOfCommand, iSabaya"/>
+    </bag>
+
+    <bag name="Superiors" >
+      <key column="SecondaryPositionID"/>
+      <one-to-many class="iSabaya.LinkOfCommand, iSabaya"/>
+    </bag>
+
+  </class>
+</hibernate-mapping>

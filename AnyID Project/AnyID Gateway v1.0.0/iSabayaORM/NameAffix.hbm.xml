@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+             <!--nameSpace.ClassName, AssemblyName-->
+  <class name="iSabaya.NameAffix, iSabaya" table="NameAffix">
+
+    <!-- Primary key-->
+    <id name="AffixID" column="AffixID" type="Int32" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+
+    <property name="IsSuffix" column="IsSuffix" type="boolean"  not-null="true" />
+    
+    <many-to-one name="Affix" 
+                class="iSabaya.MultilingualString, iSabaya"  
+                column="AffixMLSID" 
+                 outer-join="false"
+                />
+    
+    <many-to-one name="ShortAffix" 
+                  class="iSabaya.MultilingualString, iSabaya"  
+                  column="ShortAffixMLSID" 
+                  not-found="ignore"/>
+    
+  </class>
+  
+</hibernate-mapping>
+
+

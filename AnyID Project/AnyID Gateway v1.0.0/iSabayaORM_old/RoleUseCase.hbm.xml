@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.RoleUseCase,iSabaya" table="RoleUseCase">
+
+    <!-- Primary key-->
+    <id name="ID" type="Int64" unsaved-value="0" >
+      <generator class="native"/>
+    </id>
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom" type="datetime2"/>
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+    <property name="CanAddData" not-null="true" />
+    <property name="CanChangeData" not-null="true" />
+    <property name="CanDeleteData" not-null="true" />
+    <property name="CanDisplay" not-null="true" />
+    <property name="CanPrintData" not-null="true" />
+    <property name="Reference" />
+    <property name="Remark" />
+    <many-to-one name="Role" column="RoleID" />
+    <property name="SeqNo" />
+    <many-to-one name="UseCase" column="UseCaseID" />
+  </class>
+</hibernate-mapping>
+
+

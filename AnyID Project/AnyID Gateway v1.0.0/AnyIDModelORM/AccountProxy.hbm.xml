@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="AnyIDModel">
+  <class name="AnyIDModel.AccountProxy" table="TB_T_Account_Proxy" >
+
+    <id name="ID" column="PK_Account_Proxy" type="Int64" unsaved-value="0" >
+      <generator class="native"/>
+    </id>
+
+    <many-to-one name="AnyID" column="FK_AnyID"/>
+    <many-to-one name="BankAccount" column="FK_Bank_Account" />
+    <property name="CISID" column="CIS_ID"/>
+    <many-to-one name="CurrentState" column="FK_Account_Proxy_State" />
+    <property name="CurrentStateCategory" column="Current_State_Category" />
+    <many-to-one name="Customer" column="FK_Customer" fetch="join" />
+    <property name="DisplayName" column="Display_Name" />
+    <property name="DummyAccountNo" column="Dummy_Account_No" />
+    <property name="KKRequiredStateDescription" column="KK_Required_State_Description" />
+    <!--<component name="EffectivePeriod" >
+      <property name="From" column="Effective_From" type="datetime2"/>
+      <property name="To" column="Effective_To" type="datetime2" />
+    </component>-->
+    <!--<property name="ProxyNo" column="Proxy_No" />-->
+    <!--<property name="ProxyType" column="Proxy_Type" />-->
+    <many-to-one name="LatestTransaction" column="FK_Proxy_Transaction" fetch="join" />
+    <property name="RegisteringBranch" column="Registering_Branch" />
+    <property name="RegisteredTS" column="Registered_TS" type="datetime2"/>
+    <property name="RegistrationID" column="Registration_ID" />
+    <property name="Status" column="Status" />
+
+    <component name="RequestAction">
+      <many-to-one name="ByUser" column="FK_User" />
+      <property name="Timestamp" column="Requested_TS" type="datetime2" />
+    </component>
+
+    <!--<component name="BankAccount" >
+      <property name="AccountNo" column="Bank_Account_No" />
+      <property name="Name" column="Bank_Account_Name" />
+      <property name="BankCode" column="Bank_Code" />
+      <property name="BranchCode" column="Branch_Code" />
+      <property name="Status" />
+    </component>-->
+
+    <bag name="States" >
+      <key column="FK_Account_Proxy" />
+      <one-to-many class="AnyIDModel.AccountProxyState"/>
+    </bag>
+
+  </class>
+</hibernate-mapping>

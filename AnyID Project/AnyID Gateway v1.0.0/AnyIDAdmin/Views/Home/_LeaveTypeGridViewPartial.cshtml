@@ -1,0 +1,67 @@
+﻿@{
+	var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "gvLeaveTypes";
+        settings.CallbackRouteValues = new { Controller = "Home", Action = "GridViewPartialView" };
+        //settings.CustomActionRouteValues = new { Controller = "Home", Action = "GridViewPartialView" };
+
+                //settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Home", Action = "LeaveTypeGridViewPartialAddNew" };
+        //settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Home", Action = "LeaveTypeGridViewPartialUpdate" };
+        //settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Home", Action = "LeaveTypeGridViewPartialDelete" };
+        //settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        //settings.SettingsBehavior.ConfirmDelete = true;
+
+        //settings.CommandColumn.Visible = true;
+        //settings.CommandColumn.ShowNewButton = true;
+        //settings.CommandColumn.ShowDeleteButton = true;
+        //settings.CommandColumn.ShowEditButton = true;
+
+		settings.KeyFieldName = "ID";
+        settings.Columns.Add(e =>
+        {
+            e.Caption = "รหัส";
+            e.FieldName = "Code";
+        });
+        settings.Columns.Add(e =>
+        {
+            e.Caption = "ชื่อ";
+            e.FieldName = "Title";
+        });
+        settings.Columns.Add(e =>
+        {
+            e.Caption = "กลุ่มลา";
+            e.FieldName = "LeaveGroup";
+        });
+        settings.Columns.Add(e =>
+        {
+            e.Caption = "วันเริ่ม - วันสิ้นสุด";
+            e.FieldName = "EffectivePeriod";
+            e.Width = Unit.Pixel(200);
+        });
+        settings.Columns.Add(e => {
+            e.Caption = "#";
+            e.FieldName = "ID";
+            e.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+            e.SetDataItemTemplateContent(c =>
+            {
+                DevExpressHelper.WriteLineToResponse("<a title='รายละเอียด : " + DataBinder.Eval(c.DataItem, "Title") + "' onclick='detail(" + DataBinder.Eval(c.DataItem, "ID") + ")' href='#'/><img src='./Images/icon/application_view_list.png'/></a>");
+                //DevExpressHelper.WriteLineToResponse("<a title='" + DataBinder.Eval(c.DataItem, "Title") + "' onclick='del(" + DataBinder.Eval(c.DataItem, "ID") + ")' href='#'/>ลบ</a>");
+                //DevExpressHelper.WriteLineToResponse("<a href=\"" + DataBinder.Eval(c.DataItem, "ID") + "\" target=\"_blank\" title=\"Url\"><img src=\"" + Url.Content("~/content/img/url.png") + "\" alt=\"แก้ไข\" /></a>");
+            });
+        });
+
+		settings.SettingsPager.Visible = true;
+        settings.Width = Unit.Percentage(100);
+		settings.Settings.ShowGroupPanel = false;
+		settings.Settings.ShowFilterRow = false;
+		settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.Styles.Header.CssClass = "gridViewCaptionStyle";
+        settings.Styles.Cell.CssClass = "gridViewCellStyle";
+        settings.Styles.Header.HorizontalAlign = HorizontalAlign.Center;
+
+
+	});
+		if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

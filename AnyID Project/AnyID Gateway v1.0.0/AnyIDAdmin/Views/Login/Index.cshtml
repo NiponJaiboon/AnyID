@@ -1,0 +1,172 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout_Anonymus.cshtml";
+}
+
+@section PageHead{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.form.js")"></script>
+    <style type="text/css">
+        .borderRadius {
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+        }
+
+        .loginbox {
+            -webkit-box-shadow: 2px 2px 3px 0px rgba(50, 50, 50, 1);
+            -moz-box-shadow: 2px 2px 3px 0px rgba(50, 50, 50, 1);
+            box-shadow: 2px 2px 3px 0px rgba(50, 50, 50, 1);
+            border: 1px solid black;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .loginboxInput {
+            width: 90%;
+            padding: 20px 0px 20px 0px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .loginValidate {
+            height:30px;
+            position:absolute;
+            border:1px ridge gray;
+            background-color:#D9534F;
+            float:right;
+            margin-left:290px;
+        }
+
+        .loginInput {
+            float:left;
+            font-family:ClanOT_Narrow !important;
+            font-size:14px !important;
+            padding:5px;
+            width:270px;
+            height:23px !important;
+            border:1px solid #a9a9a9;
+        }
+    </style>
+    <script type="text/javascript">
+        function ErrorException999(logText) { alert("@CommonUtilities.Messages.CommonErrorText"); console.log(logText); }
+
+        function sendSubmit(s) {
+            var isName = ($("#uname").val() == "" || $("#uname").val() == null);
+            var isPass = ($("#upass").val() == "" || $("#upass").val() == null);
+
+            if (isName && isPass) {
+                validateEmpty("uname", true);
+                validateEmpty("upass", true);
+                document.getElementById("uname").focus();
+                s.disabled = false;
+            }
+            else if (isName && !isPass) {
+                validateEmpty("uname", true);
+                validateEmpty("upass", false);
+                document.getElementById("uname").focus();
+                s.disabled = false;
+            }
+            else if (!isName && isPass) {
+                validateEmpty("uname", false);
+                validateEmpty("upass", true);
+                document.getElementById("upass").focus();
+                s.disabled = false;
+            }
+            else {
+                validateEmpty("uname", false);
+                validateEmpty("upass", false);
+                //var options = ;
+                $('#frm').ajaxSubmit({
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.responseCode == "000") {
+                            window.location.replace(data.url);
+                        }
+                        else if (data.responseCode == "") {
+                            alert(data.responseText);
+                            s.disabled = false;
+                            clearLogin();
+                        }
+                        else {
+                            ErrorException999(data.responseCode + " : " + data.responseText);
+                            s.disabled = false;
+                            clearLogin();
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data)
+                        alert("Login failed. Exception");
+                        clearLogin();
+                        s.disabled = false;
+                    }
+                });
+            }
+        }
+
+        function validateEmpty(sender, show)
+        {
+            var s = document.getElementById(sender);
+            var vs = document.getElementById("v" + sender);
+            s.style.border = (show == true ? "1px solid red" : "1px solid #a9a9a9");
+            vs.style.display = (show == true ? "table" : "none");
+        }
+
+        function clearLogin() {
+            document.getElementById("uname").value = "";
+            document.getElementById("upass").value = "";
+            document.getElementById("uname").focus();
+        }
+</script>
+}
+<div class="loginbox borderRadius" style="width: 450px;">
+    <div class="loginboxInput">
+        <form id="frm" action="@Url.Content("~/Login/Authentication")" method="post">
+            <table class="fontClanOT_Narrow" style="width:100%;font-size:18px;">
+                <tbody>
+                    <tr>
+                        <td class="BGKKBlue" colspan="2" style="height:40px;color:white;font-weight:bold;">
+                            &nbsp;<span>Login</span>
+                            &nbsp;<span>เข้าสู่ระบบ</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:40px;">
+                            &nbsp;<span style="color:black;font-weight:bold;">username: </span>
+                        </td>
+                        <td style="overflow:visible;">
+                            <input type="text" id="uname" name="uname" class="loginInput" />
+                            <table id="vuname" class="loginValidate" style="display:none;">
+                                <tr>
+                                    <td style="padding:0 5px;">
+                                        <span style="font-family:ClanOT_Narrow;font-size:14px;white-space:nowrap;color:white;">กรุณาระบุ : username</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;<span style="color:black;font-weight:bold;">password: </span>
+                        </td>
+                        <td>
+                            <input type="password" id="upass" name="upass" class="loginInput" />
+                            <table id="vupass" class="loginValidate" style="display:none;">
+                                <tr>
+                                    <td style="padding:0 5px;">
+                                        <span style="font-family:ClanOT_Narrow;font-size:14px;white-space:nowrap;color:white;">กรุณาระบุ : password</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:40px;"></td>
+                        <td>
+                            <input type="submit" id="submit1" name="submit1" class="ibtn ibtn-primary" style="width:100px;font-size:16px !important;" value="เข้าสู่ระบบ" onclick="this.disabled = true; sendSubmit(this); return false;" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>

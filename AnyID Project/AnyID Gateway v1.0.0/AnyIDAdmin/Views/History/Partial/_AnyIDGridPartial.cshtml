@@ -1,0 +1,56 @@
+﻿@{
+    string langCode = (ViewData["LanguageCode"] == null ? "th-TH" : ViewData["LanguageCode"].ToString());
+    IList<AnyIDModel.ProxyTransaction> data = (ViewData["Data"] == null ? null : (IList<AnyIDModel.ProxyTransaction>)ViewData["Data"]);
+
+    string daTacolumns = "";
+    if (data != null)
+    {
+        List<AnyIDModel.ProxyTransaction> proxyTransactions = new List<AnyIDModel.ProxyTransaction>();
+        IEnumerable<AnyIDModel.ProxyTransaction> proxyTransactionRegsitrationEmpty = data.Where(x => string.IsNullOrEmpty(x.AccountProxy.RegistrationID));
+        IEnumerable<AnyIDModel.ProxyTransaction> proxyTransactionRegsitrationDistanct = data.Where(x => !string.IsNullOrEmpty(x.AccountProxy.RegistrationID)).GroupBy(x => x.RegistrationID).Select(group => group.First());
+
+        proxyTransactions.AddRange(proxyTransactionRegsitrationEmpty);
+        foreach (var item in proxyTransactionRegsitrationDistanct)
+        {
+            IList<AnyIDModel.ProxyTransaction> transDeactivate = data.Where(x => x.AccountProxy.RegistrationID == item.AccountProxy.RegistrationID).OrderBy(x => x.ID).ToList();
+            proxyTransactions.Add(transDeactivate[transDeactivate.Count - 1]);
+        }
+
+        Dictionary<string, string> cardTypeDict = CommonUtilities.CardType(new Dictionary<string, string>());
+        Dictionary<string, string> anyIDTypeDict = CommonUtilities.AnyIDType(new Dictionary<string, string>());
+        int i = 0;
+        foreach (AnyIDModel.ProxyTransaction item in proxyTransactions.OrderBy(x => x.CreateAction.Timestamp))
+        {
+            daTacolumns = daTacolumns + "<tr><td class=\"text-center\">" + (i + 1).ToString() + "</td>";
+            daTacolumns = daTacolumns + "<td>" + item.AccountProxy.CISID + "</td>";
+            daTacolumns = daTacolumns + "<td>" + cardTypeDict[item.AccountProxy.Customer.IDType.ToString()] + "</td>";
+            daTacolumns = daTacolumns + "<td>" + item.AccountProxy.Customer.IDNo + "</td>";
+            daTacolumns = daTacolumns + "<td class=\"nowrap\">" + item.AccountProxy.Customer.FullNameThai + "</td>";
+            daTacolumns = daTacolumns + "<td>" + anyIDTypeDict[item.AccountProxy.AnyID.IDType.ToString()] + "</td>";
+            daTacolumns = daTacolumns + "<td>" + item.AccountProxy.AnyID.DisplayIDNo + "</td>";
+            daTacolumns = daTacolumns + "<td>" + item.AccountProxy.RegistrationID + "</td>";
+            daTacolumns = daTacolumns + "<td class=\"text-center nowrap\" >" + CommonUtilities.GetUserActionTimestampText(item.CreateAction) + "</td>";
+            daTacolumns = daTacolumns + "<td>" + item.AccountProxy.KKRequiredStateDescription + "</td>";
+            daTacolumns = daTacolumns + "<td class=\"text-center\"><img alt=\"\" class=\"imgIcon\" src=\"" + Url.Content("~/Images/icon/search.png") + "\" onclick=\"GoViewHistory('" + item.AccountProxy.ID + "')\" /></td></tr>";
+            i++;
+        }
+    }
+}
+<table id="AnyIDGrid" class="display fontClanOT_Narrow" style="font-size:14px; width:99%; margin:1px auto 0px auto;">
+    <thead class="BGKKBlue" style="color:white;">
+        <tr>
+            <th class="tableHeaderLabel">No.</th>
+            <th class="tableHeaderLabel">CIS ID</th>
+            <th class="tableHeaderLabel">ประเภทบัตร</th>
+            <th class="tableHeaderLabel">เลขที่บัตร</th>
+            <th class="tableHeaderLabel">ชื่อ-นามสกุล (ไทย)</th>
+            <th class="tableHeaderLabel">ประเภท AnyID</th>
+            <th class="tableHeaderLabel">AnyID</th>
+            <th class="tableHeaderLabel">Registration ID</th>
+            <th class="tableHeaderLabel">วันที่ดำเนินการ</th>
+            <th class="tableHeaderLabel">Registration Status</th>
+            <th class="tableHeaderLabel">Action</th>
+        </tr>
+    </thead>
+    <tbody>@Html.Raw(daTacolumns)</tbody>
+</table>

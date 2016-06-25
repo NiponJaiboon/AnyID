@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:ax26="http://message.kktutility.services.kiatnakinbank.com/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ax21="http://dto.kktutility.services.kiatnakinbank.com/xsd" xmlns:ax23="http://dto.authentication.kktutility.services.kiatnakinbank.com/xsd" xmlns:ax25="http://message.authentication.kktutility.services.kiatnakinbank.com/xsd" xmlns:ns="http://service.authentication.kktutility.services.kiatnakinbank.com" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://service.authentication.kktutility.services.kiatnakinbank.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation>
+			KKTAuthentication
+		</wsdl:documentation>
+  <wsdl:types>
+    <xs:schema xmlns:ax24="http://dto.authentication.kktutility.services.kiatnakinbank.com/xsd" xmlns:ax22="http://dto.kktutility.services.kiatnakinbank.com/xsd" xmlns:ax210="http://message.authentication.kktutility.services.kiatnakinbank.com/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://service.authentication.kktutility.services.kiatnakinbank.com">
+      <xs:import namespace="http://dto.kktutility.services.kiatnakinbank.com/xsd" />
+      <xs:import namespace="http://dto.authentication.kktutility.services.kiatnakinbank.com/xsd" />
+      <xs:import namespace="http://message.authentication.kktutility.services.kiatnakinbank.com/xsd" />
+      <xs:element name="authenticate">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="header" nillable="true" type="ax22:RequestHeader" />
+            <xs:element minOccurs="0" name="authentication" nillable="true" type="ax24:Authentication" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="authenticateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax210:AuthenticationResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema xmlns:ax28="http://message.kktutility.services.kiatnakinbank.com/xsd" xmlns:ax29="http://dto.authentication.kktutility.services.kiatnakinbank.com/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://message.authentication.kktutility.services.kiatnakinbank.com/xsd">
+      <xs:import namespace="http://message.kktutility.services.kiatnakinbank.com/xsd" />
+      <xs:import namespace="http://dto.authentication.kktutility.services.kiatnakinbank.com/xsd" />
+      <xs:complexType name="AuthenticationResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="ax28:Response">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="userInfo" nillable="true" type="ax29:UserInfo" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns:ax27="http://dto.kktutility.services.kiatnakinbank.com/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://message.kktutility.services.kiatnakinbank.com/xsd">
+      <xs:import namespace="http://dto.kktutility.services.kiatnakinbank.com/xsd" />
+      <xs:complexType name="Response">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="header" nillable="true" type="ax27:ResponseHeader" />
+          <xs:element minOccurs="0" name="responseStatus" nillable="true" type="ax27:ResponseStatus" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://dto.authentication.kktutility.services.kiatnakinbank.com/xsd">
+      <xs:complexType name="Authentication">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="userPassword" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="UserInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="userBranchName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="userBranchNo" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="userFullName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="userRoles" nillable="true" type="ax23:UserRoles" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="UserRoles">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="userRoles" nillable="true" type="ax23:UserRole" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="UserRole">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="roleCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="roleName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://dto.kktutility.services.kiatnakinbank.com/xsd">
+      <xs:complexType name="Header">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="channelId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="serviceName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="transDate" nillable="true" type="xs:date" />
+          <xs:element minOccurs="0" name="transReferenceNo" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RequestHeader">
+        <xs:complexContent mixed="false">
+          <xs:extension base="ax21:Header">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="loginName" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="loginPassword" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="repeatFlag" nillable="true" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ResponseHeader">
+        <xs:complexContent mixed="false">
+          <xs:extension base="ax21:Header">
+            <xs:sequence />
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ResponseStatus">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="errorDesc" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="authenticateRequest">
+    <wsdl:part name="parameters" element="ns:authenticate" />
+  </wsdl:message>
+  <wsdl:message name="authenticateResponse">
+    <wsdl:part name="parameters" element="ns:authenticateResponse" />
+  </wsdl:message>
+  <wsdl:portType name="KKTAuthenticationPortType">
+    <wsdl:operation name="authenticate">
+      <wsdl:input wsaw:Action="urn:authenticate" message="ns:authenticateRequest" />
+      <wsdl:output wsaw:Action="urn:authenticateResponse" message="ns:authenticateResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="KKTAuthenticationSoap11Binding" type="ns:KKTAuthenticationPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="authenticate">
+      <soap:operation soapAction="urn:authenticate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="KKTAuthentication">
+    <wsdl:port name="KKTAuthenticationHttpSoap11Endpoint" binding="ns:KKTAuthenticationSoap11Binding">
+      <soap:address location="http://KKTAPPD01B.kiatnakinbank.com:7779/KKTUtility/services/KKTAuthentication.KKTAuthenticationHttpSoap11Endpoint/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

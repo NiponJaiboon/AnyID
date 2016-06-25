@@ -1,0 +1,378 @@
+﻿@using AnyIDAdmin.Models
+@{
+    string languageCode = ViewData["LanguageCode"] == null ? "th-TH" : ViewData["LanguageCode"].ToString();
+    ViewBag.Title = "My Work";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    IList<AnyIDModel.ProxyTransaction> data = (ViewData["Data"] == null ? null : (IList<AnyIDModel.ProxyTransaction>)ViewData["Data"]);
+    Dictionary<string, AnyIDModel.Customer> cust_dataDict = (ViewData["Cust_Data"] == null ? null : (Dictionary<string, AnyIDModel.Customer>)ViewData["Cust_Data"]);
+    string daTacolumns = "";
+    if (data != null)
+    {
+        Dictionary<string, string> cardTypeDict = CommonUtilities.CardType(new Dictionary<string, string>());
+        Dictionary<string, string> anyIDTypeDict = CommonUtilities.AnyIDType(new Dictionary<string, string>());
+        Dictionary<string, string> registrationStatusDict = CommonUtilities.RegistrationStatus(new Dictionary<string, string>());
+        for (int i = 0; i < data.Count; i++)
+        {
+            string fullName = cust_dataDict[data[i].CISID].FullNameThai;
+            daTacolumns = daTacolumns + "<tr><td class=\"text-center\">" + (i+1).ToString() + "</td>";
+            daTacolumns = daTacolumns + "<td>" + data[i].AccountProxy.CISID + "</td>";
+            daTacolumns = daTacolumns + "<td>" + cardTypeDict[(cust_dataDict[data[i].CISID]).IDType.ToString()] + "</td>";
+            daTacolumns = daTacolumns + "<td>" + (cust_dataDict[data[i].CISID]).IDNo + "</td>";
+            daTacolumns = daTacolumns + "<td class=\"nowrap\">" + fullName + "</td>";
+            daTacolumns = daTacolumns + "<td>" + anyIDTypeDict[data[i].AccountProxy.AnyID.IDType.ToString()] + "</td>";
+            daTacolumns = daTacolumns + "<td>" + data[i].AccountProxy.AnyID.DisplayIDNo + "</td>";
+            daTacolumns = daTacolumns + "<td>" + data[i].AccountProxy.RegistrationID + "</td>";
+            daTacolumns = daTacolumns + "<td class=\"text-center nowrap\" >" + CommonUtilities.GetUserActionTimestampText(data[i].CreateAction) + "</td>";
+            if (data[i] is AnyIDModel.RegisterTransaction) { daTacolumns = daTacolumns + "<td>Create</td>"; }
+            else if (data[i] is AnyIDModel.AmendTransaction) { daTacolumns = daTacolumns + "<td>Amend</td>"; }
+            else if (data[i] is AnyIDModel.DeactivateTransaction) { daTacolumns = daTacolumns + "<td>Deactivate</td>"; }
+            else { daTacolumns = daTacolumns + "<td>Create</td>"; }
+            daTacolumns = daTacolumns + "<td>" + data[i].AccountProxy.KKRequiredStateDescription + "</td>";
+            if (ViewData["IsMaker"] != null)
+            {
+                daTacolumns = daTacolumns + "<td class=\"text-center\"><img alt=\"\" class=\"imgIcon\" src=\"" + Url.Content("~/Images/icon/search.png") + "\" onclick=\"GoViewResgister('" + data[i].ID + "', '" + data[i].AccountProxy.CISID + "')\" /></td></tr>";
+            }
+            else
+            {
+                daTacolumns = daTacolumns + "<td class=\"text-center\"><img alt=\"\" class=\"imgIcon\" src=\"" + Url.Content("~/Images/icon/search.png") + "\" onclick=\"GoApprove('" + data[i].ID + "', '" + data[i].AccountProxy.CISID + "')\" /></td></tr>";
+            }
+        }
+    }
+}
+
+@if (ViewData["ExceptionOnLoad"] != null){<span style="font-family:ClanOT_Narrow;font-size:14px;color:red;">@Html.Raw(ViewData["ExceptionOnLoad"].ToString())</span>}
+else if (ViewData["InsufficientPrivilege"] != null)
+{
+    @section PageHead{
+        <script>
+            window.onload = function () {
+                window.location.replace('@Url.Content("~/Login")');
+            }
+        </script>
+    }
+}
+else
+{
+    @section PageHead {
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/datatables.min.css")">
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/isabayaDataTable.css")">
+        <script type="text/javascript" src="@Url.Content("~/Scripts/datatables.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/isabayaDataTable.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui.js")"></script>
+        <style type="text/css">
+            .page-lable {
+                font-weight: bold;
+                font-size: 15px;
+                vertical-align: middle;
+            }
+
+            .page-option14 option{
+                font-family:ClanOT_Narrow;
+                font-size:14px;
+            }
+
+            .page-label14 {
+                font-weight:bold;
+                color:black;
+            }
+
+            .page-input14 {
+                font-family:ClanOT_Narrow !important;
+                font-size:14px !important;
+                padding:5px;
+                width:250px;
+                border:1px solid #a9a9a9;
+            }
+
+            .page-row td{
+                padding: 5px;
+            }
+
+            .page-validate {
+                height: 30px;
+                position: absolute;
+                border: 1px ridge gray;
+                background-color: #D9534F;
+                float: right;
+            }
+        </style>
+        <script type="text/javascript">
+            var LoG = { EmptyTableText: "ไม่มีข้อมูล", InfoText: "จำนวนรายการที่พบ _TOTAL_ รายการ แสดงผลหน้าที่ _PAGE_ จาก _PAGES_", InfoEmptyText: "จำนวนรายการที่พบ 0 รายการ แสดงผลหน้าที่ 1 จาก 1" };
+            $(document).ready(function () {
+                MyWorkGrid.Initial(LoG);
+                MyWorkGrid.ChangePageLength(15);
+                var urlImage = "@Url.Content("~/Images/icon/calendar.gif")";
+                InitDatepicker("operationDateFrom", new Date(), urlImage);
+                InitDatepicker("operationDateTo", new Date(), urlImage);
+            });
+
+            function Expired() { window.location.replace('@Url.Content("~/Login")'); }
+            function InitDatepicker(s, initDate, urlImg) {
+                $("#" + s).datepicker({
+                    showButtonPanel: true,
+                    showOn: "button",
+                    buttonImage: urlImg,
+                    buttonImageOnly: true,
+                    buttonText: "",
+                    dateFormat: "dd/mm/yy",
+                });
+                $("#" + s).datepicker("setDate", initDate);
+            }
+            function GetiSabayaDateFromDatepicker(s) {
+                var iDatepicker = $("#" + s).datepicker("getDate");
+                if (iDatepicker == null) { return ""; }
+                else {
+                    var date = iDatepicker.getDate().toString();
+                    var month = (iDatepicker.getMonth() + 1).toString();
+                    var year = iDatepicker.getFullYear().toString();
+                    while (date.length < 2) { date = "0" + date; }
+                    while (month.length < 2) { month = "0" + month; }
+                    while (year.length < 4) { year = "0" + year; }
+                    return year + month + date
+                }
+            }
+
+            function GoApprove(s, k) {
+                loading.Show();
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    dataType: "json",
+                    url: '@Url.Content("~/MyWork/GotoApprover")',
+                    data: { sender: s, referance: k },
+                    success: function (data) {
+                        if (data.responseCode == "000") { window.location.replace(data.url); }
+                        else if (data.responseCode == "500") { Expired(); }
+                        else {
+                            ErrorException999(data.responseCode + ", " + data.responseText + ";" + data.html);
+                            loading.Hide();
+                        }
+                    },
+                    error: function (e) {
+                        alert("Error Exception");
+                        console.log(e);
+                    }
+                });
+            }
+
+            function GoViewResgister(s, k) {
+                loading.Show();
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    dataType: "json",
+                    url: '@Url.Content("~/MyWork/GotoViewRegsitration")',
+                    data: { sender: s, referance: k },
+                    success: function (data) {
+                        if (data.responseCode == "000") { window.location.replace(data.url); }
+                        else if (data.responseCode == "500") { Expired(); }
+                        else {
+                            ErrorException999(data.responseCode + ", " + data.responseText + ";" + data.html);
+                            loading.Hide();
+                        }
+                    },
+                    error: function (e) {
+                        alert("Error Exception");
+                        console.log(e);
+                    }
+                });
+            }
+
+            function GetData(sender, urlAction) {
+                clearAllValidate(["cardType", "anyIDType"])
+                if ($("#cardNo").val() != "" && $("#cardType").val() == "") { displayValidate("cardType", true); return; }
+                if ($("#anyIDValue").val() != "" && $("#anyIDType").val() == "") { displayValidate("anyIDType", true); sender.disabled = false; return; }
+                if (OutOfLimitDateLength($("#operationDateFrom").datepicker("getDate"), $("#operationDateTo").datepicker("getDate"), 30)) { return; }
+                if (IsDateToLessthanDateFrom($("#operationDateFrom").datepicker("getDate"), $("#operationDateTo").datepicker("getDate"), "คุณเลือกวันที่ไม่ถูกต้อง วันที่ดำเนินการ จะต้องมีค่าน้อยกว่าsหรือเท่ากับ ถึงวันที่ดำเนินการ เท่านั้น")) { return; }
+
+                sender.disabled = true;
+                loading.Show();
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    dataType: "json",
+                    url: urlAction,
+                    data: {
+                        cardType: $("#cardType").val(),
+                        cardNo: $("#cardNo").val(),
+                        firstname: $("#fnameTH").val(),
+                        surname: $("#lnameTH").val(),
+                        anyIDType: $("#anyIDType").val(),
+                        anyIDValue: $("#anyIDValue").val(),
+                        dateFrom: GetiSabayaDateFromDatepicker("operationDateFrom"),
+                        dateTo: GetiSabayaDateFromDatepicker("operationDateTo"),
+                        status: (($("#anyIDStatus").val() === undefined) ? "" : $("#anyIDStatus").val())
+                    },
+                    success: function (data) {
+                        if (data.responseCode == "000") {
+                            MyWorkGrid.UpdateDataGrid(data.html);
+                            loading.Hide();
+                            sender.disabled = false;
+                        }
+                        else if (data.responseCode == "500") { Expired(); }
+                        else {
+                            if (data.responseCode == "100") { alert(data.html); displayValidate("cardType", true); }
+                            else if (data.responseCode == "101") { alert(data.html); displayValidate("anyIDType", true); }
+                            else { ErrorException999(data.responseCode + ", " + data.responseText + ";" + data.html); }
+                            loading.Hide();
+                            sender.disabled = false;
+                        }
+                    },
+                    error: function (e) { alert("Error Exception"); console.log(e); }
+                });
+            }
+        </script>
+    }
+    <table style="font-family:ClanOT_Narrow !important;font-size:14px !important;width:100%;">
+        <tr>
+            <td class="BGKKGray" style="border-style:solid;border-color:white;border-width:2px 0px 2px 0px;height:30px;">
+                &nbsp;<span class="page-lable" style="color:black;">My Work</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="BGKKBlue" style="height:30px;">
+                &nbsp;<span class="page-lable" style="color:white;">เงื่อนไขการค้นหา</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:3px 0;">
+                <table class="page-tablepadding" style="width:100%;padding:5px;border-style: inset;border-color: gray;border-width: medium;">
+                    <tr class="page-row">
+                        <td>
+                            <span class="page-label14">ประเภทบัตร:</span>
+                        </td>
+                        <td>
+                            <select id="cardType" class="page-option14" style="width:160px;border:1px solid #a9a9a9;float:left;">
+                                <option value="">-- All --</option>
+                                <option value="I">ID Card</option>
+                            </select>
+                            <table id="vcardType" class="page-validate" style="display:none;margin-left: 165px;">
+                                <tr>
+                                    <td style="padding:0 5px;">
+                                        <span style="font-family:ClanOT_Narrow;font-size:14px;white-space:nowrap;color:white;">กรุณาระบุ : ประเภทบัตร</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <span class="page-label14">เลขที่บัตร:</span>
+                        </td>
+                        <td>
+                            <input id="cardNo" class="page-input14" />
+                        </td>
+                    </tr>
+                    <tr class="page-row">
+                        <td>
+                            <span class="page-label14">ชื่อ (ไทย):</span>
+                        </td>
+                        <td>
+                            <input id="fnameTH" class="page-input14" />
+                        </td>
+                        <td>
+                            <span class="page-label14">นามสกุล (ไทย):</span>
+                        </td>
+                        <td>
+                            <input id="lnameTH" class="page-input14" />
+                        </td>
+                    </tr>
+                    <tr class="page-row">
+                        <td>
+                            <span class="page-label14">ประเภท AnyID:</span>
+                        </td>
+                        <td>
+                            <select id="anyIDType" class="page-option14" style="width:160px;border:1px solid #a9a9a9;float:left;">
+                                @{
+                                    @Html.Raw("<option value=\"\">-- All --</option>");
+                                    foreach (string item in CommonUtilities.AnyIDType(new string[1]))
+                                    {
+                                        string[] keyValue = item.Split(':');
+                                        @Html.Raw("<option value=\"" + keyValue[0] + "\">" + keyValue[1] + "</option>");
+                                    }
+                                }
+                            </select>
+                            <table id="vanyIDType" class="page-validate" style="display:none;margin-left: 165px;">
+                                <tr>
+                                    <td style="padding:0 5px;">
+                                        <span style="font-family:ClanOT_Narrow;font-size:14px;white-space:nowrap;color:white;">กรุณาระบุ : ประเภท AnyID</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <span class="page-label14">AnyID:</span>
+                        </td>
+                        <td>
+                            <input id="anyIDValue" class="page-input14" />
+                        </td>
+                    </tr>
+                    <tr class="page-row">
+                        <td>
+                            <span class="page-label14">วันที่ดำเนินการ:</span>
+                        </td>
+                        <td>
+                            <input id="operationDateFrom" readonly class="iDatepicker" />
+                        </td>
+                        <td>
+                            <span class="page-label14">ถึงวันที่ดำเนินการ:</span>
+                        </td>
+                        <td>
+                            <input id="operationDateTo" readonly class="iDatepicker" />
+                        </td>
+                    </tr>
+                    @if (ViewData["IsMaker"] != null)
+                    {
+                        <tr class="page-row">
+                            <td>
+                                <span class="page-label14">Registration Status:</span>
+                            </td>
+                            <td>
+                                <select id="anyIDStatus" class="page-option14" style="width:160px;border:1px solid #a9a9a9;">
+                                    <option value="">-- All --</option>
+                                    <option value="W">อยู่ระหว่างรออนุมัติ</option>
+                                    <option value="N">ไม่ได้รับการอนุมัติ</option>
+                                    <option value="S">สำเร็จ</option>
+                                    <option value="F">ไม่สำเร็จ</option>
+                                    <option value="D">Deactivate</option>
+                                    <option value="T">System Error (Timeout)</option>
+                                    <option value="O">System Error (Offline)</option>
+                                    <option value="E">System Error (Exported)</option>
+                                </select>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    }
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table style="font-family:ClanOT_Narrow !important;font-size:14px !important;width:100%; margin-top:5px;">
+        <tr>
+            <td>
+                <div class="grp-btn-center">
+                    <input type="button" class="ibtn ibtn-primary" style="width:80px;" value="Search" onclick="GetData(this, '@Url.Content("~/MyWork/GetTransaction")');" />
+                    &nbsp;&nbsp;
+                    <input type="button" class="ibtn ibtn-primary" style="width:80px;" value="Reset" onclick="window.location.replace('@Url.Content("~/MyWork")')" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table style="font-family:ClanOT_Narrow !important;font-size:14px !important;width:100%;margin-top:20px;">
+        <tr>
+            <td class="BGKKBlue" style="height:30px;">
+                &nbsp;<span class="page-lable" style="color:white;">ผลการค้นหา</span>
+            </td>
+        </tr>
+    </table>
+    @Html.iSabayaDataTable(new iSabayaDataTableSettings()
+    {
+        Name = "MyWorkGrid",
+        Url = Url,
+        Columns = new List<string>() { "No.", "CIS ID", "ประเภทบัตร", "เลขที่บัตร", "ชื่อ-นามสกุล (ไทย)", "ประเภท AnyID", "AnyID", "Registration ID", "วันที่ดำเนินการ", "Action", "Registration Status", "Detail" },
+        ColumnDatas = daTacolumns,
+        PageLength = new List<string>() { "15", "25", "50", "100" },
+        PageLengthShowingText = "แสดง",
+        PageLengthEntriesText = "รายการ"
+    })
+}

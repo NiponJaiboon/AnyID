@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/AnyIDModel" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/AnyIDModel" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://10.202.104.109/ProxyRegistraGateway/ProxyRegistraGateway.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/iSabaya" />
+  <xs:complexType name="Person">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Customer">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FirstNameEnglish" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FirstNameThai" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LastNameEnglish" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LastNameThai" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Person" nillable="true" type="tns:Person" />
+  <xs:complexType name="Customer">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/iSabaya" base="q1:PersistentEntity">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Customer" nillable="true" type="tns:Customer" />
+  <xs:complexType name="Organization">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Customer">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="NameEnglish" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NameThai" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RegisteredDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Organization" nillable="true" type="tns:Organization" />
+</xs:schema>

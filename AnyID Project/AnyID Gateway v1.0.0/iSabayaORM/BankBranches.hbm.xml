@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.BankBranches,iSabaya" table="BankBranches">
+
+    <!-- Primary key-->
+    <id name="ID" unsaved-value="0">
+      <generator class="assigned"/>
+    </id>
+    <property name="BankCode" type="iSabaya.BankCode,iSabaya" />
+    <property name="BranchCode" />
+    <property name="BOTBranchCode" />
+    <property name="BranchName" />
+    <property name="ClearingZone" />
+    <property name="BathnetZone" />
+    <property name="BranchStatus" />
+  </class>
+</hibernate-mapping>

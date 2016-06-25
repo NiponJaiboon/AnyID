@@ -1,0 +1,68 @@
+﻿@{
+    string langCode = (ViewData["LanguageCode"] == null ? "th-TH" : ViewData["LanguageCode"].ToString());
+    var reportDataList = new List<AnyIDAdmin.Models.Report.DetailReportByCustomerModel>();
+    var reportDateFrom = ViewData["reportDateFrom"].ToString();
+    var reportDateTo = ViewData["reportDateTo"].ToString();
+    var reportIDType = ViewData["reportIDType"].ToString();
+    var reportIDNo = ViewData["reportIDNo"].ToString();
+    var reportCISID = ViewData["reportCISID"].ToString();
+    var reportCustomerName = ViewData["reportCustomerName"].ToString();
+    if (ViewData["reportDataList"] != null)
+    {
+        reportDataList = ViewData["reportDataList"] as List<AnyIDAdmin.Models.Report.DetailReportByCustomerModel>;
+    }
+}
+
+<input type="hidden" id="reportDateFrom" value="@reportDateFrom" />
+<input type="hidden" id="reportDateTo" value="@reportDateTo" />
+<input type="hidden" id="reportIDType" value="@reportIDType" />
+<input type="hidden" id="reportIDNo" value="@reportIDNo" />
+<input type="hidden" id="reportCISID" value="@reportCISID" />
+<input type="hidden" id="reportCustomerName" value="@reportCustomerName" />
+
+<table id="TransactioReportGrid" class="display fontClanOT_Narrow" style="font-size:14px; width:99%; margin:1px auto 0px auto;">
+    <thead class="BGKKBlue" style="color:white;">
+        <tr>
+            <th class="tableHeaderLabel">No.</th>
+            <th class="tableHeaderLabel">ประเภทบัตร</th>
+            <th class="tableHeaderLabel">เลขที่บัตร</th>
+            <th class="tableHeaderLabel">ชื่อ-นามสกุล</th>
+            <th class="tableHeaderLabel">AnyID Type</th>
+            <th class="tableHeaderLabel">AnyID</th>
+            <th class="tableHeaderLabel">เลขที่บัญชี</th>
+            <th class="tableHeaderLabel">ชื่อบัญชี</th>
+            <th class="tableHeaderLabel">ดำเนินการโดย</th>
+            <th class="tableHeaderLabel">วันที่ดำเนินการ</th>
+            <th class="tableHeaderLabel">Action</th>
+            <th class="tableHeaderLabel">อนุมัติโดย</th>
+            <th class="tableHeaderLabel">วันที่อนุมัติ</th>
+            <th class="tableHeaderLabel">ผลการอนุมัติ</th>
+            <th class="tableHeaderLabel">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 0;
+            foreach (var r in reportDataList)
+            {
+                <tr>
+                    <td class="text-center">@(++i)</td>
+                    <td>@(r.IDType)</td>
+                    <td>@(r.IDNo)</td>
+                    <td class="nowrap">@(r.CustomerName)</td>
+                    <td>@(r.AnyIDType)</td>
+                    <td>@(r.AnyID)</td>
+                    <td>@(r.AccountNo)</td>
+                    <td class="nowrap">@(r.AccountName)</td>
+                    <td class="nowrap">@(r.Actioner)</td>
+                    <td class="nowrap">@(r.TransactionTS)</td>
+                    <td>@(r.Action)</td>
+                    <td class="nowrap">@(r.Approver)</td>
+                    <td class="nowrap">@(r.ApproveDate)</td>
+                    <td>@(r.ApproveResult)</td>
+                    <td class="nowrap">@(r.Description)</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

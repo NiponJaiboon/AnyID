@@ -1,0 +1,68 @@
+﻿@{
+    IList<string> useableMenu = (IList<string>)ViewData["UseableMenu"];
+    string menuActiveCode1 = "";
+    string menuActiveCode2 = "";
+    if (ViewData["MenuActive"] != null)
+    {
+        if (typeof(List<string>).Equals((ViewData["MenuActive"]).GetType()))
+        {
+            if (((List<string>)ViewData["MenuActive"]).Count == 2)
+            {
+                menuActiveCode1 = ((List<string>)ViewData["MenuActive"])[0];
+                menuActiveCode2 = ((List<string>)ViewData["MenuActive"])[1];
+            }
+        }
+    }
+    IList<AnyIDAdmin.Models.PrivilegeMenu> menu = AnyIDAdmin.Models.PrivilegeMenu.GetMenus(Url);
+}
+<ul id="side_menu" class="side-menu">
+    @foreach (AnyIDAdmin.Models.PrivilegeMenu item in menu)
+    {
+        if (item.IsMustCreateMenu(useableMenu))
+        {
+            if (item.Childs == null)
+            {
+                <li class="">
+                    <a onclick="window.location.replace('@item.Url');">
+                        @*<span class="ico-nav-wide ico-nav"><img src="./Kiatnakin Bank - ATS_files/RefValidate_W.png"></span>*@
+                        <span class="text-nav" style="cursor:pointer;">@Html.Raw(item.Title)</span>
+                        @if (!string.IsNullOrEmpty(item.Title2))
+                        {
+                            <span class="text-nav" style="cursor:pointer;">@Html.Raw(item.Title2)</span>
+                        }
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="accordion-level-1 ">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#@item.ID" data-id="accordion-level-2">
+                        <span class="accordion-link">
+                            @*<span class="ico-nav-wide ico-nav"><img src="./Kiatnakin Bank - ATS_files/MasterData_W.png"></span>*@
+                            <span class="text-nav" style="cursor:pointer;">@Html.Raw(item.Title)</span>
+                            @if (!string.IsNullOrEmpty(item.Title2))
+                            {
+                                <span class="text-nav" style="cursor:pointer;">@Html.Raw(item.Title2)</span>
+                            }
+                            <span class="ico-slide ico-accordion-down"></span>
+                        </span>
+                    </a>
+                </li>
+                <ul id="@item.ID" class="accordion-body accordion-level-2 collapse" style="height: auto;">
+                    @foreach (AnyIDAdmin.Models.PrivilegeMenu itemSub1 in item.Childs)
+                    {
+                        if (itemSub1.IsMustCreateMenu(useableMenu))
+                        {
+                            <li class="" style="padding-left:45px !important;">
+                                <a onclick="window.location.replace('@itemSub1.Url');" style="font-size:15px;">
+                                    @*<span class="ico-nav-wide ico-nav"><img src="./Kiatnakin Bank - ATS_files/Service_W.png"></span>*@
+                                    <span class="" style="cursor:pointer;">@Html.Raw(itemSub1.Title)</span>
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+            }
+        }
+    }
+</ul>

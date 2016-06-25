@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.UserGroup,iSabaya" table="UserGroup">
+    <!-- Primary key-->
+    <id name="ID" type="Int64" unsaved-value="0">
+      <generator class="native" />
+    </id>
+    <component name="EffectivePeriod"  >
+      <property name="From" column="EffectiveFrom" type="datetime2" />
+      <property name="To" column="EffectiveTo" type="datetime2" />
+    </component>
+
+    <property name="Code" />
+    <property name="Title" />
+    <property name="Description" />
+    <many-to-one name="Organization" column="OrganizationID" />
+    <many-to-one name="OrgUnit" column="OrgUnitID" />
+    <property name="ShortTitle" />
+    <property name="Reference" />
+    <property name="Remark" />
+
+    <bag name="GroupUsers" table="UserGroupUser" cascade="delete">
+      <key column="GroupID" />
+      <one-to-many class="iSabaya.UserGroupUser,iSabaya" />
+    </bag>
+    
+  </class>
+</hibernate-mapping>

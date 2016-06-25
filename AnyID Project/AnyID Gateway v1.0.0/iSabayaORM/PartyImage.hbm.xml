@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.PartyImage,iSabaya" table="PartyImage">
+
+    <id name="ID" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+    
+    <component name="EffectivePeriod" >
+      <property name="From" column="EffectiveFrom"/>
+      <property name="To" column="EffectiveTo"/>
+    </component>
+    
+    <any name="Party" meta-type="byte" id-type="Int64" >
+      <meta-value value="10" class="iSabaya.Organization,iSabaya"/>
+      <meta-value value="15" class="iSabaya.OrgUnit,iSabaya"/>
+      <meta-value value="20" class="iSabaya.Person,iSabaya"/>
+
+      <column name="PartyDiscriminator"/>
+      <column name="PartyID"/>
+    </any>
+
+    <!--<many-to-one name="CategoryRoot" column="CategoryRootNodeID" />-->
+    <!--<many-to-one name="CategoryParent" column="CategoryParentNodeID" />-->
+    <many-to-one name="Category" column="CategoryNodeID" />
+    <property name="ImageBytes" column="ImageBytes" type="BinaryBlob" />
+    <property name="Reference" />
+    <property name="Remark" />
+
+  </class>
+</hibernate-mapping>

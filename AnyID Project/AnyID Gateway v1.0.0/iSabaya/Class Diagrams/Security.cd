@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="iSabaya.User" Collapsed="true">
+    <Position X="4" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="UserRoles" Type="iSabaya.UserRole" FixedFromPoint="true">
+      <Path>
+        <Point X="5.5" Y="2.437" />
+        <Point X="7" Y="2.437" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>CMUACAAEAAAAEAVEghAAgKaBChQIYMgyAIAUQQFIKCs=</HashCode>
+      <FileName>Security\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Person" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="UserRoles" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iSabaya.Role" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAiAAEAABABAAAAAAAAAIACAAKAAoQAAEAAAAQAKI=</HashCode>
+      <FileName>Security\Role.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="OrgUnit" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="UseCases" />
+      <Property Name="UserRoles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="iSabaya.Password" Collapsed="true">
+    <Position X="5.25" Y="5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AQABAgAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Security\Password.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="User" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="iSabaya.Person" Collapsed="true">
+    <Position X="1.25" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>lAApgMEIFAAFIIGMgFJIYAaUSGAMEMBhARAoYgAOFYA=</HashCode>
+      <FileName>Person.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iSabaya.ActiveDirectoryUser" Collapsed="true">
+    <Position X="2.75" Y="3.5" Width="1.75" />
+    <InheritanceLine Type="iSabaya.User" FixedFromPoint="true">
+      <Path>
+        <Point X="4.75" Y="2.691" />
+        <Point X="4.75" Y="3.115" />
+        <Point X="3.625" Y="3.115" />
+        <Point X="3.625" Y="3.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAkAAIAEAAAAAAAECACAAAAAAAAAEAAAAAAUAAAAAAA=</HashCode>
+      <FileName>Security\ActiveDirectoryUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iSabaya.SelfAuthenticatedUser" Collapsed="true">
+    <Position X="5" Y="3.5" Width="2" />
+    <InheritanceLine Type="iSabaya.User" ManuallyRouted="true">
+      <Path>
+        <Point X="4.75" Y="2.691" />
+        <Point X="4.75" Y="3.115" />
+        <Point X="6" Y="3.115" />
+        <Point X="6" Y="3.5" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="CurrentPassword" Type="iSabaya.Password">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.06" Y="0.294" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AEAQAAgEAAAAgAAUgAEAAAYAAAAAEAECgAERAgAAEQA=</HashCode>
+      <FileName>Security\SelfAuthenticatedUser.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CurrentPassword" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Passwords" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="iSabaya.UserRole" Collapsed="true">
+    <Position X="7" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Security\UserRole.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Role" />
+      <Property Name="User" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="iSabaya.UseCase" Collapsed="true">
+    <Position X="1.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAgAEIAAAAAQEkBAEQQAAACAMAIAQAgAAQAAAACA=</HashCode>
+      <FileName>Security\UseCase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iSabaya.RoleUseCase" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <AssociationLine Name="Role" Type="iSabaya.Role" FixedFromPoint="true">
+      <Path>
+        <Point X="5.5" Y="0.938" />
+        <Point X="7" Y="0.938" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAEABAAgAAAQBIAAAAAQAAAAACACI=</HashCode>
+      <FileName>Security\RoleUseCase.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="UseCase" />
+      <Property Name="Role" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="iSabaya.OrgUnit" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAABAIAAIEAAAAhgkACYQIQAyAKAIAAAAQiAAgAIAY=</HashCode>
+      <FileName>Organization\OrgUnit.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

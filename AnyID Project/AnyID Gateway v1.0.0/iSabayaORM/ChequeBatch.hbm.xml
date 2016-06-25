@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="iSabaya.ChequeBatch,iSabaya" table="ChequeBatch" >
+    <id name="BatchID" access="field.camelcase" column="ChequeBatchID" type="Int32" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+    <property name="AcquiredDate" column="AcquiredDate" type="DateTime"  not-null="true" />
+    <!--<many-to-one name="BankAccount" column="BankAccountID" class="iSabaya.BankAccount,iSabaya"/>-->
+    <many-to-one name="ChequeFormat" column="ChequeFormatID" class="iSabaya.ChequeFormat,iSabaya"/>
+    <property name="ChequeNoFrom" column="ChequeNoFrom" type="Int64"  not-null="true" />
+    <property name="ChequeCount" />
+    <component name="Cost" class="iSabaya.Money, iSabaya">
+      <property name="Amount"   column="Cost"/>
+      <property name="CurrencyCode" column="CostCurrencyID" />
+    </component>
+    <property name="Remaining" />
+    <!--<bag name="ChequeBatchMembers" table="ChequeBatchItem" inverse="true" lazy="false">
+      <key column="ChequeBatchID"/>
+      <one-to-many class="iSabaya.ChequeBatchItem,iSabaya"/>
+    </bag>-->
+  </class>
+</hibernate-mapping>
